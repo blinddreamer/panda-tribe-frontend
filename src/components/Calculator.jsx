@@ -67,7 +67,7 @@ function Calculator() {
       building = document.getElementById("build_"+parent_id).value;
     }
     try {
-      const response = await axios.post("http://localhost:8080/api/v1/type", { blueprintName: material.name, quantity: material.jobsCount, blueprintMe: blueprintMe, buildingRig: buildingRig, building: building  });
+      const response = await axios.post("http://localhost:8080/api/v1/type", { blueprintName: material.name, quantity: material.jobsCount, blueprintMe: blueprintMe, buildingRig: buildingRig, building: building, system: system, facilityTax: facilityTax  });
       if (response.status !== 200) {
         throw new Error(`Server Error: ${response.statusText}`);
       }
