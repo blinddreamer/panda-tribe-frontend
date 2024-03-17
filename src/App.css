@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+ 
 }
 
 .logo {
@@ -32,7 +33,9 @@
     animation: logo-spin infinite 20s linear;
   }
 }
-
+body{
+  background-color:rgb(94, 86, 97)
+}
 .card {
   padding: 2em;
 }
