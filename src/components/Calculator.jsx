@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Card, Collapse, Alert, Spinner } from 'react-bootstrap';
 import {ArrowBarDown, ArrowBarUp} from 'react-bootstrap-icons';
+import { Typeahead } from 'react-bootstrap-typeahead';
 import axios from 'axios';
 
 function Calculator() {
@@ -292,8 +293,14 @@ async function handleCopy(material,id) {
         </Form.Group>
         <Form.Group controlId="systemName">
           <Form.Label>System:</Form.Label>
-          <Form.Control type="text" name="systemName" placeholder='Enter sytem name.Default Jita' />
-        </Form.Group>
+          {/* <Form.Control type="text" name="systemName" placeholder='Enter sytem name.Default Jita' /> */}
+        
+        <Typeahead id='systemName'
+             onChange={(selected) => {
+            // Handle selections...
+        }}
+               options={[ "Jita","Gnomakevo","Hukuvo"]}
+/></Form.Group>
         <Form.Group controlId="facility">
           <Form.Label>Facility tax:</Form.Label>
           <Form.Control type="number" min={0} name="facility" placeholder='Enter facility tax. Default 0' />
