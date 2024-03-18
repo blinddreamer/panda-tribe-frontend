@@ -394,6 +394,7 @@ function Calculator() {
   // END RESULT
   return (
     <div className="d-grid gap-5">
+      <p />
       <Form>
         <Form.Group controlId="blueprintName">
           <Form.Label>Blueprint Name:</Form.Label>
