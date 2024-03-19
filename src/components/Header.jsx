@@ -5,7 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 
 function Header() {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="bg-body-tertiary navbarh">
       <Container>
         <Navbar.Brand href="#home">eve-helper</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -13,6 +13,8 @@ function Header() {
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#link">Link</Nav.Link>
+          </Nav>
+          <Nav>
             <DarkModeToggle />
           </Nav>
         </Navbar.Collapse>
