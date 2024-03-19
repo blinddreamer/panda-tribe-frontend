@@ -10,7 +10,7 @@ function Calculator(props) {
   const [isCopied, setIsCopied] = useState({});
   const [system,setSystem] = useState(null);
   const [systemValues,setSystemValues] = useState({});
-  const backend = "http://localhost:8080/api/v1/";
+  
  
   useEffect(()=> {
     system!=null && recalculatePrices(system.id, system.material, system.colId, system.parent_id,system.value)
@@ -70,7 +70,7 @@ function Calculator(props) {
       building = document.getElementById("build_" + parent_id).value;
     }
     try {
-      const response = await axios.post(backend+"type", {
+      const response = await axios.post(props.backend+"type", {
         blueprintName: material.name,
         quantity: material.jobsCount,
         blueprintMe: blueprintMe,
@@ -133,7 +133,7 @@ function Calculator(props) {
   async function getSubmatsData(material, colId) {
     if (!Array.isArray(material.materialsList)) {
       try {
-        const response = await axios.post(backend+"type", {
+        const response = await axios.post(props.backend+"type", {
           blueprintName: material.name,
           quantity: material.jobsCount,
         });

@@ -16,7 +16,7 @@ function Body() {
   const [optionsBp, setOptionsBp] = useState([]);
   const [optionsSys, setOptionsSys] = useState([])
   const [onStart,setOnstart] = useState(true);
- // const backend = "http://thunder:6549/api/v1/type";
+ // const backend = "http://thunder:6549/api/v1/";
   const backend = "http://localhost:8080/api/v1/";
   // SET PAGE TITLE
   useEffect(() => {
@@ -82,7 +82,7 @@ function Body() {
         <Col>
           2 of 2
           <Calculator materialsList={materialsList} setMaterialsList={setMaterialsList} errorMessage={errorMessage} setErrorMessage={setErrorMessage} initialBlueprint={initialBlueprint}
-          openState = {openState} setOpenState={setOpenState} optionsSys={optionsSys}
+          openState = {openState} setOpenState={setOpenState} optionsSys={optionsSys} backend={backend}
           />
         </Col>
       </Row>
