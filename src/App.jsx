@@ -1,16 +1,17 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Calculator from './components/Calculator'
-import Header from './components/Header'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import Calculator from "./components/Calculator";
+import Header from "./components/Header";
 
 function App() {
-  return <div>
-    <Header />
-    <Calculator />
-    
+  return (
+    <div>
+      <Header />
+      <Calculator />
     </div>
+  );
 }
 
-export default App
+export default App;
