@@ -4,14 +4,15 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 
 function GetForm(props){
-    const [options, setOptions] = useState([{}])
+  
+  const [system,setSystem] = useState("");
+  const [blueprint,setBlueprint] = useState("");
+  
     function sendData(){
-        let blueprint = document.getElementById("blueprintName").value;
         let building = document.getElementById("building").value;
         let quantity = document.getElementById("quantity").value;
         let buildingRig = document.getElementById("buildingRig").value;
         let blueprintMe = document.getElementById("blueprintMe").value;
-        let system = document.getElementById("systemName").value;
         let facilityTax = document.getElementById("facility").value;
         props.setFormData({ blueprintName: blueprint,
             quantity: quantity,
@@ -22,20 +23,23 @@ function GetForm(props){
             facilityTax: facilityTax});
         props.setIsClicked(true);
     }
-
-   async function handleChange(e) {
-      
-    }
-    
-    return (
+   
+  return (
         <Form>
         <Form.Group controlId="blueprintName">
           <Form.Label>Blueprint Name:</Form.Label>
-          <Form.Control
-            type="text"
-            name="blueprintName"
-            placeholder="Enter material name"
-          />
+          <Typeahead
+          minLength={2}
+          
+                
+          onChange={(selected) => {
+            setBlueprint(selected[0]);
+          }}
+          id="basic-behaviors-example"
+          options={props.optionsBp}
+          // onInputChange={(e)=> typeheadSearch(e)}
+          placeholder="Choose a Blueprint..."
+        />
         </Form.Group>
         <Form.Group controlId="quantity">
           <Form.Label>Quantity:</Form.Label>
@@ -75,13 +79,19 @@ function GetForm(props){
             <option value="2">T2</option>
           </Form.Select>
         </Form.Group>
-        <Form.Group controlId="systemName">
+      <Form.Group controlId="systemName">
           <Form.Label>System:</Form.Label>
-          <Form.Control
-            type="text"
-            name="systemName"
-            placeholder="Enter sytem name.Default Jita"
-          />
+        <Typeahead
+          minLength={2}
+          
+          onChange={(selected) => {
+            setSystem(selected[0]);
+          }}
+          id="basic-behaviors-example"
+          options={props.optionsSys}
+          // onInputChange={(e)=> typeheadSearch(e)}
+          placeholder="Choose a system..."
+        />
         </Form.Group>
         <Form.Group controlId="facility">
           <Form.Label>Facility tax:</Form.Label>
@@ -92,19 +102,7 @@ function GetForm(props){
             placeholder="Enter facility tax. Default 0"
           />
         </Form.Group>
-      
-      <Form.Group controlId="facility-test">
-          <Form.Label>Facility tax:</Form.Label>
-        <Typeahead
-          minLength={4}
-          maxResults={10}
-          id="basic-behaviors-example"
-          options={options}
-          onChange={(e)=> handleChange(e)}
-          placeholder="Choose a state..."
-        />
-        </Form.Group>
-        <Button variant="primary" onClick={sendData}>
+       <Button variant="primary" onClick={sendData}>
           {props.isLoading ? (
             <>
               <Spinner

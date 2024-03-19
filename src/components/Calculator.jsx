@@ -1,50 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Card, Collapse, Alert, Spinner } from "react-bootstrap";
 import { ArrowBarDown, ArrowBarUp } from "react-bootstrap-icons";
-import GetForm from "./Form";
+import { Typeahead } from "react-bootstrap-typeahead";
 import axios from "axios";
 
-function Calculator() {
+function Calculator(props) {
   // INITIALISE STATE PARAMETERS
-  const [startUp, setStartUp] = useState(true);
-  const [openState, setOpenState] = useState({});
-  const [initialBlueprint, setInitialBlueprint] = useState({});
-  const [materialsList, setMaterialsList] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
   const [isDataLoaded, setIsDataLoaded] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
   const [isCopied, setIsCopied] = useState({});
-  const [formData, setFormData] = useState({});
-  const [isClicked, setIsClicked] = useState(false);
-  const [systems, setSystems] = useState([{}]);
-  const [blueprintsList, setBlueprintList] = useState([{}]);
- // const backend = "http://thunder:6549/api/v1/type";
+  const [system,setSystem] = useState(null);
+  const [systemValues,setSystemValues] = useState({});
   const backend = "http://localhost:8080/api/v1/";
-  // SET PAGE TITLE
-  useEffect(() => {
-    document.title = "Eve Industry Calculator"; // Set the new title
-  }, []);
+ 
   useEffect(()=> {
-    isClicked && submitForm();
+    system!=null && recalculatePrices(system.id, system.material, system.colId, system.parent_id,system.value)
+    setSystem(null);
   });
-  useEffect(()=> {
-    startUp && getSystems();
-    setStartUp(false);
-  })
-  const getSystems = async ()=> {
-    try {
-      const response = await axios.get(backend+"systems")
-      if(response.status !== 200) {
-        throw new Error("Something went wrong")
-      }
-      setSystems(response.data.systems)
-    }
-    catch{
-      console.error("Error:", error.message);
-      setErrorMessage(error.message);
-    }
-    
-  };
+ 
   // HANDEL MATERIAL DISCOUNT FORM
   const handleInputChange = async (material, e) => {
     const tempId = e.target.id;
@@ -52,44 +24,49 @@ function Calculator() {
     const parent_id = splitedId[1];
     const id = splitedId[0];
     const colId = "col_" + parent_id;
+    const value = e.target.value;
+    recalculatePrices(id,material,colId, parent_id,value)
+  };
+
+  async function recalculatePrices(id, material, colId, parent_id, value){
     let blueprintMe = "";
     let buildingRig = "";
     let building = "";
     let system = "";
     let facilityTax;
     if (id === "me") {
-      blueprintMe = e.target.value;
+      blueprintMe = value;
       buildingRig = document.getElementById("rig_" + parent_id).value;
       building = document.getElementById("build_" + parent_id).value;
-      system = document.getElementById("system_" + parent_id).value;
+      system = 
       facilityTax = document.getElementById("facility_" + parent_id).value;
     }
     if (id === "rig") {
       blueprintMe = document.getElementById("me_" + parent_id).value;
-      buildingRig = e.target.value;
+      buildingRig = value;
       building = document.getElementById("build_" + parent_id).value;
-      system = document.getElementById("system_" + parent_id).value;
+      system = systemValues["system_" + parent_id];
       facilityTax = document.getElementById("facility_" + parent_id).value;
     }
     if (id === "build") {
       blueprintMe = document.getElementById("me_" + parent_id).value;
       buildingRig = document.getElementById("rig_" + parent_id).value;
-      system = document.getElementById("system_" + parent_id).value;
+      system = systemValues["system_" + parent_id];
       facilityTax = document.getElementById("facility_" + parent_id).value;
-      building = e.target.value;
+      building = value;
     }
     if (id === "system") {
       blueprintMe = document.getElementById("me_" + parent_id).value;
       buildingRig = document.getElementById("rig_" + parent_id).value;
-      system = e.target.value;
+      system = value;
       facilityTax = document.getElementById("facility_" + parent_id).value;
       building = document.getElementById("build_" + parent_id).value;
     }
     if (id === "facility") {
       blueprintMe = document.getElementById("me_" + parent_id).value;
       buildingRig = document.getElementById("rig_" + parent_id).value;
-      system = document.getElementById("system_" + parent_id).value;
-      facilityTax = e.target.value;
+      system = systemValues["system_" + parent_id];
+      facilityTax = value;
       building = document.getElementById("build_" + parent_id).value;
     }
     try {
@@ -108,13 +85,13 @@ function Calculator() {
       const data = response.data;
       material.craftPrice = data.craftPrice;
       material.materialsList = data.materialsList;
-      setMaterialsList(...[materialsList]);
+      props.setMaterialsList(...[props.materialsList]);
       updateLoadedData(colId);
     } catch (error) {
       console.error("Error:", error.message);
-      setErrorMessage(error.message);
+      props.setErrorMessage(error.message);
     }
-  };
+  }
 
   // COPY FUNCTION
   async function handleCopy(material, id) {
@@ -130,46 +107,19 @@ function Calculator() {
     }
   }
   // INITIAL BACKEND CALL TO OBTAIN INITIAL DATA
-  const submitForm = async () => {
-   
-    setOpenState({});
-    setIsLoading(true);
-    try {
-      const response = await axios.post(backend+"type", {
-        blueprintName: formData.blueprintName,
-        quantity: formData.quantity,
-        blueprintMe: formData.blueprintMe,
-        buildingRig: formData.buildingRig,
-        building: formData.building,
-        system: formData.system,
-        facilityTax: formData.facilityTax
-      });
-      if (response.status !== 200) {
-        throw new Error(`Server Error: ${response.statusText}`);
-      }
-      setErrorMessage("");
-      const data = response.data;
-      setMaterialsList(data.materialsList);
-      setInitialBlueprint(data);
-    } catch (error) {
-      console.error("Error:", error.message);
-      setErrorMessage("Item '" + blueprint + "' not found in database !");
-    }
-    setIsClicked(false);
-    setIsLoading(false);
-  };
+ 
 
   const craftPrice = () => {
-    const price = initialBlueprint.materialsList.reduce(
+    const price = props.initialBlueprint.materialsList.reduce(
       (accumulator, mat, index) => {
         const elementId = (
           "card_" +
-          initialBlueprint.name +
+          props.initialBlueprint.name +
           "_" +
           mat.name +
           index
         ).replace(" ", "_");
-        const state = openState[elementId];
+        const state = props.openState[elementId];
         return (
           accumulator +
           (mat.craftPrice && state ? mat.craftPrice : mat.sellPrice)
@@ -193,11 +143,11 @@ function Calculator() {
         const data = response.data;
         material.craftPrice = data.craftPrice;
         material.materialsList = data.materialsList;
-        setMaterialsList(...[materialsList]);
+        props.setMaterialsList(...[props.materialsList]);
         updateLoadedData(colId);
       } catch (error) {
         console.error("Error:", error.message);
-        setErrorMessage(error.message);
+        props.setErrorMessage(error.message);
       }
     }
   }
@@ -205,7 +155,7 @@ function Calculator() {
   // COLLABSIBLE TOGGLING
   const toggleCollapsible = (id, isCreatable) => {
     if (isCreatable) {
-      setOpenState((prevState) => ({
+      props.setOpenState((prevState) => ({
         ...prevState,
         [id]: !prevState[id], // Toggle the state for the given ID
       }));
@@ -222,19 +172,19 @@ function Calculator() {
   const displayResult = () => {
     return (
       <>
-        {initialBlueprint.materialsList && (
+        {props.initialBlueprint.materialsList && (
           <div id="blueprintHeader">
             <h1>
-              Materials for creating {initialBlueprint.quantity}{" "}
-              <img src={initialBlueprint.icon} loading="lazy" />{" "}
-              {initialBlueprint.name}. Material price:{" "}
+              Materials for creating {props.initialBlueprint.quantity}{" "}
+              <img src={props.initialBlueprint.icon} loading="lazy" />{" "}
+              {props.initialBlueprint.name}. Material price:{" "}
               {craftPrice().toLocaleString("en-US", {
                 style: "currency",
                 currency: "ISK",
                 minimumFractionDigits: 2,
               })}{" "}
               Sell order price:{" "}
-              {initialBlueprint.sellPrice.toLocaleString("en-US", {
+              {props.initialBlueprint.sellPrice.toLocaleString("en-US", {
                 style: "currency",
                 currency: "ISK",
                 minimumFractionDigits: 2,
@@ -242,17 +192,17 @@ function Calculator() {
               <Button
                 className="btn btn-primary"
                 onClick={() =>
-                  handleCopy(initialBlueprint, "copy_" + initialBlueprint.name)
+                  handleCopy(props.initialBlueprint, "copy_" + props.initialBlueprint.name)
                 }
-                disabled={isCopied["copy_" + initialBlueprint.name]}
+                disabled={isCopied["copy_" + props.initialBlueprint.name]}
               >
-                {!isCopied["copy_" + initialBlueprint.name] ? "Copy" : "Copied"}
+                {!isCopied["copy_" + props.initialBlueprint.name] ? "Copy" : "Copied"}
               </Button>
             </h1>
           </div>
         )}
-        {materialsList.map((mat, index) =>
-          render(initialBlueprint, mat, index)
+        {props.materialsList.map((mat, index) =>
+          render(props.initialBlueprint, mat, index)
         )}
       </>
     );
@@ -263,7 +213,7 @@ function Calculator() {
     const id = (parent.name + "_" + material.name + index).replace(" ", "_"); // Unique ID for the card
     const openId = "card_" + id;
     const colId = "col_" + id;
-    const isOpen = openState[openId]; // Get the open state for the card
+    const isOpen = props.openState[openId]; // Get the open state for the card
     const isLoaded = isDataLoaded[colId];
 
     return (
@@ -347,14 +297,22 @@ function Calculator() {
                     </Form.Select>
                   </Form.Group>
 
-                  <Form.Group controlId={`system_${id}`}>
+                  <Form.Group>
                     <Form.Label>System:</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name={`system_${id}`}
-                      placeholder="Jita"
-                      onChange={(e) => handleInputChange(material, e)}
-                    />
+                    <Typeahead 
+                        id={`system_${id}`}
+                        minLength={2}
+                         onChange={(selected) => {
+                        setSystemValues((prevState) => ({
+                          ...prevState,
+                          [`system_${id}`]: selected[0],
+                        }));  
+                        setSystem({value: selected[0], id: "system", material: material, parent_id: id, colId: "col_"+id})
+                      }}
+                     options={props.optionsSys}
+                     placeholder="Choose a System..." 
+                     />
+                   
                   </Form.Group>
                   <Form.Group controlId={`facility_${id}`}>
                     <Form.Label>Facility tax:</Form.Label>
@@ -415,8 +373,8 @@ function Calculator() {
   // END RESULT
   return (
     <div className="d-grid gap-5">
-       <GetForm setFormData={setFormData} setIsClicked={setIsClicked} isLoading={isLoading} systems={systems}></GetForm> 
-      {errorMessage ? <Alert>{errorMessage}</Alert> : displayResult()}
+     
+      {props.errorMessage ? <Alert>{props.errorMessage}</Alert> : displayResult()}
     </div>
   );
 }
