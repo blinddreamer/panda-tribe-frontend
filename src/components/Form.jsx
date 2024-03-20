@@ -1,7 +1,7 @@
 import {Form,Button, Spinner} from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
-import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import React, { useState} from "react";
+i
 
 function GetForm(props){
   
@@ -37,7 +37,6 @@ function GetForm(props){
           }}
           id="basic-behaviors-example"
           options={props.optionsBp}
-          // onInputChange={(e)=> typeheadSearch(e)}
           placeholder="Choose a Blueprint..."
         />
         </Form.Group>
@@ -89,7 +88,6 @@ function GetForm(props){
           }}
           id="basic-behaviors-example"
           options={props.optionsSys}
-          // onInputChange={(e)=> typeheadSearch(e)}
           placeholder="Choose a system..."
         />
         </Form.Group>
@@ -100,6 +98,16 @@ function GetForm(props){
             min={0}
             name="facility"
             placeholder="Enter facility tax. Default 0"
+          />
+        </Form.Group>
+        <Form.Group controlId="multiplier">
+          <Form.Label>Facility tax:</Form.Label>
+          <Form.Control
+            onChange={(e)=>props.setMultiplier(e.target.value)}
+            type="number"
+            min={0}
+            name="multiplier"
+            placeholder="Enter multiplier number. Default 0"
           />
         </Form.Group>
        <Button variant="primary" onClick={sendData}>

@@ -16,8 +16,9 @@ function Body() {
   const [optionsBp, setOptionsBp] = useState([]);
   const [optionsSys, setOptionsSys] = useState([])
   const [onStart,setOnstart] = useState(true);
-  const backend = "http://thunder:6549/api/v1/";
-  //const backend = "http://localhost:8080/api/v1/";
+  const [multiplier, setMultiplier] = useState(1);
+  //const backend = "http://thunder:6549/api/v1/";
+  const backend = "http://localhost:8080/api/v1/";
   // SET PAGE TITLE
   useEffect(() => {
     document.title = "Eve Industry Calculator"; // Set the new title
@@ -77,12 +78,12 @@ function Body() {
       <Row>
         <Col>
           <Col>1 of 2
-          <GetForm setFormData={setFormData} setIsClicked={setIsClicked} isLoading={isLoading} optionsBp={optionsBp} optionsSys={optionsSys}></GetForm> </Col>
+          <GetForm setFormData={setFormData} setIsClicked={setIsClicked} isLoading={isLoading} optionsBp={optionsBp} optionsSys={optionsSys} setMultiplier={setMultiplier}></GetForm> </Col>
         </Col>
         <Col>
           2 of 2
           <Calculator materialsList={materialsList} setMaterialsList={setMaterialsList} errorMessage={errorMessage} setErrorMessage={setErrorMessage} initialBlueprint={initialBlueprint}
-          openState = {openState} setOpenState={setOpenState} optionsSys={optionsSys} backend={backend}
+          openState = {openState} setOpenState={setOpenState} optionsSys={optionsSys} backend={backend} multiplier={multiplier}
           />
         </Col>
       </Row>
