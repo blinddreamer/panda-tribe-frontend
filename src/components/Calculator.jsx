@@ -97,7 +97,7 @@ function Calculator(props) {
   async function handleCopy(material, id) {
     try {
       const textToCopy = material.materialsList
-        .map((mat) => `${mat.name} x ${mat.quantity}`)
+        .map((mat) => `${mat.name} x${mat.quantity}`)
         .join("\n");
       await navigator.clipboard.writeText(textToCopy);
       setIsCopied({ [id]: true });
