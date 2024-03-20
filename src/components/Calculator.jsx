@@ -8,15 +8,21 @@ function Calculator(props) {
   // INITIALISE STATE PARAMETERS
   const [isDataLoaded, setIsDataLoaded] = useState({});
   const [isCopied, setIsCopied] = useState({});
-  const [system,setSystem] = useState(null);
-  const [systemValues,setSystemValues] = useState({});
-  
- 
-  useEffect(()=> {
-    system!=null && recalculatePrices(system.id, system.material, system.colId, system.parent_id,system.value)
+  const [system, setSystem] = useState(null);
+  const [systemValues, setSystemValues] = useState({});
+
+  useEffect(() => {
+    system != null &&
+      recalculatePrices(
+        system.id,
+        system.material,
+        system.colId,
+        system.parent_id,
+        system.value
+      );
     setSystem(null);
   });
- 
+
   // HANDEL MATERIAL DISCOUNT FORM
   const handleInputChange = async (material, e) => {
     const tempId = e.target.id;
@@ -25,10 +31,10 @@ function Calculator(props) {
     const id = splitedId[0];
     const colId = "col_" + parent_id;
     const value = e.target.value;
-    recalculatePrices(id,material,colId, parent_id,value)
+    recalculatePrices(id, material, colId, parent_id, value);
   };
 
-  async function recalculatePrices(id, material, colId, parent_id, value){
+  async function recalculatePrices(id, material, colId, parent_id, value) {
     let blueprintMe = "";
     let buildingRig = "";
     let building = "";
@@ -38,8 +44,9 @@ function Calculator(props) {
       blueprintMe = value;
       buildingRig = document.getElementById("rig_" + parent_id).value;
       building = document.getElementById("build_" + parent_id).value;
-      system = 
-      facilityTax = document.getElementById("facility_" + parent_id).value;
+      system = facilityTax = document.getElementById(
+        "facility_" + parent_id
+      ).value;
     }
     if (id === "rig") {
       blueprintMe = document.getElementById("me_" + parent_id).value;
@@ -70,7 +77,7 @@ function Calculator(props) {
       building = document.getElementById("build_" + parent_id).value;
     }
     try {
-      const response = await axios.post(props.backend+"type", {
+      const response = await axios.post(props.backend + "type", {
         blueprintName: material.name,
         quantity: material.jobsCount,
         blueprintMe: blueprintMe,
@@ -107,7 +114,6 @@ function Calculator(props) {
     }
   }
   // INITIAL BACKEND CALL TO OBTAIN INITIAL DATA
- 
 
   const craftPrice = () => {
     const price = props.initialBlueprint.materialsList.reduce(
@@ -133,7 +139,7 @@ function Calculator(props) {
   async function getSubmatsData(material, colId) {
     if (!Array.isArray(material.materialsList)) {
       try {
-        const response = await axios.post(props.backend+"type", {
+        const response = await axios.post(props.backend + "type", {
           blueprintName: material.name,
           quantity: material.jobsCount,
         });
@@ -174,31 +180,40 @@ function Calculator(props) {
       <>
         {props.initialBlueprint.materialsList && (
           <div id="blueprintHeader">
-            <h1>
+            <h4>
               Materials for creating {props.initialBlueprint.quantity}{" "}
               <img src={props.initialBlueprint.icon} loading="lazy" />{" "}
-              {props.initialBlueprint.name}. Material price:{" "}
+              {props.initialBlueprint.name}.
+              <p id="bpheader" />
+              Estimate Material price:{" "}
               {craftPrice().toLocaleString("en-US", {
                 style: "currency",
                 currency: "ISK",
                 minimumFractionDigits: 2,
               })}{" "}
-              Sell order price:{" "}
+              <p id="bpheader" />
+              Estimate Sell order :{" "}
               {props.initialBlueprint.sellPrice.toLocaleString("en-US", {
                 style: "currency",
                 currency: "ISK",
                 minimumFractionDigits: 2,
               })}
+              <p id="bpheader" />
               <Button
                 className="btn btn-primary"
                 onClick={() =>
-                  handleCopy(props.initialBlueprint, "copy_" + props.initialBlueprint.name)
+                  handleCopy(
+                    props.initialBlueprint,
+                    "copy_" + props.initialBlueprint.name
+                  )
                 }
                 disabled={isCopied["copy_" + props.initialBlueprint.name]}
               >
-                {!isCopied["copy_" + props.initialBlueprint.name] ? "Copy" : "Copied"}
+                {!isCopied["copy_" + props.initialBlueprint.name]
+                  ? "multi buy copy"
+                  : "Copied"}
               </Button>
-            </h1>
+            </h4>
           </div>
         )}
         {props.materialsList.map((mat, index) =>
@@ -299,20 +314,25 @@ function Calculator(props) {
 
                   <Form.Group>
                     <Form.Label>System:</Form.Label>
-                    <Typeahead 
-                        id={`system_${id}`}
-                        minLength={2}
-                         onChange={(selected) => {
+                    <Typeahead
+                      id={`system_${id}`}
+                      minLength={2}
+                      onChange={(selected) => {
                         setSystemValues((prevState) => ({
                           ...prevState,
                           [`system_${id}`]: selected[0],
-                        }));  
-                        setSystem({value: selected[0], id: "system", material: material, parent_id: id, colId: "col_"+id})
+                        }));
+                        setSystem({
+                          value: selected[0],
+                          id: "system",
+                          material: material,
+                          parent_id: id,
+                          colId: "col_" + id,
+                        });
                       }}
-                     options={props.optionsSys}
-                     placeholder="Choose a System..." 
-                     />
-                   
+                      options={props.optionsSys}
+                      placeholder="Choose a System..."
+                    />
                   </Form.Group>
                   <Form.Group controlId={`facility_${id}`}>
                     <Form.Label>Facility tax:</Form.Label>
@@ -373,8 +393,11 @@ function Calculator(props) {
   // END RESULT
   return (
     <div className="d-grid gap-5">
-     
-      {props.errorMessage ? <Alert>{props.errorMessage}</Alert> : displayResult()}
+      {props.errorMessage ? (
+        <Alert>{props.errorMessage}</Alert>
+      ) : (
+        displayResult()
+      )}
     </div>
   );
 }
