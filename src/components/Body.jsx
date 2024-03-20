@@ -14,10 +14,11 @@ function Body() {
   const [formData, setFormData] = useState({});
   const [isClicked, setIsClicked] = useState(false);
   const [optionsBp, setOptionsBp] = useState([]);
-  const [optionsSys, setOptionsSys] = useState([]);
-  const [onStart, setOnstart] = useState(true);
-  const backend = "http://thunder:6549/api/v1/";
-  //const backend = "http://localhost:8080/api/v1/";
+  const [optionsSys, setOptionsSys] = useState([])
+  const [onStart,setOnstart] = useState(true);
+  const [multiplier, setMultiplier] = useState(1);
+  //const backend = "http://thunder:6549/api/v1/";
+  const backend = "http://localhost:8080/api/v1/";
   // SET PAGE TITLE
   useEffect(() => {
     document.title = "eve-helper / Eve Online Industry Calculator"; // Set the new title
@@ -83,7 +84,7 @@ function Body() {
               setIsClicked={setIsClicked}
               isLoading={isLoading}
               optionsBp={optionsBp}
-              optionsSys={optionsSys}
+              optionsSys={optionsSys} setMultiplier={setMultiplier}
             ></GetForm>{" "}
           </Col>
         </Col>
@@ -98,7 +99,7 @@ function Body() {
             openState={openState}
             setOpenState={setOpenState}
             optionsSys={optionsSys}
-            backend={backend}
+            backend={backend} multiplier={multiplier}
           />
         </Col>
       </Row>

@@ -254,7 +254,7 @@ function Calculator(props) {
               <img src={material.icon} loading="lazy" />
               {material.name}
             </p>
-            <p>Quantity: {material.quantity} </p>
+            <p>Quantity: {material.quantity * props.multiplier}</p>
             <p>Crafting Jobs: {material.jobsCount}</p>
             <p>Volume: {material.volume} m³</p>
             <p>

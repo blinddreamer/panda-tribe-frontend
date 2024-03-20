@@ -36,7 +36,6 @@ function GetForm(props) {
           }}
           id="basic-behaviors-example"
           options={props.optionsBp}
-          // onInputChange={(e)=> typeheadSearch(e)}
           placeholder="Choose a Blueprint..."
         />
       </Form.Group>
@@ -87,7 +86,6 @@ function GetForm(props) {
           }}
           id="basic-behaviors-example"
           options={props.optionsSys}
-          // onInputChange={(e)=> typeheadSearch(e)}
           placeholder="Choose a system..."
         />
       </Form.Group>
@@ -101,6 +99,16 @@ function GetForm(props) {
         />
       </Form.Group>
       <p />
+        <Form.Group controlId="multiplier">
+          <Form.Label>Facility tax:</Form.Label>
+          <Form.Control
+            onChange={(e)=>props.setMultiplier(e.target.value)}
+            type="number"
+            min={0}
+            name="multiplier"
+            placeholder="Enter multiplier number. Default 0"
+          />
+        </Form.Group>
       <Button variant="primary" onClick={sendData}>
         {props.isLoading ? (
           <>
