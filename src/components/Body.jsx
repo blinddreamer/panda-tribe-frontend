@@ -87,7 +87,7 @@ function Body() {
             ></GetForm>{" "}
           </Col>
         </Col>
-        <Col>
+        <Col sm={9}>
           2 of 2
           <Calculator
             materialsList={materialsList}
