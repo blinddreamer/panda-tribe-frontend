@@ -16,8 +16,8 @@ function Body() {
   const [optionsBp, setOptionsBp] = useState([]);
   const [optionsSys, setOptionsSys] = useState([])
   const [onStart,setOnstart] = useState(true);
- // const backend = "http://thunder:6549/api/v1/";
-  const backend = "http://localhost:8080/api/v1/";
+  const backend = "http://thunder:6549/api/v1/";
+  //const backend = "http://localhost:8080/api/v1/";
   // SET PAGE TITLE
   useEffect(() => {
     document.title = "Eve Industry Calculator"; // Set the new title
