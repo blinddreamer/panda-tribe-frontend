@@ -63,8 +63,8 @@ function GetForm(props) {
 
       <Form.Group controlId="building">
         <Form.Label>Building:</Form.Label>
-        <Form.Select aria-label="Default select example">
-          <option value={0}>Select Building</option>
+        <Form.Select defaultValue="0" aria-label="Default select example">
+          <option value={0}>None</option>
           <option value="1">Azbel</option>
           <option value="2">Raitaru</option>
           <option value="3">Sotiyo</option>
@@ -73,8 +73,8 @@ function GetForm(props) {
 
       <Form.Group controlId="buildingRig">
         <Form.Label>Building Rig:</Form.Label>
-        <Form.Select aria-label="Default select example">
-          <option value={0}>Select Building Rig</option>
+        <Form.Select aria-label="Default select example" defaultValue="0">
+          <option value={0}>None</option>
           <option value="1">T1</option>
           <option value="2">T2</option>
         </Form.Select>

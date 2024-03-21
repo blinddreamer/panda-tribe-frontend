@@ -302,7 +302,8 @@ function Calculator(props) {
                       aria-label="Default select example"
                       onChange={(e) => handleInputChange(material, e)}
                     >
-                      <option selected={props.formData.building==0} value="0">Select Building</option>
+                      <option hidden>Select Building</option>
+                      <option selected={props.formData.building==0} value="0">None</option>
                       <option selected={props.formData.building==1} value="1">Azbel</option>
                       <option selected={props.formData.building==2} value="2">Raitaru</option>
                       <option selected={props.formData.building==3} value="3">Sotiyo</option>
@@ -312,10 +313,11 @@ function Calculator(props) {
                     <Form.Label>Building Rig:</Form.Label>
                     <Form.Select
                       aria-label="Default select example"
-                      
+                      defaultValue="0"
                       onChange={(e) => handleInputChange(material, e)}
                     >
-                      <option selected={props.formData.buildingRig==0 } value="0">Select Building Rig</option>
+                      <option hidden>Select Building Rig</option>
+                      <option selected={props.formData.buildingRig==0 } value="0">None</option>
                       <option selected={props.formData.buildingRig==1 } value="1">T1</option>
                       <option selected={props.formData.buildingRig==2 } value="2">T2</option>
                     </Form.Select>
