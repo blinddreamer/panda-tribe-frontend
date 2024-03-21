@@ -190,7 +190,10 @@ function Calculator(props) {
               <img src={props.initialBlueprint.icon} loading="lazy" />{" "}
               {props.initialBlueprint.name}.
               <p id="bpheader" />
-              Estimate Material price:{" "}
+              Volume : {" "}
+              {props.initialBlueprint.volume + " m³"} 
+              <p id="bpheader" />
+              Estimate Crafting price:{" "}
               {craftPrice().toLocaleString("en-US", {
                 style: "currency",
                 currency: "ISK",
@@ -204,6 +207,16 @@ function Calculator(props) {
                 minimumFractionDigits: 2,
               })}
               <p id="bpheader" />
+              Estimate Profit :{" "}
+              {(props.initialBlueprint.sellPrice-props.initialBlueprint.craftPrice).toLocaleString("en-US", {
+                style: "currency",
+                currency: "ISK",
+                minimumFractionDigits: 2,
+              })}
+              <p id="bpheader" />
+              Margin : {" "}
+              {(((props.initialBlueprint.sellPrice- props.initialBlueprint.craftPrice)/props.initialBlueprint.sellPrice)*100).toFixed(2)+" %"} 
+              <p id="bpheader" />
               <Button
                 className="btn btn-primary"
                 onClick={() =>
@@ -212,7 +225,7 @@ function Calculator(props) {
                     "copy_" + props.initialBlueprint.name
                   )
                 }
-                disabled={isCopied["copy_" + props.initialBlueprint.name]}
+                
               >
                 {!isCopied["copy_" + props.initialBlueprint.name]
                   ? "multi buy copy"
@@ -249,7 +262,7 @@ function Calculator(props) {
               <Button
                 id={`copy_${id}`}
                 onClick={() => handleCopy(material, "copy_" + id)}
-                disabled={isCopied["copy_" + id]}
+                
               >
                 {!isCopied["copy_" + id] ? "Copy" : "Copied"}
               </Button>
