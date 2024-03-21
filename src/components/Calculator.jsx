@@ -292,6 +292,7 @@ function Calculator(props) {
                       min={0}
                       name={`me_${id}`}
                       placeholder="0"
+                      defaultValue={props.formData.blueprintMe}
                       onChange={(e) => handleInputChange(material, e)}
                     />
                   </Form.Group>
@@ -299,23 +300,25 @@ function Calculator(props) {
                     <Form.Label>Building:</Form.Label>
                     <Form.Select
                       aria-label="Default select example"
+                      option={props.formData.building}
                       onChange={(e) => handleInputChange(material, e)}
                     >
-                      <option value="0">Select Building</option>
-                      <option value="1">Azbel</option>
-                      <option value="2">Raitaru</option>
-                      <option value="3">Sotiyo</option>
+                      <option selected={props.formData.building==0} value="0">Select Building</option>
+                      <option selected={props.formData.building==1} value="1">Azbel</option>
+                      <option selected={props.formData.building==2} value="2">Raitaru</option>
+                      <option selected={props.formData.building==3} value="3">Sotiyo</option>
                     </Form.Select>
                   </Form.Group>
                   <Form.Group controlId={`rig_${id}`}>
                     <Form.Label>Building Rig:</Form.Label>
                     <Form.Select
                       aria-label="Default select example"
+                      
                       onChange={(e) => handleInputChange(material, e)}
                     >
-                      <option value="0">Select Building Rig</option>
-                      <option value="1">T1</option>
-                      <option value="2">T2</option>
+                      <option selected={props.formData.buildingRig==0} value="0">Select Building Rig</option>
+                      <option selected={props.formData.buildingRig==1} value="1">T1</option>
+                      <option selected={props.formData.buildingRig==2} value="2">T2</option>
                     </Form.Select>
                   </Form.Group>
 
@@ -324,6 +327,7 @@ function Calculator(props) {
                     <Typeahead
                       id={`system_${id}`}
                       minLength={2}
+                      defaultInputValue={props.formData.system}
                       onChange={(selected) => {
                         setSystemValues((prevState) => ({
                           ...prevState,
@@ -344,6 +348,7 @@ function Calculator(props) {
                   <Form.Group controlId={`facility_${id}`}>
                     <Form.Label>Facility tax:</Form.Label>
                     <Form.Control
+                    defaultValue={props.formData.facilityTax}
                       type="number"
                       min={0}
                       name={`facility_${id}`}
