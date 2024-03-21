@@ -311,29 +311,29 @@ function Calculator(props) {
                       <Form.Label>Building:</Form.Label>
                       <Form.Select
                         aria-label="Default select example"
+                        defaultValue={props.formData.building}
                         onChange={(e) => handleInputChange(material, e)}
                       >
                         <option hidden>Select Building</option>
                         <option
-                          selected={props.formData.building == 0}
+                         
                           value="0"
                         >
                           None
                         </option>
                         <option
-                          selected={props.formData.building == 1}
+                          
                           value="1"
                         >
                           Azbel
                         </option>
                         <option
-                          selected={props.formData.building == 2}
-                          value="2"
+                         value="2"
                         >
                           Raitaru
                         </option>
                         <option
-                          selected={props.formData.building == 3}
+                         
                           value="3"
                         >
                           Sotiyo
@@ -344,7 +344,7 @@ function Calculator(props) {
                       <Form.Label>Building Rig:</Form.Label>
                       <Form.Select
                         aria-label="Default select example"
-                        defaultValue="0"
+                        defaultValue={props.formData.buildingRig}
                         onChange={(e) => handleInputChange(material, e)}
                       >
                         <option hidden>Select Building Rig</option>
@@ -373,8 +373,9 @@ function Calculator(props) {
                       <Form.Label>System:</Form.Label>
                       <Typeahead
                         id={`system_${id}`}
+                        clearButton
                         minLength={2}
-                        defaultInputValue={props.formData.system}
+                        defaultSelected={[props.formData.system]}
                         onChange={(selected) => {
                           setSystemValues((prevState) => ({
                             ...prevState,
