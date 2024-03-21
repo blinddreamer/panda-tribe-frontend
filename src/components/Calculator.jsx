@@ -142,6 +142,11 @@ function Calculator(props) {
         const response = await axios.post(props.backend + "type", {
           blueprintName: material.name,
           quantity: material.jobsCount,
+          blueprintMe: 10,
+          building: props.formData.building,
+          buildingRig: props.formData.buildingRig,
+          system: props.formData.system,
+          facilityTax: props.formData.facilityTax
         });
         if (response.status !== 200) {
           throw new Error(`Server Error: ${response.statusText}`);
@@ -178,8 +183,11 @@ function Calculator(props) {
   const displayResult = () => {
     return (
       <>
+   
         {props.initialBlueprint.materialsList && (
+          
           <div id="blueprintHeader">
+   
             <h4>
               Materials for creating {props.initialBlueprint.quantity}{" "}
               <img src={props.initialBlueprint.icon} loading="lazy" />{" "}
@@ -217,7 +225,7 @@ function Calculator(props) {
           </div>
         )}
         {props.materialsList.map((mat, index) =>
-          render(props.initialBlueprint, mat, index)
+          render(props.initialBlueprint.name, mat, index)
         )}
       </>
     );
@@ -225,12 +233,13 @@ function Calculator(props) {
 
   // RENDER MATERIALS
   function render(parent, material, index) {
-    const id = (parent.name + "_" + material.name + index).replace(" ", "_"); // Unique ID for the card
+    const id = (parent + "_" + material.name + index).replace(" ", "_"); // Unique ID for the card
     const openId = "card_" + id;
     const colId = "col_" + id;
     const isOpen = props.openState[openId]; // Get the open state for the card
     const isLoaded = isDataLoaded[colId];
-
+ 
+    
     return (
       <>
         <div className="card d-grid gap-3 border border-primary shadow p-3 mb-5">
@@ -252,10 +261,8 @@ function Calculator(props) {
             <p>
               {" "}
               <img src={material.icon} loading="lazy" />
-              {material.name}
-            </p>
-            <p>Quantity: {material.quantity * props.multiplier}</p>
-            <p>Crafting Jobs: {material.jobsCount}</p>
+              {material.name}</p> 
+            <p>Quantity: {material.quantity}</p>
             <p>Volume: {material.volume} m³</p>
             <p>
               Market price:{" "}
@@ -277,7 +284,7 @@ function Calculator(props) {
             )}
             {material.isCreatable && (
               <div className="card-form">
-                <Form>
+               {props.advancedMode && <Form>
                   <Form.Group controlId={`me_${id}`}>
                     <Form.Label>Blueprint ME:</Form.Label>
                     <Form.Control
@@ -344,7 +351,7 @@ function Calculator(props) {
                       onChange={(e) => handleInputChange(material, e)}
                     />
                   </Form.Group>
-                </Form>
+                </Form>}
                 {material.isCreatable &&
                   (!isOpen ? (
                     <ArrowBarDown

@@ -1,18 +1,19 @@
 import { Form, Button, Spinner } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+
 
 function GetForm(props) {
   const [system, setSystem] = useState("");
   const [blueprint, setBlueprint] = useState("");
-
+  
   function sendData() {
     let building = document.getElementById("building").value;
     let quantity = document.getElementById("quantity").value;
     let buildingRig = document.getElementById("buildingRig").value;
     let blueprintMe = document.getElementById("blueprintMe").value;
     let facilityTax = document.getElementById("facility").value;
+    let blueprintCount = document.getElementById("blueprintCount").value;
     props.setFormData({
       blueprintName: blueprint,
       quantity: quantity,
@@ -21,6 +22,7 @@ function GetForm(props) {
       building: building,
       system: system,
       facilityTax: facilityTax,
+      blueprintCount: blueprintCount
     });
     props.setIsClicked(true);
   }
@@ -98,17 +100,18 @@ function GetForm(props) {
           placeholder="Enter facility tax. Default 0"
         />
       </Form.Group>
-      <p />
-        <Form.Group controlId="multiplier">
-          <Form.Label>Facility tax:</Form.Label>
+     
+      
+      <Form.Group controlId="blueprintCount">
+          <Form.Label>Job Runs:</Form.Label>
           <Form.Control
-            onChange={(e)=>props.setMultiplier(e.target.value)}
             type="number"
-            min={0}
-            name="multiplier"
-            placeholder="Enter multiplier number. Default 0"
+            min={1}
+            name="blueprintCount"
+            placeholder="Enter blueprint count. Default 1"
           />
         </Form.Group>
+      
       <Button variant="primary" onClick={sendData}>
         {props.isLoading ? (
           <>

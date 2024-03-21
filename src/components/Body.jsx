@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Calculator from "../components/Calculator";
 import GetForm from "./Form";
 import axios from "axios";
-function Body() {
+function Body(props) {
   const [openState, setOpenState] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [initialBlueprint, setInitialBlueprint] = useState({});
@@ -16,7 +16,8 @@ function Body() {
   const [optionsBp, setOptionsBp] = useState([]);
   const [optionsSys, setOptionsSys] = useState([])
   const [onStart,setOnstart] = useState(true);
-  const [multiplier, setMultiplier] = useState(1);
+  
+ 
   //const backend = "http://thunder:6549/api/v1/";
   const backend = "http://localhost:8080/api/v1/";
   // SET PAGE TITLE
@@ -56,6 +57,7 @@ function Body() {
         building: formData.building,
         system: formData.system,
         facilityTax: formData.facilityTax,
+        blueprintCount: formData.blueprintCount
       });
       if (response.status !== 200) {
         throw new Error(`Server Error: ${response.statusText}`);
@@ -84,11 +86,11 @@ function Body() {
               setIsClicked={setIsClicked}
               isLoading={isLoading}
               optionsBp={optionsBp}
-              optionsSys={optionsSys} setMultiplier={setMultiplier}
+              optionsSys={optionsSys}
             ></GetForm>{" "}
           </Col>
         </Col>
-        <Col sm={9}>
+        <Col>
           2 of 2
           <Calculator
             materialsList={materialsList}
@@ -99,7 +101,10 @@ function Body() {
             openState={openState}
             setOpenState={setOpenState}
             optionsSys={optionsSys}
-            backend={backend} multiplier={multiplier}
+            backend={backend}
+            advancedMode={props.advancedMode}
+            formData = {formData} 
+
           />
         </Col>
       </Row>

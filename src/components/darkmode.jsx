@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 
-const DarkModeToggle = () => {
+const DarkModeToggle = (props) => {
   const [darkMode, setDarkMode] = useState(true);
 
   useEffect(() => {
@@ -20,6 +20,7 @@ const DarkModeToggle = () => {
       <Button variant="secondary" onClick={toggleDarkMode}>
         {darkMode ? "Light Mode" : "Dark Mode"}
       </Button>
+      <Button variant="secondary" onClick={() => props.setAdvancedMode(!props.advancedMode)}> {props.advancedMode ? "Basic Mode" : "Advanced Mode"}</Button>
     </div>
   );
 };
