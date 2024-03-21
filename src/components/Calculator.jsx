@@ -292,7 +292,7 @@ function Calculator(props) {
                       min={0}
                       name={`me_${id}`}
                       placeholder="0"
-                      defaultValue={props.formData.blueprintMe}
+                      defaultValue={10}
                       onChange={(e) => handleInputChange(material, e)}
                     />
                   </Form.Group>
@@ -300,7 +300,6 @@ function Calculator(props) {
                     <Form.Label>Building:</Form.Label>
                     <Form.Select
                       aria-label="Default select example"
-                      option={props.formData.building}
                       onChange={(e) => handleInputChange(material, e)}
                     >
                       <option selected={props.formData.building==0} value="0">Select Building</option>
@@ -316,9 +315,9 @@ function Calculator(props) {
                       
                       onChange={(e) => handleInputChange(material, e)}
                     >
-                      <option selected={props.formData.buildingRig==0} value="0">Select Building Rig</option>
-                      <option selected={props.formData.buildingRig==1} value="1">T1</option>
-                      <option selected={props.formData.buildingRig==2} value="2">T2</option>
+                      <option selected={props.formData.buildingRig==0 } value="0">Select Building Rig</option>
+                      <option selected={props.formData.buildingRig==1 } value="1">T1</option>
+                      <option selected={props.formData.buildingRig==2 } value="2">T2</option>
                     </Form.Select>
                   </Form.Group>
 
