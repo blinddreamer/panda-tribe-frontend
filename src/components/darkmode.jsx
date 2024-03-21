@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 
-const DarkModeToggle = (props) => {
+const DarkModeToggle = () => {
   const [darkMode, setDarkMode] = useState(true);
 
   useEffect(() => {

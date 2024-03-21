@@ -16,7 +16,7 @@ function Header(props) {
             <Nav.Link href="#link">Link</Nav.Link>
           </Nav>
           <Nav>
-            <AdvancedModeToggle />
+            <AdvancedModeToggle setAdvancedMode={props.setAdvancedMode} advancedMode={props.advancedMode}/>
             <DarkModeToggle />
           </Nav>
         </Navbar.Collapse>
