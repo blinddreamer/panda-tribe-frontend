@@ -76,38 +76,40 @@ function Body(props) {
     }
   };
   return (
-    <Container>
-      <Row>
-        <Col>
+    <>
+      <Container>
+        <Row>
           <Col>
-            1 of 2
-            <GetForm
-              setFormData={setFormData}
-              setIsClicked={setIsClicked}
-              isLoading={isLoading}
-              optionsBp={optionsBp}
-              optionsSys={optionsSys}
-            ></GetForm>{" "}
+            <Col>
+              1 of 2
+              <GetForm
+                setFormData={setFormData}
+                setIsClicked={setIsClicked}
+                isLoading={isLoading}
+                optionsBp={optionsBp}
+                optionsSys={optionsSys}
+              ></GetForm>
+            </Col>
           </Col>
-        </Col>
-        <Col xs={8}>
-          2 of 2
-          <Calculator
-            materialsList={materialsList}
-            setMaterialsList={setMaterialsList}
-            errorMessage={errorMessage}
-            setErrorMessage={setErrorMessage}
-            initialBlueprint={initialBlueprint}
-            openState={openState}
-            setOpenState={setOpenState}
-            optionsSys={optionsSys}
-            backend={backend}
-            advancedMode={props.advancedMode}
-            formData={formData}
-          />
-        </Col>
-      </Row>
-    </Container>
+          <Col xs={8}>
+            2 of 2
+            <Calculator
+              materialsList={materialsList}
+              setMaterialsList={setMaterialsList}
+              errorMessage={errorMessage}
+              setErrorMessage={setErrorMessage}
+              initialBlueprint={initialBlueprint}
+              openState={openState}
+              setOpenState={setOpenState}
+              optionsSys={optionsSys}
+              backend={backend}
+              advancedMode={props.advancedMode}
+              formData={formData}
+            />
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 }
 
