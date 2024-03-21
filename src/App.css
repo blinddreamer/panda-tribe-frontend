@@ -82,3 +82,18 @@ a:visited {
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
+
+.cards {
+  border-radius: 5px;
+  border-color: var(--bs-card-color);
+  border-style: solid;
+  height: 100%;
+  border-width: 1px;
+  z-index: 1;
+}
+
+.cardsbg {
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}

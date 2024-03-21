@@ -190,8 +190,7 @@ function Calculator(props) {
               <img src={props.initialBlueprint.icon} loading="lazy" />{" "}
               {props.initialBlueprint.name}.
               <p id="bpheader" />
-              Volume : {" "}
-              {props.initialBlueprint.volume + " m³"} 
+              Volume : {props.initialBlueprint.volume + " m³"}
               <p id="bpheader" />
               Estimate Crafting price:{" "}
               {craftPrice().toLocaleString("en-US", {
@@ -208,14 +207,22 @@ function Calculator(props) {
               })}
               <p id="bpheader" />
               Estimate Profit :{" "}
-              {(props.initialBlueprint.sellPrice-props.initialBlueprint.craftPrice).toLocaleString("en-US", {
+              {(
+                props.initialBlueprint.sellPrice -
+                props.initialBlueprint.craftPrice
+              ).toLocaleString("en-US", {
                 style: "currency",
                 currency: "ISK",
                 minimumFractionDigits: 2,
               })}
               <p id="bpheader" />
-              Margin : {" "}
-              {(((props.initialBlueprint.sellPrice- props.initialBlueprint.craftPrice)/props.initialBlueprint.sellPrice)*100).toFixed(2)+" %"} 
+              Margin :{" "}
+              {(
+                ((props.initialBlueprint.sellPrice -
+                  props.initialBlueprint.craftPrice) /
+                  props.initialBlueprint.sellPrice) *
+                100
+              ).toFixed(2) + " %"}
               <p id="bpheader" />
               <Button
                 className="btn btn-primary"
@@ -225,7 +232,6 @@ function Calculator(props) {
                     "copy_" + props.initialBlueprint.name
                   )
                 }
-                
               >
                 {!isCopied["copy_" + props.initialBlueprint.name]
                   ? "multi buy copy"
@@ -253,178 +259,177 @@ function Calculator(props) {
       <>
         <div className="cards">
           <Card.Header
-            className={`card-header border border-secondary ${
-              isOpen ? "collapsed" : ""
-            }`}
+            className={` ${isOpen ? "collapsed" : ""}`}
             key={`header_${id}`}
           >
-            {material.isCreatable && isOpen && (
-              <Button
-                id={`copy_${id}`}
-                onClick={() => handleCopy(material, "copy_" + id)}
-                
-              >
-                {!isCopied["copy_" + id] ? "Copy" : "Copied"}
-              </Button>
-            )}
-            <p>
-              {" "}
-              <img src={material.icon} loading="lazy" />
-              {material.name}
-            </p>
-            <p>Quantity: {material.quantity}</p>
-            <p>Volume: {material.volume} m³</p>
-            <p>
-              Market price:{" "}
-              {material.sellPrice.toLocaleString("en-US", {
-                style: "currency",
-                currency: "ISK",
-                minimumFractionDigits: 2,
-              })}
-            </p>
-            {material.craftPrice && (
-              <p id={id}>
-                Crafting price:{" "}
-                {material.craftPrice.toLocaleString("en-US", {
+            <div className="cardsbg">
+              {material.isCreatable && isOpen && (
+                <Button
+                  id={`copy_${id}`}
+                  onClick={() => handleCopy(material, "copy_" + id)}
+                >
+                  {!isCopied["copy_" + id] ? "Copy" : "Copied"}
+                </Button>
+              )}
+              <p>
+                {" "}
+                <img src={material.icon} loading="lazy" />
+                {material.name}
+              </p>
+              <p>Quantity: {material.quantity}</p>
+              <p>Volume: {material.volume} m³</p>
+              <p>
+                Market price:{" "}
+                {material.sellPrice.toLocaleString("en-US", {
                   style: "currency",
                   currency: "ISK",
                   minimumFractionDigits: 2,
                 })}
               </p>
-            )}
-            {material.isCreatable && (
-              <div className="card-form">
-                {props.advancedMode && (
-                  <Form>
-                    <Form.Group controlId={`me_${id}`}>
-                      <Form.Label>Blueprint ME:</Form.Label>
-                      <Form.Control
-                        type="number"
-                        min={0}
-                        name={`me_${id}`}
-                        placeholder="0"
-                        defaultValue={10}
-                        onChange={(e) => handleInputChange(material, e)}
-                      />
-                    </Form.Group>
-                    <Form.Group controlId={`build_${id}`}>
-                      <Form.Label>Building:</Form.Label>
-                      <Form.Select
-                        aria-label="Default select example"
-                        onChange={(e) => handleInputChange(material, e)}
-                      >
-                        <option hidden>Select Building</option>
-                        <option
-                          selected={props.formData.building == 0}
-                          value="0"
+              {material.craftPrice && (
+                <p id={id}>
+                  Crafting price:{" "}
+                  {material.craftPrice.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "ISK",
+                    minimumFractionDigits: 2,
+                  })}
+                </p>
+              )}
+              {material.isCreatable && (
+                <div className="card-form">
+                  {props.advancedMode && (
+                    <Form>
+                      <Form.Group controlId={`me_${id}`}>
+                        <Form.Label>Blueprint ME:</Form.Label>
+                        <Form.Control
+                          type="number"
+                          min={0}
+                          name={`me_${id}`}
+                          placeholder="0"
+                          defaultValue={10}
+                          onChange={(e) => handleInputChange(material, e)}
+                        />
+                      </Form.Group>
+                      <Form.Group controlId={`build_${id}`}>
+                        <Form.Label>Building:</Form.Label>
+                        <Form.Select
+                          aria-label="Default select example"
+                          onChange={(e) => handleInputChange(material, e)}
                         >
-                          None
-                        </option>
-                        <option
-                          selected={props.formData.building == 1}
-                          value="1"
+                          <option hidden>Select Building</option>
+                          <option
+                            selected={props.formData.building == 0}
+                            value="0"
+                          >
+                            None
+                          </option>
+                          <option
+                            selected={props.formData.building == 1}
+                            value="1"
+                          >
+                            Azbel
+                          </option>
+                          <option
+                            selected={props.formData.building == 2}
+                            value="2"
+                          >
+                            Raitaru
+                          </option>
+                          <option
+                            selected={props.formData.building == 3}
+                            value="3"
+                          >
+                            Sotiyo
+                          </option>
+                        </Form.Select>
+                      </Form.Group>
+                      <Form.Group controlId={`rig_${id}`}>
+                        <Form.Label>Building Rig:</Form.Label>
+                        <Form.Select
+                          aria-label="Default select example"
+                          defaultValue="0"
+                          onChange={(e) => handleInputChange(material, e)}
                         >
-                          Azbel
-                        </option>
-                        <option
-                          selected={props.formData.building == 2}
-                          value="2"
-                        >
-                          Raitaru
-                        </option>
-                        <option
-                          selected={props.formData.building == 3}
-                          value="3"
-                        >
-                          Sotiyo
-                        </option>
-                      </Form.Select>
-                    </Form.Group>
-                    <Form.Group controlId={`rig_${id}`}>
-                      <Form.Label>Building Rig:</Form.Label>
-                      <Form.Select
-                        aria-label="Default select example"
-                        defaultValue="0"
-                        onChange={(e) => handleInputChange(material, e)}
-                      >
-                        <option hidden>Select Building Rig</option>
-                        <option
-                          selected={props.formData.buildingRig == 0}
-                          value="0"
-                        >
-                          None
-                        </option>
-                        <option
-                          selected={props.formData.buildingRig == 1}
-                          value="1"
-                        >
-                          T1
-                        </option>
-                        <option
-                          selected={props.formData.buildingRig == 2}
-                          value="2"
-                        >
-                          T2
-                        </option>
-                      </Form.Select>
-                    </Form.Group>
+                          <option hidden>Select Building Rig</option>
+                          <option
+                            selected={props.formData.buildingRig == 0}
+                            value="0"
+                          >
+                            None
+                          </option>
+                          <option
+                            selected={props.formData.buildingRig == 1}
+                            value="1"
+                          >
+                            T1
+                          </option>
+                          <option
+                            selected={props.formData.buildingRig == 2}
+                            value="2"
+                          >
+                            T2
+                          </option>
+                        </Form.Select>
+                      </Form.Group>
 
-                    <Form.Group>
-                      <Form.Label>System:</Form.Label>
-                      <Typeahead
-                        id={`system_${id}`}
-                        minLength={2}
-                        defaultInputValue={props.formData.system}
-                        onChange={(selected) => {
-                          setSystemValues((prevState) => ({
-                            ...prevState,
-                            [`system_${id}`]: selected[0],
-                          }));
-                          setSystem({
-                            value: selected[0],
-                            id: "system",
-                            material: material,
-                            parent_id: id,
-                            colId: "col_" + id,
-                          });
-                        }}
-                        options={props.optionsSys}
-                        placeholder="Choose a System..."
-                      />
-                    </Form.Group>
-                    <Form.Group controlId={`facility_${id}`}>
-                      <Form.Label>Facility tax:</Form.Label>
-                      <Form.Control
-                        defaultValue={props.formData.facilityTax}
-                        type="number"
-                        min={0}
-                        name={`facility_${id}`}
-                        placeholder="0"
-                        onChange={(e) => handleInputChange(material, e)}
-                      />
-                    </Form.Group>
-                  </Form>
-                )}
-                {material.isCreatable &&
-                  (!isOpen ? (
-                    <ArrowBarDown
-                      aria-controls={`card_${id}`}
-                      aria-expanded={isOpen}
-                      onClick={() =>
-                        toggleCollapsible("card_" + id, material.isCreatable)
-                      }
-                    ></ArrowBarDown>
-                  ) : (
-                    <ArrowBarUp
-                      aria-controls={`card_${id}`}
-                      aria-expanded={isOpen}
-                      onClick={() =>
-                        toggleCollapsible("card_" + id, material.isCreatable)
-                      }
-                    ></ArrowBarUp>
-                  ))}
-              </div>
-            )}
+                      <Form.Group>
+                        <Form.Label>System:</Form.Label>
+                        <Typeahead
+                          id={`system_${id}`}
+                          minLength={2}
+                          defaultInputValue={props.formData.system}
+                          onChange={(selected) => {
+                            setSystemValues((prevState) => ({
+                              ...prevState,
+                              [`system_${id}`]: selected[0],
+                            }));
+                            setSystem({
+                              value: selected[0],
+                              id: "system",
+                              material: material,
+                              parent_id: id,
+                              colId: "col_" + id,
+                            });
+                          }}
+                          options={props.optionsSys}
+                          placeholder="Choose a System..."
+                        />
+                      </Form.Group>
+                      <Form.Group controlId={`facility_${id}`}>
+                        <Form.Label>Facility tax:</Form.Label>
+                        <Form.Control
+                          defaultValue={props.formData.facilityTax}
+                          type="number"
+                          min={0}
+                          name={`facility_${id}`}
+                          placeholder="0"
+                          onChange={(e) => handleInputChange(material, e)}
+                        />
+                      </Form.Group>
+                    </Form>
+                  )}
+                  {material.isCreatable &&
+                    (!isOpen ? (
+                      <ArrowBarDown
+                        aria-controls={`card_${id}`}
+                        aria-expanded={isOpen}
+                        onClick={() =>
+                          toggleCollapsible("card_" + id, material.isCreatable)
+                        }
+                      ></ArrowBarDown>
+                    ) : (
+                      <ArrowBarUp
+                        aria-controls={`card_${id}`}
+                        aria-expanded={isOpen}
+                        onClick={() =>
+                          toggleCollapsible("card_" + id, material.isCreatable)
+                        }
+                      ></ArrowBarUp>
+                    ))}
+                </div>
+              )}
+            </div>
           </Card.Header>
           <Collapse
             id={colId}
