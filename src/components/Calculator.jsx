@@ -238,7 +238,7 @@ function Calculator(props) {
 
     return (
       <>
-        <div className="">
+        <div className="cards">
           <Card.Header
             className={`card-header border border-secondary ${
               isOpen ? "collapsed" : ""
