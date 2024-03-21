@@ -33,6 +33,7 @@ function GetForm(props) {
         <Form.Label>Blueprint Name:</Form.Label>
         <Typeahead
           minLength={2}
+          clearButton
           onChange={(selected) => {
             setBlueprint(selected[0]);
           }}
@@ -82,12 +83,14 @@ function GetForm(props) {
       <Form.Group controlId="systemName">
         <Form.Label>System:</Form.Label>
         <Typeahead
+          clearButton={true}
           minLength={2}
           onChange={(selected) => {
             setSystem(selected[0]);
           }}
           id="basic-behaviors-example"
           options={props.optionsSys}
+          oo
           placeholder="Choose a system..."
         />
       </Form.Group>
