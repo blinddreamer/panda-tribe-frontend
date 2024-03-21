@@ -20,7 +20,6 @@ const DarkModeToggle = (props) => {
       <Button variant="secondary" onClick={toggleDarkMode}>
         {darkMode ? "Light Mode" : "Dark Mode"}
       </Button>
-      <Button variant="secondary" onClick={() => props.setAdvancedMode(!props.advancedMode)}> {props.advancedMode ? "Basic Mode" : "Advanced Mode"}</Button>
     </div>
   );
 };

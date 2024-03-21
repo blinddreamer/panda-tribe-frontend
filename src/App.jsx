@@ -7,11 +7,11 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 function App() {
-  const [advancedMode,setAdvancedMode] = useState(false);
+  const [advancedMode, setAdvancedMode] = useState(false);
   return (
     <div>
-      <Header advancedMode={advancedMode} setAdvancedMode={setAdvancedMode}/>
-      <Body advancedMode={advancedMode} setAdvancedMode={setAdvancedMode}/>
+      <Header advancedMode={advancedMode} setAdvancedMode={setAdvancedMode} />
+      <Body advancedMode={advancedMode} setAdvancedMode={setAdvancedMode} />
       <Footer />
     </div>
   );

@@ -14,12 +14,12 @@ function Body(props) {
   const [formData, setFormData] = useState({});
   const [isClicked, setIsClicked] = useState(false);
   const [optionsBp, setOptionsBp] = useState([]);
-  const [optionsSys, setOptionsSys] = useState([])
-  const [onStart,setOnstart] = useState(true);
-  
- 
-  //const backend = "http://thunder:6549/api/v1/";
-  const backend = "http://localhost:8080/api/v1/";
+  const [optionsSys, setOptionsSys] = useState([]);
+  const [onStart, setOnstart] = useState(true);
+
+  const backend = "http://thunder:6549/api/v1/";
+  //const backend = "http://localhost:8080/api/v1/";
+
   // SET PAGE TITLE
   useEffect(() => {
     document.title = "eve-helper / Eve Online Industry Calculator"; // Set the new title
@@ -57,7 +57,7 @@ function Body(props) {
         building: formData.building,
         system: formData.system,
         facilityTax: formData.facilityTax,
-        jobRuns: formData.blueprintCount
+        jobRuns: formData.blueprintCount,
       });
       if (response.status !== 200) {
         throw new Error(`Server Error: ${response.statusText}`);
@@ -90,7 +90,7 @@ function Body(props) {
             ></GetForm>{" "}
           </Col>
         </Col>
-        <Col>
+        <Col xs={8}>
           2 of 2
           <Calculator
             materialsList={materialsList}
@@ -103,8 +103,7 @@ function Body(props) {
             optionsSys={optionsSys}
             backend={backend}
             advancedMode={props.advancedMode}
-            formData = {formData} 
-
+            formData={formData}
           />
         </Col>
       </Row>
