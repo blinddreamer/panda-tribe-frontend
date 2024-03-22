@@ -74,7 +74,6 @@ a:visited {
 }
 
 #advmode {
-  margin-right: 10px;
 }
 
 .wrapper {
@@ -100,6 +99,9 @@ a:visited {
 }
 
 #blueprintHeader {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
   border-radius: 5px;
   border-color: var(--bs-card-color);
   border-style: solid;
@@ -117,4 +119,13 @@ a:visited {
 }
 
 .gnomatrie {
+}
+
+img,
+svg {
+  border-radius: 3px !important;
+}
+
+#button-top {
+  width: 140px !important;
 }

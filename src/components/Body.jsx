@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import Calculator from "../components/Calculator";
 import GetForm from "./Form";
 import axios from "axios";
+
 function Body(props) {
   const [openState, setOpenState] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
@@ -34,13 +35,13 @@ function Body(props) {
     setOnstart(false);
   });
 
-  async function getRegions(){
+  async function getRegions() {
     const response = await axios.get(backend + "regions");
     if (response.status === 200) {
       setRegions(response.data);
     }
   }
-  async function getStations(){
+  async function getStations() {
     const response = await axios.get(backend + "stations");
     if (response.status === 200) {
       setStations(response.data);
@@ -95,7 +96,6 @@ function Body(props) {
         <Row>
           <Col>
             <Col>
-              1 of 2
               <GetForm
                 setFormData={setFormData}
                 setIsClicked={setIsClicked}
@@ -107,7 +107,6 @@ function Body(props) {
             </Col>
           </Col>
           <Col xs={8}>
-            2 of 2
             <Calculator
               materialsList={materialsList}
               setMaterialsList={setMaterialsList}

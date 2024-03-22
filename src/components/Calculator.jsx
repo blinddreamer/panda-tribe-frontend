@@ -3,6 +3,7 @@ import { Form, Button, Card, Collapse, Alert, Spinner } from "react-bootstrap";
 import { ArrowBarDown, ArrowBarUp } from "react-bootstrap-icons";
 import { Typeahead } from "react-bootstrap-typeahead";
 import axios from "axios";
+import AdvancedModeToggle from "../components/AdvancedMode";
 
 function Calculator(props) {
   // INITIALISE STATE PARAMETERS
@@ -128,7 +129,9 @@ function Calculator(props) {
         const state = props.openState[elementId];
         return (
           accumulator +
-          (mat.craftPrice && state ? mat.craftPrice + mat.industryCosts : mat.sellPrice)
+          (mat.craftPrice && state
+            ? mat.craftPrice + mat.industryCosts
+            : mat.sellPrice)
         );
       },
       0
@@ -185,57 +188,68 @@ function Calculator(props) {
       <>
         {props.initialBlueprint.materialsList && (
           <div id="blueprintHeader">
-            Materials for creating {props.initialBlueprint.quantity}{" "}
-            <img src={props.initialBlueprint.icon} loading="lazy" />{" "}
-            {props.initialBlueprint.name}.
-            <p id="bpheader" />
-            Volume : {props.initialBlueprint.volume + " m³"}
-            <p id="bpheader" />
-            Estimate Crafting price:{" "}
-            {craftPrice().toLocaleString("en-US", {
-              style: "currency",
-              currency: "ISK",
-              minimumFractionDigits: 2,
-            })}{" "}
-            <p id="bpheader" />
-            Estimate Sell order :{" "}
-            {props.initialBlueprint.sellPrice.toLocaleString("en-US", {
-              style: "currency",
-              currency: "ISK",
-              minimumFractionDigits: 2,
-            })}
-            <p id="bpheader" />
-            Estimate Profit :{" "}
-            {(
-              props.initialBlueprint.sellPrice -
-              craftPrice()
-            ).toLocaleString("en-US", {
-              style: "currency",
-              currency: "ISK",
-              minimumFractionDigits: 2,
-            })}
-            <p id="bpheader" />
-            Margin :{" "}
-            {(
-              ((props.initialBlueprint.sellPrice -
-                craftPrice()) /
-                props.initialBlueprint.sellPrice) *
-              100
-            ).toFixed(2) + " %"}
-            <p id="bpheader" />
-            <Button
-              className="btn btn-primary"
-              onClick={() =>
-                handleCopy(
-                  props.initialBlueprint,
-                  "copy_" + props.initialBlueprint.name
-                )
-              }
-            >
-              {!isCopied["copy_" + props.initialBlueprint.name]
-                ? "multi buy copy"
-                : "Copied"}
-            </Button>
+            <div>
+              <img src={props.initialBlueprint.icon} loading="lazy" />{" "}
+            </div>
+            <div>
+              Materials for creating {props.initialBlueprint.quantity}{" "}
+              {props.initialBlueprint.name}.
+              <p id="bpheader" />
+              Volume : {props.initialBlueprint.volume + " m³"}
+              <p id="bpheader" />
+              Estimate Crafting price:{" "}
+              {craftPrice().toLocaleString("en-US", {
+                style: "currency",
+                currency: "ISK",
+                minimumFractionDigits: 2,
+              })}{" "}
+              <p id="bpheader" />
+              Estimate Sell order :{" "}
+              {props.initialBlueprint.sellPrice.toLocaleString("en-US", {
+                style: "currency",
+                currency: "ISK",
+                minimumFractionDigits: 2,
+              })}
+              <p id="bpheader" />
+              Estimate Profit :{" "}
+              {(props.initialBlueprint.sellPrice - craftPrice()).toLocaleString(
+                "en-US",
+                {
+                  style: "currency",
+                  currency: "ISK",
+                  minimumFractionDigits: 2,
+                }
+              )}
+              <p id="bpheader" />
+              Margin :{" "}
+              {(
+                ((props.initialBlueprint.sellPrice - craftPrice()) /
+                  props.initialBlueprint.sellPrice) *
+                100
+              ).toFixed(2) + " %"}
+              <p id="bpheader" />
+            </div>
+            <div>
+              <Button
+                id="button-top"
+                variant="secondary"
+                onClick={() =>
+                  handleCopy(
+                    props.initialBlueprint,
+                    "copy_" + props.initialBlueprint.name
+                  )
+                }
+              >
+                {!isCopied["copy_" + props.initialBlueprint.name]
+                  ? "Multibuy"
+                  : "Copied"}
+              </Button>
+              <p />
+              <AdvancedModeToggle
+                setAdvancedMode={props.setAdvancedMode}
+                advancedMode={props.advancedMode}
+              />
+            </div>
           </div>
         )}
         <div className="wrapper">
@@ -318,28 +332,10 @@ function Calculator(props) {
                         onChange={(e) => handleInputChange(material, e)}
                       >
                         <option hidden>Select Building</option>
-                        <option
-                          
-                          value="0"
-                        >
-                          None
-                        </option>
-                        <option
-                         
-                          value="1"
-                        >
-                          Azbel
-                        </option>
-                        <option
-                          value="2"
-                        >
-                          Raitaru
-                        </option>
-                        <option
-                          value="3"
-                        >
-                          Sotiyo
-                        </option>
+                        <option value="0">None</option>
+                        <option value="1">Azbel</option>
+                        <option value="2">Raitaru</option>
+                        <option value="3">Sotiyo</option>
                       </Form.Select>
                     </Form.Group>
                     <Form.Group controlId={`rig_${id}`}>
@@ -350,23 +346,9 @@ function Calculator(props) {
                         onChange={(e) => handleInputChange(material, e)}
                       >
                         <option hidden>Select Building Rig</option>
-                        <option
-                         value="0"
-                        >
-                          None
-                        </option>
-                        <option
-                         
-                          value="1"
-                        >
-                          T1
-                        </option>
-                        <option
-                         
-                          value="2"
-                        >
-                          T2
-                        </option>
+                        <option value="0">None</option>
+                        <option value="1">T1</option>
+                        <option value="2">T2</option>
                       </Form.Select>
                     </Form.Group>
 
