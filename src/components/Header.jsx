@@ -2,7 +2,6 @@ import DarkModeToggle from "../components/darkmode";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import AdvancedModeToggle from "../components/AdvancedMode";
 
 function Header(props) {
   return (
@@ -17,10 +16,6 @@ function Header(props) {
               <Nav.Link href="#link">Link</Nav.Link>
             </Nav>
             <Nav>
-              <AdvancedModeToggle
-                setAdvancedMode={props.setAdvancedMode}
-                advancedMode={props.advancedMode}
-              />
               <DarkModeToggle />
             </Nav>
           </Navbar.Collapse>
