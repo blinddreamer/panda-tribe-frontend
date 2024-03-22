@@ -128,12 +128,12 @@ function Calculator(props) {
         const state = props.openState[elementId];
         return (
           accumulator +
-          (mat.craftPrice && state ? mat.craftPrice : mat.sellPrice)
+          (mat.craftPrice && state ? mat.craftPrice + mat.industryCosts : mat.sellPrice)
         );
       },
       0
     );
-    return price;
+    return price + props.initialBlueprint.industryCosts;
   };
   // BACKEND CALL FOR THE SUBMATERIALS DATA
   async function getSubmatsData(material, colId) {
@@ -208,7 +208,7 @@ function Calculator(props) {
             Estimate Profit :{" "}
             {(
               props.initialBlueprint.sellPrice -
-              props.initialBlueprint.craftPrice
+              craftPrice()
             ).toLocaleString("en-US", {
               style: "currency",
               currency: "ISK",
@@ -218,7 +218,7 @@ function Calculator(props) {
             Margin :{" "}
             {(
               ((props.initialBlueprint.sellPrice -
-                props.initialBlueprint.craftPrice) /
+                craftPrice()) /
                 props.initialBlueprint.sellPrice) *
               100
             ).toFixed(2) + " %"}
@@ -314,29 +314,28 @@ function Calculator(props) {
                       <Form.Label>Building:</Form.Label>
                       <Form.Select
                         aria-label="Default select example"
+                        defaultValue={props.formData.building}
                         onChange={(e) => handleInputChange(material, e)}
                       >
                         <option hidden>Select Building</option>
                         <option
-                          selected={props.formData.building == 0}
+                          
                           value="0"
                         >
                           None
                         </option>
                         <option
-                          selected={props.formData.building == 1}
+                         
                           value="1"
                         >
                           Azbel
                         </option>
                         <option
-                          selected={props.formData.building == 2}
                           value="2"
                         >
                           Raitaru
                         </option>
                         <option
-                          selected={props.formData.building == 3}
                           value="3"
                         >
                           Sotiyo
@@ -347,24 +346,23 @@ function Calculator(props) {
                       <Form.Label>Building Rig:</Form.Label>
                       <Form.Select
                         aria-label="Default select example"
-                        defaultValue="0"
+                        defaultValue={props.formData.buildingRig}
                         onChange={(e) => handleInputChange(material, e)}
                       >
                         <option hidden>Select Building Rig</option>
                         <option
-                          selected={props.formData.buildingRig == 0}
-                          value="0"
+                         value="0"
                         >
                           None
                         </option>
                         <option
-                          selected={props.formData.buildingRig == 1}
+                         
                           value="1"
                         >
                           T1
                         </option>
                         <option
-                          selected={props.formData.buildingRig == 2}
+                         
                           value="2"
                         >
                           T2

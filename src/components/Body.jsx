@@ -16,6 +16,8 @@ function Body(props) {
   const [optionsBp, setOptionsBp] = useState([]);
   const [optionsSys, setOptionsSys] = useState([]);
   const [onStart, setOnstart] = useState(true);
+  const [regions, setRegions] = useState([]);
+  const [stations, setStations] = useState([]);
 
   const backend = "http://thunder:6549/api/v1/";
   //const backend = "http://localhost:8080/api/v1/";
@@ -28,10 +30,22 @@ function Body(props) {
     isClicked && submitForm();
   });
   useEffect(() => {
-    onStart && getSystems() && getBlueprints();
+    onStart && getSystems() && getBlueprints() && getRegions() && getStations;
     setOnstart(false);
   });
 
+  async function getRegions(){
+    const response = await axios.get(backend + "regions");
+    if (response.status === 200) {
+      setRegions(response.data);
+    }
+  }
+  async function getStations(){
+    const response = await axios.get(backend + "stations");
+    if (response.status === 200) {
+      setStations(response.data);
+    }
+  }
   async function getSystems() {
     const response = await axios.get(backend + "systems");
     if (response.status === 200) {
@@ -88,6 +102,7 @@ function Body(props) {
                 isLoading={isLoading}
                 optionsBp={optionsBp}
                 optionsSys={optionsSys}
+                advancedMode={props.advancedMode}
               ></GetForm>
             </Col>
           </Col>
