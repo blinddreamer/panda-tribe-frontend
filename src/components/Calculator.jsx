@@ -185,65 +185,63 @@ function Calculator(props) {
       <>
         {props.initialBlueprint.materialsList && (
           <div id="blueprintHeader">
-            <h4>
-              Materials for creating {props.initialBlueprint.quantity}{" "}
-              <img src={props.initialBlueprint.icon} loading="lazy" />{" "}
-              {props.initialBlueprint.name}.
-              <p id="bpheader" />
-              Volume : {props.initialBlueprint.volume + " m³"}
-              <p id="bpheader" />
-              Estimate Crafting price:{" "}
-              {craftPrice().toLocaleString("en-US", {
-                style: "currency",
-                currency: "ISK",
-                minimumFractionDigits: 2,
-              })}{" "}
-              <p id="bpheader" />
-              Estimate Sell order :{" "}
-              {props.initialBlueprint.sellPrice.toLocaleString("en-US", {
-                style: "currency",
-                currency: "ISK",
-                minimumFractionDigits: 2,
-              })}
-              <p id="bpheader" />
-              Estimate Profit :{" "}
-              {(
-                props.initialBlueprint.sellPrice -
-                props.initialBlueprint.craftPrice
-              ).toLocaleString("en-US", {
-                style: "currency",
-                currency: "ISK",
-                minimumFractionDigits: 2,
-              })}
-              <p id="bpheader" />
-              Margin :{" "}
-              {(
-                ((props.initialBlueprint.sellPrice -
-                  props.initialBlueprint.craftPrice) /
-                  props.initialBlueprint.sellPrice) *
-                100
-              ).toFixed(2) + " %"}
-              <p id="bpheader" />
-              <Button
-                className="btn btn-primary"
-                onClick={() =>
-                  handleCopy(
-                    props.initialBlueprint,
-                    "copy_" + props.initialBlueprint.name
-                  )
-                }
-              >
-                {!isCopied["copy_" + props.initialBlueprint.name]
-                  ? "multi buy copy"
-                  : "Copied"}
-              </Button>
-            </h4>
+            Materials for creating {props.initialBlueprint.quantity}{" "}
+            <img src={props.initialBlueprint.icon} loading="lazy" />{" "}
+            {props.initialBlueprint.name}.
+            <p id="bpheader" />
+            Volume : {props.initialBlueprint.volume + " m³"}
+            <p id="bpheader" />
+            Estimate Crafting price:{" "}
+            {craftPrice().toLocaleString("en-US", {
+              style: "currency",
+              currency: "ISK",
+              minimumFractionDigits: 2,
+            })}{" "}
+            <p id="bpheader" />
+            Estimate Sell order :{" "}
+            {props.initialBlueprint.sellPrice.toLocaleString("en-US", {
+              style: "currency",
+              currency: "ISK",
+              minimumFractionDigits: 2,
+            })}
+            <p id="bpheader" />
+            Estimate Profit :{" "}
+            {(
+              props.initialBlueprint.sellPrice -
+              props.initialBlueprint.craftPrice
+            ).toLocaleString("en-US", {
+              style: "currency",
+              currency: "ISK",
+              minimumFractionDigits: 2,
+            })}
+            <p id="bpheader" />
+            Margin :{" "}
+            {(
+              ((props.initialBlueprint.sellPrice -
+                props.initialBlueprint.craftPrice) /
+                props.initialBlueprint.sellPrice) *
+              100
+            ).toFixed(2) + " %"}
+            <p id="bpheader" />
+            <Button
+              className="btn btn-primary"
+              onClick={() =>
+                handleCopy(
+                  props.initialBlueprint,
+                  "copy_" + props.initialBlueprint.name
+                )
+              }
+            >
+              {!isCopied["copy_" + props.initialBlueprint.name]
+                ? "multi buy copy"
+                : "Copied"}
+            </Button>
           </div>
         )}
         <div className="wrapper">
-        {props.materialsList.map((mat, index) =>
-          render(props.initialBlueprint.name, mat, index)
-        )}
+          {props.materialsList.map((mat, index) =>
+            render(props.initialBlueprint.name, mat, index)
+          )}
         </div>
       </>
     );
@@ -272,7 +270,7 @@ function Calculator(props) {
                 {!isCopied["copy_" + id] ? "Copy" : "Copied"}
               </Button>
             )}
-            <p>
+            <p id="topcard">
               {" "}
               <img src={material.icon} loading="lazy" />
               {material.name}
