@@ -253,10 +253,12 @@ function Calculator(props) {
             </div>
           </div>
         )}
-        <div id="pinkrainbow">
-          Materials for creating {props.initialBlueprint.quantity}{" "}
-          {props.initialBlueprint.name}.
-        </div>
+        {props.initialBlueprint.materialsList && 
+         <div id="pinkrainbow">
+         Materials for creating {props.initialBlueprint.quantity}{" "}
+         {props.initialBlueprint.name}.
+       </div>
+        }
         <div className="wrapper">
           {props.materialsList.map((mat, index) =>
             render(props.initialBlueprint.name, mat, index)
