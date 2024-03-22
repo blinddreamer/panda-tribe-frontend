@@ -289,8 +289,8 @@ function Calculator(props) {
               </Button>
             )}
             <p id="topcard">
-              {" "}
               <img src={material.icon} loading="lazy" />
+              {"asd"}
               {material.name}
             </p>
             <p>Quantity: {material.quantity}</p>
