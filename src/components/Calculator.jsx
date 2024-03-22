@@ -189,9 +189,13 @@ function Calculator(props) {
         {props.initialBlueprint.materialsList && (
           <div id="blueprintHeader">
             <div>
-              <img src={props.initialBlueprint.icon} loading="lazy" />{" "}
+              <img
+                id="gnomorocks"
+                src={props.initialBlueprint.icon}
+                loading="lazy"
+              />{" "}
             </div>
-            <div>
+            <div id="hukurocks">
               Materials for creating {props.initialBlueprint.quantity}{" "}
               {props.initialBlueprint.name}.
               <p id="bpheader" />
