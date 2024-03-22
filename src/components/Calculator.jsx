@@ -240,9 +240,11 @@ function Calculator(props) {
             </h4>
           </div>
         )}
+        <div className="wrapper">
         {props.materialsList.map((mat, index) =>
           render(props.initialBlueprint.name, mat, index)
         )}
+        </div>
       </>
     );
   };
@@ -455,13 +457,13 @@ function Calculator(props) {
   }
   // END RESULT
   return (
-    <div className="wrapper">
+    <>
       {props.errorMessage ? (
         <Alert>{props.errorMessage}</Alert>
       ) : (
         displayResult()
       )}
-    </div>
+    </>
   );
 }
 
