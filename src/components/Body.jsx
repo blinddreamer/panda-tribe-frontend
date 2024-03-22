@@ -31,7 +31,7 @@ function Body(props) {
     isClicked && submitForm();
   });
   useEffect(() => {
-    onStart && getSystems() && getBlueprints() && getRegions() && getStations;
+    onStart && getRegions() && getSystems() && getBlueprints()  && getStations();
     setOnstart(false);
   });
 
@@ -120,6 +120,7 @@ function Body(props) {
               optionsSys={optionsSys}
               backend={backend}
               advancedMode={props.advancedMode}
+              setAdvancedMode={props.setAdvancedMode}
               formData={formData}
             />
           </Col>

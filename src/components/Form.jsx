@@ -112,15 +112,15 @@ function GetForm(props) {
           placeholder="Enter blueprint count. Default 1"
         />
       </Form.Group>
-      {props.advancedMode &&
+      
       <Form.Group controlId="marketRegion">
         <Form.Label>Market Region:</Form.Label>
-        <Form.Select aria-label="Default select example" defaultValue={10000002}>
+        <Form.Select aria-label="Default select example">
           {props.regions.map(region => {
-            return <option value={region.regionId}>{region.regionName}</option>
+            return <option selected={region.regionId==10000002} value={region.regionId}>{region.regionName}</option>
           })}
         </Form.Select>
-      </Form.Group>  }
+      </Form.Group>  
       <Button variant="primary" onClick={sendData}>
         {props.isLoading ? (
           <>
