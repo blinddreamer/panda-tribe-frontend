@@ -13,6 +13,7 @@ function GetForm(props) {
     let blueprintMe = document.getElementById("blueprintMe").value;
     let facilityTax = document.getElementById("facility").value;
     let blueprintCount = document.getElementById("blueprintCount").value;
+    let regionId = document.getElementById("marketRegion").value;
     props.setFormData({
       blueprintName: blueprint,
       quantity: quantity,
@@ -22,6 +23,7 @@ function GetForm(props) {
       system: system,
       facilityTax: facilityTax,
       blueprintCount: blueprintCount,
+      regionId: regionId
     });
     props.setIsClicked(true);
   }

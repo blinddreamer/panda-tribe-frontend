@@ -73,6 +73,7 @@ function Body(props) {
         system: formData.system,
         facilityTax: formData.facilityTax,
         jobRuns: formData.blueprintCount,
+        regionId: formData.regionId,
         init: true
       });
       if (response.status !== 200) {
