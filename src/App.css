@@ -84,7 +84,7 @@ a:visited {
 }
 
 .cards {
-  padding: 5px;
+  padding: 10px;
   border-radius: 5px;
   border-color: var(--bs-card-color);
   border-style: solid;
@@ -111,5 +111,7 @@ a:visited {
 }
 
 #topcard {
-  border-bottom: 1px solid red;
+  border-bottom: 1px solid;
+  border-color: var(--bs-card-color);
+  padding: 5px;
 }
