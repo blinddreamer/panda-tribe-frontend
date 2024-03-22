@@ -73,6 +73,7 @@ function Body(props) {
         system: formData.system,
         facilityTax: formData.facilityTax,
         jobRuns: formData.blueprintCount,
+        init: true
       });
       if (response.status !== 200) {
         throw new Error(`Server Error: ${response.statusText}`);
