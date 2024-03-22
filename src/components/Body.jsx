@@ -16,8 +16,8 @@ function Body(props) {
   const [optionsBp, setOptionsBp] = useState([]);
   const [optionsSys, setOptionsSys] = useState([]);
   const [onStart, setOnstart] = useState(true);
-  const [regions, setRegions] = useState([]);
-  const [stations, setStations] = useState([]);
+  const [regions, setRegions] = useState([{}]);
+  const [stations, setStations] = useState([{}]);
 
   const backend = "http://thunder:6549/api/v1/";
   //const backend = "http://localhost:8080/api/v1/";
@@ -103,6 +103,7 @@ function Body(props) {
                 optionsBp={optionsBp}
                 optionsSys={optionsSys}
                 advancedMode={props.advancedMode}
+                regions={regions}
               ></GetForm>
             </Col>
           </Col>

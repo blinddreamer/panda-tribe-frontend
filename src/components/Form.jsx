@@ -115,10 +115,10 @@ function GetForm(props) {
       {props.advancedMode &&
       <Form.Group controlId="marketRegion">
         <Form.Label>Market Region:</Form.Label>
-        <Form.Select aria-label="Default select example" defaultValue="0">
-          <option value={0}>None</option>
-          <option value="1">T1</option>
-          <option value="2">T2</option>
+        <Form.Select aria-label="Default select example" defaultValue={10000002}>
+          {props.regions.map(region => {
+            return <option value={region.regionId}>{region.regionName}</option>
+          })}
         </Form.Select>
       </Form.Group>  }
       <Button variant="primary" onClick={sendData}>
@@ -134,7 +134,7 @@ function GetForm(props) {
             Loading...
           </>
         ) : (
-          "Submit"
+          "Calculate"
         )}
       </Button>
     </Form>
