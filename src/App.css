@@ -131,9 +131,21 @@ svg {
 }
 
 #gnomorocks {
-  width: 200px;
+  width: 175px;
 }
 
 #hukurocks {
   text-align: left;
+}
+
+#stats {
+}
+
+#statsp {
+  margin-bottom: -2px;
+}
+
+#pinkrainbow {
+  margin-bottom: 20px;
+  font-size: 20px;
 }

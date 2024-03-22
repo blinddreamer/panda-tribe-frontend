@@ -196,9 +196,6 @@ function Calculator(props) {
               />{" "}
             </div>
             <div id="hukurocks">
-              Materials for creating {props.initialBlueprint.quantity}{" "}
-              {props.initialBlueprint.name}.
-              <p id="bpheader" />
               Volume : {props.initialBlueprint.volume + " m³"}
               <p id="bpheader" />
               Estimate Crafting price:{" "}
@@ -256,6 +253,10 @@ function Calculator(props) {
             </div>
           </div>
         )}
+        <div id="pinkrainbow">
+          Materials for creating {props.initialBlueprint.quantity}{" "}
+          {props.initialBlueprint.name}.
+        </div>
         <div className="wrapper">
           {props.materialsList.map((mat, index) =>
             render(props.initialBlueprint.name, mat, index)
@@ -290,19 +291,20 @@ function Calculator(props) {
             )}
             <p id="topcard">
               <img src={material.icon} loading="lazy" />
-              {"ㅤ"}
               {material.name}
             </p>
-            <p>Quantity: {material.quantity}</p>
-            <p>Volume: {material.volume} m³</p>
-            <p>
-              Market price:{" "}
-              {material.sellPrice.toLocaleString("en-US", {
-                style: "currency",
-                currency: "ISK",
-                minimumFractionDigits: 2,
-              })}
-            </p>
+            <div id="stats">
+              <p id="statsp">Quantity: {material.quantity}</p>
+              <p id="statsp">Volume: {material.volume} m³</p>
+              <p id="statsp">
+                Market price:{" "}
+                {material.sellPrice.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "ISK",
+                  minimumFractionDigits: 2,
+                })}
+              </p>
+            </div>
             {material.craftPrice && (
               <p id={id}>
                 Crafting price:{" "}
