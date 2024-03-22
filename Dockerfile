@@ -5,7 +5,7 @@ COPY yarn.lock ./
 COPY src ./src
 COPY public ./public
 RUN yarn install
-RUN yarn build --noninteractive
+RUN yarn build
 
 FROM nginx:alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
