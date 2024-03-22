@@ -10,7 +10,7 @@ function App() {
   const [advancedMode, setAdvancedMode] = useState(false);
   return (
     <div>
-      <Header advancedMode={advancedMode} setAdvancedMode={setAdvancedMode} />
+      <Header />
       <Body advancedMode={advancedMode} setAdvancedMode={setAdvancedMode} />
       <Footer />
     </div>
