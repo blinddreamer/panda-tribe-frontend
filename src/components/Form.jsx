@@ -2,11 +2,10 @@ import { Form, Button, Spinner } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import React, { useState } from "react";
 
-
 function GetForm(props) {
   const [system, setSystem] = useState("");
   const [blueprint, setBlueprint] = useState("");
-  
+
   function sendData() {
     let building = document.getElementById("building").value;
     let quantity = document.getElementById("quantity").value;
@@ -22,7 +21,7 @@ function GetForm(props) {
       building: building,
       system: system,
       facilityTax: facilityTax,
-      blueprintCount: blueprintCount
+      blueprintCount: blueprintCount,
     });
     props.setIsClicked(true);
   }
@@ -103,18 +102,17 @@ function GetForm(props) {
           placeholder="Enter facility tax. Default 0"
         />
       </Form.Group>
-     
-      
+
       <Form.Group controlId="blueprintCount">
-          <Form.Label>Job Runs:</Form.Label>
-          <Form.Control
-            type="number"
-            min={1}
-            name="blueprintCount"
-            placeholder="Enter blueprint count. Default 1"
-          />
-        </Form.Group>
-      
+        <Form.Label>Job Runs:</Form.Label>
+        <Form.Control
+          type="number"
+          min={1}
+          name="blueprintCount"
+          placeholder="Enter blueprint count. Default 1"
+        />
+      </Form.Group>
+
       <Button variant="primary" onClick={sendData}>
         {props.isLoading ? (
           <>
