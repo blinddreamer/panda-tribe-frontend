@@ -85,11 +85,17 @@ a:visited {
 .cards {
   padding: 10px;
   border-radius: 5px;
-  border-color: var(--bs-card-color);
+  border-color: var(--bs-border-color);
   border-style: solid;
   height: 100%;
   border-width: 1px;
   z-index: 1;
+  transition: 0.5s;
+}
+
+.cards:hover {
+  border-color: var(--bs-card-color);
+  transition: 0.5s;
 }
 
 .cardsbg {
@@ -103,7 +109,7 @@ a:visited {
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   border-radius: 5px;
-  border-color: var(--bs-card-color);
+  border-color: var(--bs-border-color);
   border-style: solid;
   width: 100%;
   border-width: 1px;
@@ -114,7 +120,7 @@ a:visited {
 
 #topcard {
   border-bottom: 1px solid;
-  border-color: var(--bs-card-color);
+  border-color: var(--bs-border-color);
   padding: 5px;
 }
 
@@ -131,9 +137,21 @@ svg {
 }
 
 #gnomorocks {
-  width: 200px;
+  width: 175px;
 }
 
 #hukurocks {
   text-align: left;
+}
+
+#stats {
+}
+
+#statsp {
+  margin-bottom: -2px;
+}
+
+#pinkrainbow {
+  margin-bottom: 20px;
+  font-size: 20px;
 }
