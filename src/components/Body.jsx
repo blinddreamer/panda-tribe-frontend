@@ -20,8 +20,7 @@ function Body(props) {
   const [regions, setRegions] = useState([{}]);
   const [stations, setStations] = useState([{}]);
 
-  const backend = "http://thunder:6549/api/v1/";
-  //const backend = "http://localhost:8080/api/v1/";
+  const backend = "https://api.eve-helper.com/api/v1/";
 
   // SET PAGE TITLE
   useEffect(() => {
