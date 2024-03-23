@@ -23,7 +23,7 @@ function GetForm(props) {
       system: system,
       facilityTax: facilityTax,
       blueprintCount: blueprintCount,
-      regionId: regionId
+      regionId: regionId,
     });
     props.setIsClicked(true);
   }
@@ -114,16 +114,24 @@ function GetForm(props) {
           placeholder="Enter blueprint count. Default 1"
         />
       </Form.Group>
-      
+
       <Form.Group controlId="marketRegion">
         <Form.Label>Market Region:</Form.Label>
         <Form.Select aria-label="Default select example">
-          {props.regions.map(region => {
-            return <option selected={region.regionId==10000002} value={region.regionId}>{region.regionName}</option>
+          {props.regions.map((region) => {
+            return (
+              <option
+                selected={region.regionId == 10000002}
+                value={region.regionId}
+              >
+                {region.regionName}
+              </option>
+            );
           })}
         </Form.Select>
-      </Form.Group>  
-      <Button variant="primary" onClick={sendData}>
+      </Form.Group>
+      <p />
+      <Button variant="secondary" onClick={sendData}>
         {props.isLoading ? (
           <>
             <Spinner
