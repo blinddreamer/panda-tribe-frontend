@@ -56,6 +56,13 @@ body {
   font-family: Roboto, sans-serif;
   font-size: 16pt;
   font-weight: 400;
+  transition: 0.5s;
+  color: var(--bs-border-color);
+}
+
+#icons:hover {
+  color: var(--bs-card-color);
+  transition: 0.5s;
 }
 
 #legal {
