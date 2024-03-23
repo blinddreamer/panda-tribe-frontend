@@ -23,12 +23,12 @@ function Footer() {
             </a>{" "}
           </span>
           <span id="icons">
-            <a href="">
+            <a href="mailto:contact@eve-helper.com">
               <MdEmail />
             </a>{" "}
           </span>
           <span id="icons">
-            <a href="">
+            <a href="https://hub.docker.com/repository/docker/blinddreamer/eve-helper-frontend/">
               <FaDocker />
             </a>
           </span>
