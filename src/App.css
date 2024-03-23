@@ -5,6 +5,14 @@
   text-align: center;
 }
 
+body {
+  background-image: url(..\src\assets\background.jpg) !important;
+  background-repeat: no-repeat !important;
+  background-position: 0 0 !important;
+  background-size: cover !important;
+  background-attachment: fixed !important;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -162,4 +170,10 @@ svg {
 #pinkrainbow {
   margin-bottom: 20px;
   font-size: 20px;
+}
+
+#HukuBartopolos {
+  background-color: var(--bs-body-bg);
+  padding: 25px;
+  border-radius: 15px;
 }

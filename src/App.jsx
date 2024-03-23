@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 function App() {
   const [advancedMode, setAdvancedMode] = useState(false);
   return (
-    <div>
+    <div id="HukuBartopolos">
       <Header />
       <Body advancedMode={advancedMode} setAdvancedMode={setAdvancedMode} />
       <Footer />
