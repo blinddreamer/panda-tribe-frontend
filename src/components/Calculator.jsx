@@ -284,12 +284,17 @@ function Calculator(props) {
             key={`header_${id}`}
           >
             {material.isCreatable && isOpen && (
+              <>
               <Button
                 id={`copy_${id}`}
                 onClick={() => handleCopy(material, "copy_" + id)}
               >
                 {!isCopied["copy_" + id] ? "Copy" : "Copied"}
               </Button>
+           
+                   <Form.Check/>
+                   </>
+                 
             )}
             <p id="topcard">
               <img src={material.icon} loading="lazy" />

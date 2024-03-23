@@ -70,6 +70,8 @@ function GetForm(props) {
           <option value="1">Azbel</option>
           <option value="2">Raitaru</option>
           <option value="3">Sotiyo</option>
+          <option value="4">Athanor</option>
+          <option value="5">Tatara</option>
         </Form.Select>
       </Form.Group>
 
@@ -79,6 +81,8 @@ function GetForm(props) {
           <option value={0}>None</option>
           <option value="1">T1</option>
           <option value="2">T2</option>
+          <option value="3">R1</option>
+          <option value="4">R2</option>
         </Form.Select>
       </Form.Group>
       <Form.Group controlId="systemName">
