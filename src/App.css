@@ -90,6 +90,8 @@ a:visited {
 
 #advmode {
   padding: 2px;
+  width: 138px;
+  height: 43px;
 }
 
 .wrapper {
@@ -176,4 +178,17 @@ svg {
   background-color: var(--bs-body-bg);
   padding: 25px;
   border-radius: 15px;
+}
+
+/*fk me */
+input[type="text"]:focus {
+  border: 1px solid #555;
+  box-shadow: none;
+  text-emphasis: none !important;
+}
+
+#menuleft {
+  background-color: rgba(var(--bs-body-color-rgb), 0.03) !important;
+  padding: 15px;
+  border-radius: 5px;
 }

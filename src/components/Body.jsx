@@ -21,7 +21,6 @@ function Body(props) {
   const [stations, setStations] = useState([{}]);
 
   const backend = "https://api.eve-helper.com/api/v1/";
-  //const backend = "http://thunder:6549/api/v1/";
 
   // SET PAGE TITLE
   useEffect(() => {
@@ -98,15 +97,17 @@ function Body(props) {
         <Row>
           <Col>
             <Col>
-              <GetForm
-                setFormData={setFormData}
-                setIsClicked={setIsClicked}
-                isLoading={isLoading}
-                optionsBp={optionsBp}
-                optionsSys={optionsSys}
-                advancedMode={props.advancedMode}
-                regions={regions}
-              ></GetForm>
+              <div id="menuleft">
+                <GetForm
+                  setFormData={setFormData}
+                  setIsClicked={setIsClicked}
+                  isLoading={isLoading}
+                  optionsBp={optionsBp}
+                  optionsSys={optionsSys}
+                  advancedMode={props.advancedMode}
+                  regions={regions}
+                ></GetForm>
+              </div>
             </Col>
           </Col>
           <Col xs={9}>
