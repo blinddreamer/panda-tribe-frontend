@@ -1,10 +1,13 @@
-FROM node:alpine AS meh
-WORKDIR /usr/src/app
-COPY package.json ./
-COPY yarn.lock ./
-COPY src ./src
-COPY public ./public
+FROM node:alpine
+
+WORKDIR /app
+
+COPY package.json .
+
 RUN npm install
+
+COPY . .
+
 RUN npm run build
 
 FROM nginx:alpine
