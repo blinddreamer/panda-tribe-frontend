@@ -31,7 +31,7 @@ function Body(props) {
     isClicked && submitForm();
   });
   useEffect(() => {
-    onStart && getRegions() && getSystems() && getBlueprints()  && getStations();
+    onStart && getRegions() && getSystems() && getBlueprints() && getStations();
     setOnstart(false);
   });
 
@@ -74,7 +74,7 @@ function Body(props) {
         facilityTax: formData.facilityTax,
         jobRuns: formData.blueprintCount,
         regionId: formData.regionId,
-        init: true
+        init: true,
       });
       if (response.status !== 200) {
         throw new Error(`Server Error: ${response.statusText}`);
@@ -109,7 +109,7 @@ function Body(props) {
               ></GetForm>
             </Col>
           </Col>
-          <Col xs={8}>
+          <Col xs={9}>
             <Calculator
               materialsList={materialsList}
               setMaterialsList={setMaterialsList}

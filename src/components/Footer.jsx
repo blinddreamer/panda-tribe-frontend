@@ -21,9 +21,13 @@ function Footer() {
             <a href="https://github.com/blinddreamer/eve-helper-frontend">
               <IoLogoGithub />
             </a>{" "}
+          </span>
+          <span id="icons">
             <a href="">
               <MdEmail />
             </a>{" "}
+          </span>
+          <span id="icons">
             <a href="">
               <FaDocker />
             </a>
