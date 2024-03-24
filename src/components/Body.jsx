@@ -22,10 +22,6 @@ function Body(props) {
 
   const backend = "https://api.eve-helper.com/api/v1/";
 
-  // SET PAGE TITLE
-  useEffect(() => {
-    document.title = "eve-helper / Eve Online Industry Calculator"; // Set the new title
-  }, []);
   useEffect(() => {
     isClicked && submitForm();
   });

@@ -1,18 +1,17 @@
-import { useState } from "react";
+import React from "react";
 import "./App.css";
-import Body from "./components/Body";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Home from "./components/Home";
 
-function App() {
-  const [advancedMode, setAdvancedMode] = useState(false);
+const App = () => {
   return (
-    <div id="HukuBartopolos">
-      <Header />
-      <Body advancedMode={advancedMode} setAdvancedMode={setAdvancedMode} />
-      <Footer />
-    </div>
+    <>
+      <div></div>
+      <div>
+        <Home />
+      </div>
+      <div></div>
+    </>
   );
-}
+};
 
 export default App;
