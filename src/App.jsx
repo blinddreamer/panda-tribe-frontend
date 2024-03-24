@@ -1,15 +1,18 @@
 import React from "react";
 import "./App.css";
 import Home from "./components/Home";
+import Appraisal from "./components/Appraisal";
+import { Route } from "wouter";
 
 const App = () => {
   return (
     <>
-      <div></div>
-      <div>
+      <Route path="/">
         <Home />
-      </div>
-      <div></div>
+      </Route>
+      <Route path="/appraisal">
+        <Appraisal />
+      </Route>
     </>
   );
 };
