@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Card, Collapse, Alert, Spinner } from "react-bootstrap";
-import { ArrowBarDown, ArrowBarUp } from "react-bootstrap-icons";
+import { Form, Button, Collapse, Alert, Spinner, Table } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import axios from "axios";
 import AdvancedModeToggle from "../components/AdvancedMode";
+
 
 function Calculator(props) {
   // INITIALISE STATE PARAMETERS
@@ -11,6 +11,8 @@ function Calculator(props) {
   const [isCopied, setIsCopied] = useState({});
   const [system, setSystem] = useState(null);
   const [systemValues, setSystemValues] = useState({});
+  const [inputValues, setInputValues] = useState({});
+  
 
   useEffect(() => {
     system != null &&
@@ -20,10 +22,21 @@ function Calculator(props) {
         system.colId,
         system.parent_id,
         system.value
-      );
+      ) &&
+      setInputValues((prevState) => ({
+        ...prevState,
+        [system.id]: system.value
+      }));
+      
     setSystem(null);
   });
-
+  function removeFromMultiBuy(checkId) {
+    props.setMultiBuy(prevState => {
+        const newState = new Map(prevState);
+        newState.delete(checkId);
+        return newState;
+    });
+}
   // HANDEL MATERIAL DISCOUNT FORM
   const handleInputChange = async (material, e) => {
     const tempId = e.target.id;
@@ -33,6 +46,10 @@ function Calculator(props) {
     const colId = "col_" + parent_id;
     const value = e.target.value;
     recalculatePrices(id, material, colId, parent_id, value);
+    setInputValues((prevState) => ({
+      ...prevState,
+      [tempId]: e.target.value
+    }));
   };
 
   async function recalculatePrices(id, material, colId, parent_id, value) {
@@ -92,6 +109,7 @@ function Calculator(props) {
       }
       const data = response.data;
       material.craftPrice = data.craftPrice;
+      material.industryCosts = data.industryCosts;
       material.materialsList = data.materialsList;
       props.setMaterialsList(...[props.materialsList]);
       updateLoadedData(colId);
@@ -101,8 +119,25 @@ function Calculator(props) {
     }
   }
 
+    // COPY FUNCTION
+    async function handleMultiBuyCopy(id) {
+      const matsToCopy = Object.values(props.multiBuy);
+      try {
+        const textToCopy = matsToCopy.map(mat =>
+          mat.materialsList.map(subMat =>
+              `${subMat.name} x${subMat.quantity}`
+          ).join("\n")
+      ).join("\n");
+          await navigator.clipboard.writeText(textToCopy);
+        setIsCopied({ [id]: true });
+      } catch (error) {
+        console.error("Error copying text: ", error);
+        alert("Failed to copy text.");
+      }
+    }
+
   // COPY FUNCTION
-  async function handleCopy(material, id) {
+  async function handleSingleCopy(material, id) {
     try {
       const textToCopy = material.materialsList
         .map((mat) => `${mat.name} x${mat.quantity}`)
@@ -138,6 +173,19 @@ function Calculator(props) {
     );
     return price + props.initialBlueprint.industryCosts;
   };
+
+  function handleCheck(material, colId, checkId) {
+    props.setMultiBuy(prevState => {
+        const newState = { ...prevState }; // Copy the state object
+        if (newState[checkId]) {
+            delete newState[checkId]; // Remove the item if it exists
+        } else {
+            newState[checkId] = material; // Add the item if it doesn't exist
+        }
+        return newState; // Return the new state object
+    });
+    getSubmatsData(material, colId);
+}
   // BACKEND CALL FOR THE SUBMATERIALS DATA
   async function getSubmatsData(material, colId) {
     if (!Array.isArray(material.materialsList)) {
@@ -235,10 +283,7 @@ function Calculator(props) {
                 id="button-top"
                 variant="secondary"
                 onClick={() =>
-                  handleCopy(
-                    props.initialBlueprint,
-                    "copy_" + props.initialBlueprint.name
-                  )
+                  handleMultiBuyCopy("copy_" + props.initialBlueprint.name)
                 }
               >
                 {!isCopied["copy_" + props.initialBlueprint.name]
@@ -259,11 +304,37 @@ function Calculator(props) {
          {props.initialBlueprint.name}.
        </div>
         }
-        <div className="wrapper">
+       {props.initialBlueprint.materialsList &&  <div className="wrapper">
+        <Table
+            
+            striped bordered hover size="sm"
+            key={`header_${props.initialBlueprint.name}`}
+          >
+                <thead>
+              <tr>
+          <th>#</th>      
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Volume</th>
+          <th>Market Cost</th>
+          <th>Craft Cost</th>
+          <th>Add Multibuy</th>
+          <th>Copy</th>
+          {props.advancedMode && (<th>BP ME</th>)}
+          {props.advancedMode && (<th>Building</th>)}
+          {props.advancedMode && (<th>Rig</th>)}
+          {props.advancedMode && (<th>System</th>)}
+          {props.advancedMode && (<th>Facility tax</th>)}
+        
+          </tr>
+          </thead>
+        <tbody>
           {props.materialsList.map((mat, index) =>
             render(props.initialBlueprint.name, mat, index)
           )}
-        </div>
+           </tbody>
+          </Table>
+        </div>}
       </>
     );
   };
@@ -277,71 +348,45 @@ function Calculator(props) {
     const isLoaded = isDataLoaded[colId];
 
     return (
+      
       <>
-        <div className="cards">
-          <Card.Header
-            className={` ${isOpen ? "collapsed" : ""}`}
-            key={`header_${id}`}
-          >
-            {material.isCreatable && isOpen && (
-              <>
-              <Button
+       <tr>
+        <td onClick={()=>  toggleCollapsible("card_" + id, material.isCreatable)}><img src={material.icon} loading="lazy" /></td>
+        <td onClick={()=>  toggleCollapsible("card_" + id, material.isCreatable)}>{material.name}</td>
+        <td onClick={()=>  toggleCollapsible("card_" + id, material.isCreatable)}>{material.quantity}</td>
+        <td onClick={()=>  toggleCollapsible("card_" + id, material.isCreatable)}>{material.volume.toFixed(0)}</td>
+        <td onClick={()=>  toggleCollapsible("card_" + id, material.isCreatable)}>{material.sellPrice}</td>
+        <td onClick={()=>  toggleCollapsible("card_" + id, material.isCreatable)}>{material.craftPrice ? material.craftPrice + material.industryCosts : "-"}</td>
+       
+        <td><Form.Check disabled={!material.isCreatable} id={"check_"+id} key={"check_"+id} type="switch" onClick={()=>handleCheck(material,"col_"+id, "check_"+id)}/></td>
+        <td><Button
                 id={`copy_${id}`}
-                onClick={() => handleCopy(material, "copy_" + id)}
+                disabled={!isLoaded}
+                onClick={() => handleSingleCopy(material, "copy_" + id)}
               >
                 {!isCopied["copy_" + id] ? "Copy" : "Copied"}
-              </Button>
-           
-                   <Form.Check/>
-                   </>
-                 
-            )}
-            <p id="topcard">
-              <img src={material.icon} loading="lazy" />
-              {material.name}
-            </p>
-            <div id="stats">
-              <p id="statsp">Quantity: {material.quantity}</p>
-              <p id="statsp">Volume: {material.volume} m³</p>
-              <p id="statsp">
-                Market price:{" "}
-                {material.sellPrice.toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "ISK",
-                  minimumFractionDigits: 2,
-                })}
-              </p>
-            </div>
-            {material.craftPrice && (
-              <p id={id}>
-                Crafting price:{" "}
-                {material.craftPrice.toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "ISK",
-                  minimumFractionDigits: 2,
-                })}
-              </p>
-            )}
-            {material.isCreatable && (
-              <div className="card-form">
-                {props.advancedMode && (
-                  <Form>
-                    <Form.Group controlId={`me_${id}`}>
-                      <Form.Label>Blueprint ME:</Form.Label>
+              </Button></td>
+              {props.advancedMode  && (
+                <>
+               <td><Form.Group controlId={`me_${id}`}>
+                      
                       <Form.Control
                         type="number"
+                        disabled={!material.isCreatable}
                         min={0}
                         name={`me_${id}`}
                         placeholder="0"
-                        defaultValue={10}
+                        defaultValue= {inputValues[`me_${id}`] ? inputValues[`me_${id}`] : 10}
                         onChange={(e) => handleInputChange(material, e)}
                       />
                     </Form.Group>
-                    <Form.Group controlId={`build_${id}`}>
-                      <Form.Label>Building:</Form.Label>
+                      </td>
+               <td>  <Form.Group controlId={`build_${id}`}>
+                      
                       <Form.Select
+                        disabled={!material.isCreatable}
                         aria-label="Default select example"
-                        defaultValue={props.formData.building}
+                        defaultValue={inputValues[`build_${id}`] ? inputValues[`build_${id}`] :props.formData.building}
                         onChange={(e) => handleInputChange(material, e)}
                       >
                         <option hidden>Select Building</option>
@@ -351,11 +396,13 @@ function Calculator(props) {
                         <option value="3">Sotiyo</option>
                       </Form.Select>
                     </Form.Group>
-                    <Form.Group controlId={`rig_${id}`}>
-                      <Form.Label>Building Rig:</Form.Label>
+                    </td> 
+               <td> <Form.Group controlId={`rig_${id}`}>
+                      
                       <Form.Select
+                        disabled={!material.isCreatable}
                         aria-label="Default select example"
-                        defaultValue={props.formData.buildingRig}
+                        defaultValue={inputValues[`rig_${id}`] ? inputValues[`rig_${id}`] :props.formData.buildingRig}
                         onChange={(e) => handleInputChange(material, e)}
                       >
                         <option hidden>Select Building Rig</option>
@@ -364,13 +411,15 @@ function Calculator(props) {
                         <option value="2">T2</option>
                       </Form.Select>
                     </Form.Group>
-
-                    <Form.Group>
-                      <Form.Label>System:</Form.Label>
+                    </td>
+                      <td>
+                      <Form.Group>
+                      
                       <Typeahead
                         id={`system_${id}`}
+                        disabled={!material.isCreatable}
                         minLength={2}
-                        defaultInputValue={props.formData.system}
+                        defaultInputValue={inputValues[`system_${id}`] ? inputValues[`system_${id}`] : props.formData.system}
                         onChange={(selected) => {
                           setSystemValues((prevState) => ({
                             ...prevState,
@@ -378,7 +427,7 @@ function Calculator(props) {
                           }));
                           setSystem({
                             value: selected[0],
-                            id: "system",
+                            id: "system_"+ id,
                             material: material,
                             parent_id: id,
                             colId: "col_" + id,
@@ -388,62 +437,69 @@ function Calculator(props) {
                         placeholder="Choose a System..."
                       />
                     </Form.Group>
-                    <Form.Group controlId={`facility_${id}`}>
-                      <Form.Label>Facility tax:</Form.Label>
+                      </td>
+                      <td>
+                      <Form.Group controlId={`facility_${id}`}>
+                      
                       <Form.Control
-                        defaultValue={props.formData.facilityTax}
-                        type="number"
+                      disabled={!material.isCreatable}
+                        defaultValue={inputValues[`facility_${id}`] ? inputValues[`facility_${id}`] : props.formData.facilityTax}
+                         type="number"
                         min={0}
                         name={`facility_${id}`}
                         placeholder="0"
                         onChange={(e) => handleInputChange(material, e)}
                       />
                     </Form.Group>
-                  </Form>
-                )}
-                {material.isCreatable &&
-                  (!isOpen ? (
-                    <ArrowBarDown
-                      aria-controls={`card_${id}`}
-                      aria-expanded={isOpen}
-                      onClick={() =>
-                        toggleCollapsible("card_" + id, material.isCreatable)
-                      }
-                    ></ArrowBarDown>
-                  ) : (
-                    <ArrowBarUp
-                      aria-controls={`card_${id}`}
-                      aria-expanded={isOpen}
-                      onClick={() =>
-                        toggleCollapsible("card_" + id, material.isCreatable)
-                      }
-                    ></ArrowBarUp>
-                  ))}
-              </div>
-            )}
-          </Card.Header>
+                      </td>
+               </>
+              )}
+       </tr>
+         
+        
+       
           <Collapse
             id={colId}
             in={isOpen}
             onEnter={() => getSubmatsData(material, colId)}
             timeout={10}
-          >
-            <Card.Body
-              className="card-body border border-secondary"
+          ><tr><td colSpan={props.advancedMode? 13 :8}>
+            <Table
+              striped bordered hover size="sm"    
               key={`card_${id}`}
-              id={`card_${id}`}
-            >
-              {isLoaded && Array.isArray(material.materialsList) ? (
+              id={`card_${id}`}>
+              <thead>
+              <tr>
+              <th>#</th>      
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Volume</th>
+              <th>Market Cost</th>
+              <th>Craft Cost</th>
+              <th>Add Multibuy</th>
+              <th>Copy</th>
+              {props.advancedMode && (<th>BP ME</th>)}
+              {props.advancedMode && (<th>Building</th>)}
+              {props.advancedMode && (<th>Rig</th>)}
+              {props.advancedMode && (<th>System</th>)}
+              {props.advancedMode && (<th>Facility tax</th>)}
+             </tr>
+              </thead>
+              <tbody>
+                 {isLoaded && Array.isArray(material.materialsList) ? (
                 material.materialsList.map((mat, index) =>
                   render(material.name, mat, index)
                 )
               ) : (
                 <Spinner></Spinner>
               )}
-            </Card.Body>
+              </tbody>
+           </Table>
+           </td>
+           </tr>
           </Collapse>
-        </div>
-      </>
+        
+          </>
     );
   }
   // END RESULT
