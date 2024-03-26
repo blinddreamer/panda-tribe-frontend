@@ -129,7 +129,7 @@ function Calculator(props) {
           ).join("\n")
       ).join("\n");
           await navigator.clipboard.writeText(textToCopy);
-        setIsCopied({ [id]: true });
+        setIsCopied({[id]: true });
       } catch (error) {
         console.error("Error copying text: ", error);
         alert("Failed to copy text.");
