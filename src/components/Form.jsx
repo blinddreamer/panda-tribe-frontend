@@ -49,7 +49,7 @@ function GetForm(props) {
           type="number"
           min={1}
           name="quantity"
-          placeholder="Enter quantity number. Default 1"
+          placeholder="Enter quantity number."
         />
       </Form.Group>
 
@@ -59,7 +59,7 @@ function GetForm(props) {
           type="number"
           min={0}
           name="blueprintMe"
-          placeholder="Enter blueprint material efficiency. Default 0"
+          placeholder="Enter blueprint ME."
         />
       </Form.Group>
 
@@ -105,7 +105,7 @@ function GetForm(props) {
           type="number"
           min={0}
           name="facility"
-          placeholder="Enter facility tax. Default 0"
+          placeholder="Enter facility tax."
         />
       </Form.Group>
 
@@ -115,7 +115,7 @@ function GetForm(props) {
           type="number"
           min={1}
           name="blueprintCount"
-          placeholder="Enter blueprint count. Default 1"
+          placeholder="Enter blueprint count."
         />
       </Form.Group>
 

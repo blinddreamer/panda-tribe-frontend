@@ -1,12 +1,19 @@
 import { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import ResponsiveAlert from "./Alert";
 
 function Appraisal() {
   return (
     <>
       <div id="HukuBartopolos">
         <Header />
+        <div>
+          <ResponsiveAlert
+            breakpointWidth={1280}
+            message="Optimizing for desktop first, screen resolution too low!"
+          />
+        </div>
 
         <div>
           <h2>BETA!</h2>
