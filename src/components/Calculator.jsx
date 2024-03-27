@@ -29,13 +29,7 @@ function Calculator(props) {
 
     setSystem(null);
   });
-  function removeFromMultiBuy(checkId) {
-    props.setMultiBuy((prevState) => {
-      const newState = new Map(prevState);
-      newState.delete(checkId);
-      return newState;
-    });
-  }
+
   // HANDEL MATERIAL DISCOUNT FORM
   const handleInputChange = async (material, e) => {
     const tempId = e.target.id;
@@ -353,7 +347,7 @@ function Calculator(props) {
     const trColor = index % 2 == 0 ? "huku" : "gnomo";
     return (
       <>
-        <tr>
+        <tr className={trColor}>
           <td
             onClick={() =>
               toggleCollapsible("card_" + id, material.isCreatable)
