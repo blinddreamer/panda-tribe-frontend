@@ -21,7 +21,8 @@ function Body(props) {
   const [stations, setStations] = useState([{}]);
   const [multiBuy, setMultiBuy] = useState({});
 
-  const backend = "https://api.eve-helper.com/api/v1/";
+   const backend = "https://api.eve-helper.com/api/v1/";
+  //const backend = "http://thunder:6549/api/v1/";
 
   useEffect(() => {
     isClicked && submitForm();

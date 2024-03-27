@@ -350,7 +350,7 @@ function Calculator(props) {
     const colId = "col_" + id;
     const isOpen = props.openState[openId]; // Get the open state for the card
     const isLoaded = isDataLoaded[colId];
-
+    const trColor = index % 2 == 0 ? "huku" : "gnomo";
     return (
       <>
         <tr>
