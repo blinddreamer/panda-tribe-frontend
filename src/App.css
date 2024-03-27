@@ -94,9 +94,6 @@ a:visited {
   height: 43px;
 }
 
-.wrapper {
-}
-
 .cards {
   padding: 10px;
   border-radius: 5px;
@@ -171,12 +168,6 @@ svg {
   font-size: 20px;
 }
 
-#HukuBartopolos {
-  background-color: var(--bs-body-bg);
-  padding: 25px;
-  border-radius: 15px;
-}
-
 /*fk me */
 input[type="text"]:focus {
   border: 1px solid #555;
@@ -192,4 +183,28 @@ input[type="text"]:focus {
 
 #bruh {
   margin-top: 10px;
+}
+
+#root {
+}
+
+#HukuBartopolos {
+  background-color: var(--bs-body-bg);
+  padding: 15px;
+  border-radius: 15px;
+  font-size: var(--bs-body-font-size);
+}
+
+#HukuBartopolos {
+  background-color: var(--bs-body-bg);
+  padding: 15px;
+  border-radius: 15px;
+}
+
+#AletaOceans {
+  font-size: 0.75rem;
+}
+
+.col-9 {
+  width: 80% !important;
 }

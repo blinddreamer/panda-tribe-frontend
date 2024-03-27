@@ -300,37 +300,35 @@ function Calculator(props) {
           </div>
         )}
         {props.initialBlueprint.materialsList && (
-          <div className="wrapper">
-            <Table
-              bordered
-              hover
-              size="sm"
-              key={`header_${props.initialBlueprint.name}`}
-            >
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Item</th>
-                  <th>Quantity</th>
-                  <th>Volume</th>
-                  <th>Market Cost</th>
-                  <th>Craft Cost</th>
-                  <th>Add Multibuy</th>
-                  <th>Copy</th>
-                  {props.advancedMode && <th>BP ME</th>}
-                  {props.advancedMode && <th>Building</th>}
-                  {props.advancedMode && <th>Rig</th>}
-                  {props.advancedMode && <th>System</th>}
-                  {props.advancedMode && <th>Facility tax</th>}
-                </tr>
-              </thead>
-              <tbody>
-                {props.materialsList.map((mat, index) =>
-                  render(props.initialBlueprint.name, mat, index)
-                )}
-              </tbody>
-            </Table>
-          </div>
+          <Table
+            bordered
+            hover
+            size="sm"
+            key={`header_${props.initialBlueprint.name}`}
+          >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Volume</th>
+                <th>Market Cost</th>
+                <th>Craft Cost</th>
+                <th>Add Multibuy</th>
+                <th>Copy</th>
+                {props.advancedMode && <th>BP ME</th>}
+                {props.advancedMode && <th>Building</th>}
+                {props.advancedMode && <th>Rig</th>}
+                {props.advancedMode && <th>System</th>}
+                {props.advancedMode && <th>Facility tax</th>}
+              </tr>
+            </thead>
+            <tbody>
+              {props.materialsList.map((mat, index) =>
+                render(props.initialBlueprint.name, mat, index)
+              )}
+            </tbody>
+          </Table>
         )}
       </>
     );

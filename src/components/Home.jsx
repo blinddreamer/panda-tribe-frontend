@@ -9,7 +9,9 @@ function Home() {
     <>
       <div id="HukuBartopolos">
         <Header />
-        <Body advancedMode={advancedMode} setAdvancedMode={setAdvancedMode} />
+        <div id="AletaOceans">
+          <Body advancedMode={advancedMode} setAdvancedMode={setAdvancedMode} />
+        </div>
         <Footer />
       </div>
     </>
