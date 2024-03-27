@@ -315,12 +315,12 @@ function Calculator(props) {
                 <th>Market Cost</th>
                 <th>Craft Cost</th>
                 <th>Add Multibuy</th>
-                <th>Copy</th>
                 {props.advancedMode && <th id="fackbpme">BP ME</th>}
                 {props.advancedMode && <th id="fackbuilding">Building</th>}
                 {props.advancedMode && <th id="fackrig">Rig</th>}
                 {props.advancedMode && <th id="facksystem">System</th>}
                 {props.advancedMode && <th id="facktax">Facility tax</th>}
+                <th>Copy</th>
               </tr>
             </thead>
             <tbody>
@@ -399,16 +399,7 @@ function Calculator(props) {
               onClick={() => handleCheck(material, "col_" + id, "check_" + id)}
             />
           </td>
-          <td>
-            <Button
-              id={`copy_${id}`}
-              disabled={!isLoaded}
-              onClick={() => handleSingleCopy(material, "copy_" + id)}
-              variant="secondary"
-            >
-              {!isCopied["copy_" + id] ? "Copy" : "Copied"}
-            </Button>
-          </td>
+         
           {props.advancedMode && (
             <>
               <td>
@@ -513,8 +504,18 @@ function Calculator(props) {
                   />
                 </Form.Group>
               </td>
-            </>
+             </>
           )}
+           <td>
+            <Button
+              id={`copy_${id}`}
+              disabled={!isLoaded}
+              onClick={() => handleSingleCopy(material, "copy_" + id)}
+              variant="secondary"
+            >
+              {!isCopied["copy_" + id] ? "Copy" : "Copied"}
+            </Button>
+          </td>
         </tr>
 
         <Collapse
