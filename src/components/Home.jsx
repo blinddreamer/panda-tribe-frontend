@@ -13,14 +13,14 @@ function Appraisal() {
 
           <main>
             <p>
-              <a href="https://eve-helper.com">eve-helper</a> is an advanced
-              industrial calculator aiming to help with your industrial costs.
+              eve-helper is an advanced industrial calculator aiming to help
+              with your industrial costs.
             </p>
             <p>
               Whether you're a seasoned industrialist or just starting out,{" "}
               <a href="https://eve-helper.com">eve-helper</a> provides
               comprehensive tools and features to streamline your industrial
-              operations in EVE Online.
+              operations in EVE.
             </p>
             <p>
               With <a href="https://eve-helper.com">eve-helper</a>, you can
