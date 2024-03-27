@@ -18,16 +18,15 @@ function Appraisal() {
             </p>
             <p>
               Whether you're a seasoned industrialist or just starting out,{" "}
-              <a href="https://eve-helper.com">eve-helper</a> provides
-              comprehensive tools and features to streamline your industrial
-              operations in EVE.
+              eve-helper provides comprehensive tools and features to streamline
+              your industrial operations in EVE.
             </p>
             <p>
-              With <a href="https://eve-helper.com">eve-helper</a>, you can
-              calculate material requirements, production costs, profit margins,
-              and more for a wide range of industrial activities. Our
-              user-friendly interface and customizable settings make it easy to
-              optimize your industry and maximize your profits.
+              With eve-helper, you can calculate material requirements,
+              production costs, profit margins, and more for a wide range of
+              industrial activities. Our user-friendly interface and
+              customizable settings make it easy to optimize your industry and
+              maximize your profits.
             </p>
           </main>
         </div>
