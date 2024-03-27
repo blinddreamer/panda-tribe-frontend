@@ -21,8 +21,8 @@ function Body(props) {
   const [stations, setStations] = useState([{}]);
   const [multiBuy, setMultiBuy] = useState({});
 
-   const backend = "https://api.eve-helper.com/api/v1/";
-  // const backend = "http://thunder:6549/api/v1/";
+  const backend = "https://api.eve-helper.com/api/v1/";
+
   useEffect(() => {
     isClicked && submitForm();
   });
@@ -80,7 +80,7 @@ function Body(props) {
       setMaterialsList(data.materialsList);
       setInitialBlueprint(data);
       setMultiBuy({
-        ["check_"+data.name]: initialBlueprint
+        ["check_" + data.name]: initialBlueprint,
       });
     } catch (error) {
       console.error("Error:", error.message);
