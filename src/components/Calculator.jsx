@@ -316,11 +316,11 @@ function Calculator(props) {
                 <th>Craft Cost</th>
                 <th>Add Multibuy</th>
                 <th>Copy</th>
-                {props.advancedMode && <th>BP ME</th>}
-                {props.advancedMode && <th>Building</th>}
-                {props.advancedMode && <th>Rig</th>}
-                {props.advancedMode && <th>System</th>}
-                {props.advancedMode && <th>Facility tax</th>}
+                {props.advancedMode && <th id="fackbpme">BP ME</th>}
+                {props.advancedMode && <th id="fackbuilding">Building</th>}
+                {props.advancedMode && <th id="fackrig">Rig</th>}
+                {props.advancedMode && <th id="facksystem">System</th>}
+                {props.advancedMode && <th id="facktax">Facility tax</th>}
               </tr>
             </thead>
             <tbody>
@@ -543,11 +543,11 @@ function Calculator(props) {
                     <th>Craft Cost</th>
                     <th>Add Multibuy</th>
                     <th>Copy</th>
-                    {props.advancedMode && <th>BP ME</th>}
-                    {props.advancedMode && <th>Building</th>}
-                    {props.advancedMode && <th>Rig</th>}
-                    {props.advancedMode && <th>System</th>}
-                    {props.advancedMode && <th>Facility tax</th>}
+                    {props.advancedMode && <th id="fackbpme">BP ME</th>}
+                    {props.advancedMode && <th id="fackbuilding">Building</th>}
+                    {props.advancedMode && <th id="fackrig">Rig</th>}
+                    {props.advancedMode && <th id="facksystem">System</th>}
+                    {props.advancedMode && <th id="facktax">Facility tax</th>}
                   </tr>
                 </thead>
                 <tbody>

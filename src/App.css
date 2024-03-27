@@ -91,7 +91,7 @@ a:visited {
 #advmode {
   padding: 2px;
   width: 138px;
-  height: 43px;
+  height: 38px;
 }
 
 .cards {
@@ -168,13 +168,6 @@ svg {
   font-size: 20px;
 }
 
-/*fk me */
-input[type="text"]:focus {
-  border: 1px solid #555;
-  box-shadow: none;
-  text-emphasis: none !important;
-}
-
 #menuleft {
   background-color: rgba(var(--bs-body-color-rgb), 0.03) !important;
   padding: 15px;
@@ -211,4 +204,36 @@ input[type="text"]:focus {
 
 td {
   vertical-align: middle !important;
+}
+
+th {
+  vertical-align: middle !important;
+}
+
+/*TD sizing*/
+#facktax {
+  width: 75px;
+}
+#facksystem {
+  width: 80px;
+}
+#fackbpme {
+  width: 75px;
+}
+#fackbuilding {
+}
+#fackrig {
+  width: 80px;
+}
+#facksystem {
+  width: 100px;
+}
+#facktax {
+}
+
+input,
+optgroup,
+select,
+textarea {
+  font-size: 0.75rem !important;
 }
