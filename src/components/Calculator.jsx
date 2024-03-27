@@ -302,7 +302,6 @@ function Calculator(props) {
         {props.initialBlueprint.materialsList && (
           <div className="wrapper">
             <Table
-              striped
               bordered
               hover
               size="sm"
