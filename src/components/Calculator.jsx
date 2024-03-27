@@ -406,6 +406,7 @@ function Calculator(props) {
               id={`copy_${id}`}
               disabled={!isLoaded}
               onClick={() => handleSingleCopy(material, "copy_" + id)}
+              variant="secondary"
             >
               {!isCopied["copy_" + id] ? "Copy" : "Copied"}
             </Button>
