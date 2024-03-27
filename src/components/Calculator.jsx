@@ -543,12 +543,12 @@ function Calculator(props) {
                     <th>Market Cost</th>
                     <th>Craft Cost</th>
                     <th>Add Multibuy</th>
-                    <th>Copy</th>
                     {props.advancedMode && <th id="fackbpme">BP ME</th>}
                     {props.advancedMode && <th id="fackbuilding">Building</th>}
                     {props.advancedMode && <th id="fackrig">Rig</th>}
                     {props.advancedMode && <th id="facksystem">System</th>}
                     {props.advancedMode && <th id="facktax">Facility tax</th>}
+                    <th>Copy</th>
                   </tr>
                 </thead>
                 <tbody>
