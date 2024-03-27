@@ -208,3 +208,7 @@ input[type="text"]:focus {
 .col-9 {
   width: 80% !important;
 }
+
+td {
+  vertical-align: middle !important;
+}
