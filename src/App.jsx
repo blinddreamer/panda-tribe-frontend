@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
+import Calchome from "./components/Calchome";
 import Home from "./components/Home";
-import Appraisal from "./components/Appraisal";
 import { Route } from "wouter";
 
 const App = () => {
@@ -10,8 +10,8 @@ const App = () => {
       <Route path="/">
         <Home />
       </Route>
-      <Route path="/appraisal">
-        <Appraisal />
+      <Route path="/calculator">
+        <Calchome />
       </Route>
     </>
   );
