@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Collapse, Alert, Spinner, Table } from "react-bootstrap";
+import { Form, Button, Collapse, Alert, Spinner } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import axios from "axios";
 import AdvancedModeToggle from "../components/AdvancedMode";
-
+import Table from "react-bootstrap/Table";
 
 function Calculator(props) {
   // INITIALISE STATE PARAMETERS
@@ -12,7 +12,6 @@ function Calculator(props) {
   const [system, setSystem] = useState(null);
   const [systemValues, setSystemValues] = useState({});
   const [inputValues, setInputValues] = useState({});
-  
 
   useEffect(() => {
     system != null &&
@@ -25,18 +24,18 @@ function Calculator(props) {
       ) &&
       setInputValues((prevState) => ({
         ...prevState,
-        [system.id]: system.value
+        [system.id]: system.value,
       }));
-      
+
     setSystem(null);
   });
   function removeFromMultiBuy(checkId) {
-    props.setMultiBuy(prevState => {
-        const newState = new Map(prevState);
-        newState.delete(checkId);
-        return newState;
+    props.setMultiBuy((prevState) => {
+      const newState = new Map(prevState);
+      newState.delete(checkId);
+      return newState;
     });
-}
+  }
   // HANDEL MATERIAL DISCOUNT FORM
   const handleInputChange = async (material, e) => {
     const tempId = e.target.id;
@@ -48,7 +47,7 @@ function Calculator(props) {
     recalculatePrices(id, material, colId, parent_id, value);
     setInputValues((prevState) => ({
       ...prevState,
-      [tempId]: e.target.value
+      [tempId]: e.target.value,
     }));
   };
 
@@ -119,22 +118,24 @@ function Calculator(props) {
     }
   }
 
-    // COPY FUNCTION
-    async function handleMultiBuyCopy(id) {
-      const matsToCopy = Object.values(props.multiBuy);
-      try {
-        const textToCopy = matsToCopy.map(mat =>
-          mat.materialsList.map(subMat =>
-              `${subMat.name} x${subMat.quantity}`
-          ).join("\n")
-      ).join("\n");
-          await navigator.clipboard.writeText(textToCopy);
-        setIsCopied({[id]: true });
-      } catch (error) {
-        console.error("Error copying text: ", error);
-        alert("Failed to copy text.");
-      }
+  // COPY FUNCTION
+  async function handleMultiBuyCopy(id) {
+    const matsToCopy = Object.values(props.multiBuy);
+    try {
+      const textToCopy = matsToCopy
+        .map((mat) =>
+          mat.materialsList
+            .map((subMat) => `${subMat.name} x${subMat.quantity}`)
+            .join("\n")
+        )
+        .join("\n");
+      await navigator.clipboard.writeText(textToCopy);
+      setIsCopied({ [id]: true });
+    } catch (error) {
+      console.error("Error copying text: ", error);
+      alert("Failed to copy text.");
     }
+  }
 
   // COPY FUNCTION
   async function handleSingleCopy(material, id) {
@@ -175,17 +176,17 @@ function Calculator(props) {
   };
 
   function handleCheck(material, colId, checkId) {
-    props.setMultiBuy(prevState => {
-        const newState = { ...prevState }; // Copy the state object
-        if (newState[checkId]) {
-            delete newState[checkId]; // Remove the item if it exists
-        } else {
-            newState[checkId] = material; // Add the item if it doesn't exist
-        }
-        return newState; // Return the new state object
+    props.setMultiBuy((prevState) => {
+      const newState = { ...prevState }; // Copy the state object
+      if (newState[checkId]) {
+        delete newState[checkId]; // Remove the item if it exists
+      } else {
+        newState[checkId] = material; // Add the item if it doesn't exist
+      }
+      return newState; // Return the new state object
     });
     getSubmatsData(material, colId);
-}
+  }
   // BACKEND CALL FOR THE SUBMATERIALS DATA
   async function getSubmatsData(material, colId) {
     if (!Array.isArray(material.materialsList)) {
@@ -298,43 +299,46 @@ function Calculator(props) {
             </div>
           </div>
         )}
-        {props.initialBlueprint.materialsList && 
-         <div id="pinkrainbow">
-         Materials for creating {props.initialBlueprint.quantity}{" "}
-         {props.initialBlueprint.name}.
-       </div>
-        }
-       {props.initialBlueprint.materialsList &&  <div className="wrapper">
-        <Table
-            
-            striped bordered hover size="sm"
-            key={`header_${props.initialBlueprint.name}`}
-          >
-                <thead>
-              <tr>
-          <th>#</th>      
-          <th>Item</th>
-          <th>Quantity</th>
-          <th>Volume</th>
-          <th>Market Cost</th>
-          <th>Craft Cost</th>
-          <th>Add Multibuy</th>
-          <th>Copy</th>
-          {props.advancedMode && (<th>BP ME</th>)}
-          {props.advancedMode && (<th>Building</th>)}
-          {props.advancedMode && (<th>Rig</th>)}
-          {props.advancedMode && (<th>System</th>)}
-          {props.advancedMode && (<th>Facility tax</th>)}
-        
-          </tr>
-          </thead>
-        <tbody>
-          {props.materialsList.map((mat, index) =>
-            render(props.initialBlueprint.name, mat, index)
-          )}
-           </tbody>
-          </Table>
-        </div>}
+        {props.initialBlueprint.materialsList && (
+          <div id="pinkrainbow">
+            Materials for creating {props.initialBlueprint.quantity}{" "}
+            {props.initialBlueprint.name}.
+          </div>
+        )}
+        {props.initialBlueprint.materialsList && (
+          <div className="wrapper">
+            <Table
+              striped
+              bordered
+              hover
+              size="sm"
+              key={`header_${props.initialBlueprint.name}`}
+            >
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Item</th>
+                  <th>Quantity</th>
+                  <th>Volume</th>
+                  <th>Market Cost</th>
+                  <th>Craft Cost</th>
+                  <th>Add Multibuy</th>
+                  <th>Copy</th>
+                  {props.advancedMode && <th>BP ME</th>}
+                  {props.advancedMode && <th>Building</th>}
+                  {props.advancedMode && <th>Rig</th>}
+                  {props.advancedMode && <th>System</th>}
+                  {props.advancedMode && <th>Facility tax</th>}
+                </tr>
+              </thead>
+              <tbody>
+                {props.materialsList.map((mat, index) =>
+                  render(props.initialBlueprint.name, mat, index)
+                )}
+              </tbody>
+            </Table>
+          </div>
+        )}
       </>
     );
   };
@@ -348,158 +352,226 @@ function Calculator(props) {
     const isLoaded = isDataLoaded[colId];
 
     return (
-      
       <>
-       <tr>
-        <td onClick={()=>  toggleCollapsible("card_" + id, material.isCreatable)}><img src={material.icon} loading="lazy" /></td>
-        <td onClick={()=>  toggleCollapsible("card_" + id, material.isCreatable)}>{material.name}</td>
-        <td onClick={()=>  toggleCollapsible("card_" + id, material.isCreatable)}>{material.quantity}</td>
-        <td onClick={()=>  toggleCollapsible("card_" + id, material.isCreatable)}>{material.volume.toFixed(0)}</td>
-        <td onClick={()=>  toggleCollapsible("card_" + id, material.isCreatable)}>{material.sellPrice}</td>
-        <td onClick={()=>  toggleCollapsible("card_" + id, material.isCreatable)}>{material.craftPrice ? material.craftPrice + material.industryCosts : "-"}</td>
-       
-        <td><Form.Check disabled={!material.isCreatable} id={"check_"+id} key={"check_"+id} type="switch" onClick={()=>handleCheck(material,"col_"+id, "check_"+id)}/></td>
-        <td><Button
-                id={`copy_${id}`}
-                disabled={!isLoaded}
-                onClick={() => handleSingleCopy(material, "copy_" + id)}
+        <tr>
+          <td
+            onClick={() =>
+              toggleCollapsible("card_" + id, material.isCreatable)
+            }
+          >
+            <img src={material.icon} loading="lazy" />
+          </td>
+          <td
+            onClick={() =>
+              toggleCollapsible("card_" + id, material.isCreatable)
+            }
+          >
+            {material.name}
+          </td>
+          <td
+            onClick={() =>
+              toggleCollapsible("card_" + id, material.isCreatable)
+            }
+          >
+            {material.quantity}
+          </td>
+          <td
+            onClick={() =>
+              toggleCollapsible("card_" + id, material.isCreatable)
+            }
+          >
+            {material.volume.toFixed(0)}
+          </td>
+          <td
+            onClick={() =>
+              toggleCollapsible("card_" + id, material.isCreatable)
+            }
+          >
+            {material.sellPrice}
+          </td>
+          <td
+            onClick={() =>
+              toggleCollapsible("card_" + id, material.isCreatable)
+            }
+          >
+            {material.craftPrice
+              ? material.craftPrice + material.industryCosts
+              : "-"}
+          </td>
+
+          <td>
+            <Form.Check
+              disabled={!material.isCreatable}
+              id={"check_" + id}
+              key={"check_" + id}
+              type="switch"
+              onClick={() => handleCheck(material, "col_" + id, "check_" + id)}
+            />
+          </td>
+          <td>
+            <Button
+              id={`copy_${id}`}
+              disabled={!isLoaded}
+              onClick={() => handleSingleCopy(material, "copy_" + id)}
+            >
+              {!isCopied["copy_" + id] ? "Copy" : "Copied"}
+            </Button>
+          </td>
+          {props.advancedMode && (
+            <>
+              <td>
+                <Form.Group controlId={`me_${id}`}>
+                  <Form.Control
+                    type="number"
+                    disabled={!material.isCreatable}
+                    min={0}
+                    name={`me_${id}`}
+                    placeholder="0"
+                    defaultValue={
+                      inputValues[`me_${id}`] ? inputValues[`me_${id}`] : 10
+                    }
+                    onChange={(e) => handleInputChange(material, e)}
+                  />
+                </Form.Group>
+              </td>
+              <td>
+                {" "}
+                <Form.Group controlId={`build_${id}`}>
+                  <Form.Select
+                    disabled={!material.isCreatable}
+                    aria-label="Default select example"
+                    defaultValue={
+                      inputValues[`build_${id}`]
+                        ? inputValues[`build_${id}`]
+                        : props.formData.building
+                    }
+                    onChange={(e) => handleInputChange(material, e)}
+                  >
+                    <option hidden>Select Building</option>
+                    <option value="0">None</option>
+                    <option value="1">Azbel</option>
+                    <option value="2">Raitaru</option>
+                    <option value="3">Sotiyo</option>
+                  </Form.Select>
+                </Form.Group>
+              </td>
+              <td>
+                {" "}
+                <Form.Group controlId={`rig_${id}`}>
+                  <Form.Select
+                    disabled={!material.isCreatable}
+                    aria-label="Default select example"
+                    defaultValue={
+                      inputValues[`rig_${id}`]
+                        ? inputValues[`rig_${id}`]
+                        : props.formData.buildingRig
+                    }
+                    onChange={(e) => handleInputChange(material, e)}
+                  >
+                    <option hidden>Select Building Rig</option>
+                    <option value="0">None</option>
+                    <option value="1">T1</option>
+                    <option value="2">T2</option>
+                  </Form.Select>
+                </Form.Group>
+              </td>
+              <td>
+                <Form.Group>
+                  <Typeahead
+                    id={`system_${id}`}
+                    disabled={!material.isCreatable}
+                    minLength={2}
+                    defaultInputValue={
+                      inputValues[`system_${id}`]
+                        ? inputValues[`system_${id}`]
+                        : props.formData.system
+                    }
+                    onChange={(selected) => {
+                      setSystemValues((prevState) => ({
+                        ...prevState,
+                        [`system_${id}`]: selected[0],
+                      }));
+                      setSystem({
+                        value: selected[0],
+                        id: "system_" + id,
+                        material: material,
+                        parent_id: id,
+                        colId: "col_" + id,
+                      });
+                    }}
+                    options={props.optionsSys}
+                    placeholder="Choose a System..."
+                  />
+                </Form.Group>
+              </td>
+              <td>
+                <Form.Group controlId={`facility_${id}`}>
+                  <Form.Control
+                    disabled={!material.isCreatable}
+                    defaultValue={
+                      inputValues[`facility_${id}`]
+                        ? inputValues[`facility_${id}`]
+                        : props.formData.facilityTax
+                    }
+                    type="number"
+                    min={0}
+                    name={`facility_${id}`}
+                    placeholder="0"
+                    onChange={(e) => handleInputChange(material, e)}
+                  />
+                </Form.Group>
+              </td>
+            </>
+          )}
+        </tr>
+
+        <Collapse
+          id={colId}
+          in={isOpen}
+          onEnter={() => getSubmatsData(material, colId)}
+          timeout={10}
+        >
+          <tr>
+            <td colSpan={props.advancedMode ? 13 : 8}>
+              <Table
+                striped
+                bordered
+                hover
+                size="sm"
+                key={`card_${id}`}
+                id={`card_${id}`}
               >
-                {!isCopied["copy_" + id] ? "Copy" : "Copied"}
-              </Button></td>
-              {props.advancedMode  && (
-                <>
-               <td><Form.Group controlId={`me_${id}`}>
-                      
-                      <Form.Control
-                        type="number"
-                        disabled={!material.isCreatable}
-                        min={0}
-                        name={`me_${id}`}
-                        placeholder="0"
-                        defaultValue= {inputValues[`me_${id}`] ? inputValues[`me_${id}`] : 10}
-                        onChange={(e) => handleInputChange(material, e)}
-                      />
-                    </Form.Group>
-                      </td>
-               <td>  <Form.Group controlId={`build_${id}`}>
-                      
-                      <Form.Select
-                        disabled={!material.isCreatable}
-                        aria-label="Default select example"
-                        defaultValue={inputValues[`build_${id}`] ? inputValues[`build_${id}`] :props.formData.building}
-                        onChange={(e) => handleInputChange(material, e)}
-                      >
-                        <option hidden>Select Building</option>
-                        <option value="0">None</option>
-                        <option value="1">Azbel</option>
-                        <option value="2">Raitaru</option>
-                        <option value="3">Sotiyo</option>
-                      </Form.Select>
-                    </Form.Group>
-                    </td> 
-               <td> <Form.Group controlId={`rig_${id}`}>
-                      
-                      <Form.Select
-                        disabled={!material.isCreatable}
-                        aria-label="Default select example"
-                        defaultValue={inputValues[`rig_${id}`] ? inputValues[`rig_${id}`] :props.formData.buildingRig}
-                        onChange={(e) => handleInputChange(material, e)}
-                      >
-                        <option hidden>Select Building Rig</option>
-                        <option value="0">None</option>
-                        <option value="1">T1</option>
-                        <option value="2">T2</option>
-                      </Form.Select>
-                    </Form.Group>
-                    </td>
-                      <td>
-                      <Form.Group>
-                      
-                      <Typeahead
-                        id={`system_${id}`}
-                        disabled={!material.isCreatable}
-                        minLength={2}
-                        defaultInputValue={inputValues[`system_${id}`] ? inputValues[`system_${id}`] : props.formData.system}
-                        onChange={(selected) => {
-                          setSystemValues((prevState) => ({
-                            ...prevState,
-                            [`system_${id}`]: selected[0],
-                          }));
-                          setSystem({
-                            value: selected[0],
-                            id: "system_"+ id,
-                            material: material,
-                            parent_id: id,
-                            colId: "col_" + id,
-                          });
-                        }}
-                        options={props.optionsSys}
-                        placeholder="Choose a System..."
-                      />
-                    </Form.Group>
-                      </td>
-                      <td>
-                      <Form.Group controlId={`facility_${id}`}>
-                      
-                      <Form.Control
-                      disabled={!material.isCreatable}
-                        defaultValue={inputValues[`facility_${id}`] ? inputValues[`facility_${id}`] : props.formData.facilityTax}
-                         type="number"
-                        min={0}
-                        name={`facility_${id}`}
-                        placeholder="0"
-                        onChange={(e) => handleInputChange(material, e)}
-                      />
-                    </Form.Group>
-                      </td>
-               </>
-              )}
-       </tr>
-         
-        
-       
-          <Collapse
-            id={colId}
-            in={isOpen}
-            onEnter={() => getSubmatsData(material, colId)}
-            timeout={10}
-          ><tr><td colSpan={props.advancedMode? 13 :8}>
-            <Table
-              striped bordered hover size="sm"    
-              key={`card_${id}`}
-              id={`card_${id}`}>
-              <thead>
-              <tr>
-              <th>#</th>      
-              <th>Item</th>
-              <th>Quantity</th>
-              <th>Volume</th>
-              <th>Market Cost</th>
-              <th>Craft Cost</th>
-              <th>Add Multibuy</th>
-              <th>Copy</th>
-              {props.advancedMode && (<th>BP ME</th>)}
-              {props.advancedMode && (<th>Building</th>)}
-              {props.advancedMode && (<th>Rig</th>)}
-              {props.advancedMode && (<th>System</th>)}
-              {props.advancedMode && (<th>Facility tax</th>)}
-             </tr>
-              </thead>
-              <tbody>
-                 {isLoaded && Array.isArray(material.materialsList) ? (
-                material.materialsList.map((mat, index) =>
-                  render(material.name, mat, index)
-                )
-              ) : (
-                <Spinner></Spinner>
-              )}
-              </tbody>
-           </Table>
-           </td>
-           </tr>
-          </Collapse>
-        
-          </>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Volume</th>
+                    <th>Market Cost</th>
+                    <th>Craft Cost</th>
+                    <th>Add Multibuy</th>
+                    <th>Copy</th>
+                    {props.advancedMode && <th>BP ME</th>}
+                    {props.advancedMode && <th>Building</th>}
+                    {props.advancedMode && <th>Rig</th>}
+                    {props.advancedMode && <th>System</th>}
+                    {props.advancedMode && <th>Facility tax</th>}
+                  </tr>
+                </thead>
+                <tbody>
+                  {isLoaded && Array.isArray(material.materialsList) ? (
+                    material.materialsList.map((mat, index) =>
+                      render(material.name, mat, index)
+                    )
+                  ) : (
+                    <Spinner></Spinner>
+                  )}
+                </tbody>
+              </Table>
+            </td>
+          </tr>
+        </Collapse>
+      </>
     );
   }
   // END RESULT
