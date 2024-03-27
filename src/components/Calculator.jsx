@@ -311,7 +311,7 @@ function Calculator(props) {
             key={`header_${props.initialBlueprint.name}`}
           >
                 <thead>
-              <tr>
+          <tr>
           <th>#</th>      
           <th>Item</th>
           <th>Quantity</th>
@@ -346,11 +346,11 @@ function Calculator(props) {
     const colId = "col_" + id;
     const isOpen = props.openState[openId]; // Get the open state for the card
     const isLoaded = isDataLoaded[colId];
-
+    const trColor = index % 2 == 0 ? "huku" : "gnomo"; 
     return (
       
       <>
-       <tr>
+       <tr className={trColor}>
         <td onClick={()=>  toggleCollapsible("card_" + id, material.isCreatable)}><img src={material.icon} loading="lazy" /></td>
         <td onClick={()=>  toggleCollapsible("card_" + id, material.isCreatable)}>{material.name}</td>
         <td onClick={()=>  toggleCollapsible("card_" + id, material.isCreatable)}>{material.quantity}</td>
@@ -463,7 +463,7 @@ function Calculator(props) {
             in={isOpen}
             onEnter={() => getSubmatsData(material, colId)}
             timeout={10}
-          ><tr><td colSpan={props.advancedMode? 13 :8}>
+          ><tr className={trColor}><td colSpan={props.advancedMode? 13 :8}>
             <Table
               striped bordered hover size="sm"    
               key={`card_${id}`}
