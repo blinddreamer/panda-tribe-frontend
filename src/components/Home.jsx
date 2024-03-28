@@ -16,7 +16,7 @@ function Appraisal() {
         </div>
 
         <div>
-          <h2>BETA!</h2>
+          <h2>UNDER CONSTRUCTION!</h2>
 
           <main>
             <p>
@@ -31,9 +31,11 @@ function Appraisal() {
             <p>
               With eve-helper, you can calculate material requirements,
               production costs, profit margins, and more for a wide range of
-              industrial activities. Our user-friendly interface and
-              customizable settings make it easy to optimize your industry and
-              maximize your profits.
+              industrial activities.{" "}
+              <p>
+                Our user-friendly interface and customizable settings make it
+                easy to optimize your industry and maximize your profits.
+              </p>
             </p>
           </main>
         </div>

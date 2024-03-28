@@ -314,7 +314,7 @@ function Calculator(props) {
                 <th>Volume</th>
                 <th>Market Cost</th>
                 <th>Craft Cost</th>
-                <th>Add Multibuy</th>
+                <th>Multibuy</th>
                 {props.advancedMode && <th id="fackbpme">BP ME</th>}
                 {props.advancedMode && <th id="fackbuilding">Building</th>}
                 {props.advancedMode && <th id="fackrig">Rig</th>}
@@ -399,7 +399,7 @@ function Calculator(props) {
               onClick={() => handleCheck(material, "col_" + id, "check_" + id)}
             />
           </td>
-         
+
           {props.advancedMode && (
             <>
               <td>
@@ -483,7 +483,7 @@ function Calculator(props) {
                       });
                     }}
                     options={props.optionsSys}
-                    placeholder="Choose a System..."
+                    placeholder="System"
                   />
                 </Form.Group>
               </td>
@@ -504,9 +504,9 @@ function Calculator(props) {
                   />
                 </Form.Group>
               </td>
-             </>
+            </>
           )}
-           <td>
+          <td>
             <Button
               id={`copy_${id}`}
               disabled={!isLoaded}
@@ -542,7 +542,7 @@ function Calculator(props) {
                     <th>Volume</th>
                     <th>Market Cost</th>
                     <th>Craft Cost</th>
-                    <th>Add Multibuy</th>
+                    <th>Multibuy</th>
                     {props.advancedMode && <th id="fackbpme">BP ME</th>}
                     {props.advancedMode && <th id="fackbuilding">Building</th>}
                     {props.advancedMode && <th id="fackrig">Rig</th>}
