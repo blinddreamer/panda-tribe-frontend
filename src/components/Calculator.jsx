@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Collapse, Alert, Spinner } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
 import axios from "axios";
 import AdvancedModeToggle from "../components/AdvancedMode";
 import Table from "react-bootstrap/Table";

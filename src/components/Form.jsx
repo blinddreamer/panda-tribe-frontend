@@ -1,5 +1,6 @@
 import { Form, Button, Spinner } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
 import React, { useState } from "react";
 
 function GetForm(props) {
