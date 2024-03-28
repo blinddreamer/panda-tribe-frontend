@@ -147,26 +147,23 @@ function Calculator(props) {
   }
   // INITIAL BACKEND CALL TO OBTAIN INITIAL DATA
 
-  const craftPrice = (material,id) => {
-    const price = material.materialsList.reduce(
-      (accumulator, mat, index) => {
-     //   const elementId = (
-        //   "card_" +
-        //   props.initialBlueprint.name +
-        //   "_" +
-        //   mat.name +
-        //   index
-        // ).replace(" ", "_");
-        const state = props.openState[id];
-        return (
-          accumulator +
-          (mat.craftPrice && state
-            ? mat.craftPrice + mat.industryCosts
-            : mat.sellPrice)
-        );
-      },
-      0
-    );
+  const craftPrice = (material, id) => {
+    const price = material.materialsList.reduce((accumulator, mat, index) => {
+      //   const elementId = (
+      //   "card_" +
+      //   props.initialBlueprint.name +
+      //   "_" +
+      //   mat.name +
+      //   index
+      // ).replace(" ", "_");
+      const state = props.openState[id];
+      return (
+        accumulator +
+        (mat.craftPrice && state
+          ? mat.craftPrice + mat.industryCosts
+          : mat.sellPrice)
+      );
+    }, 0);
     return price + props.initialBlueprint.industryCosts;
   };
 
@@ -243,7 +240,10 @@ function Calculator(props) {
               Volume : {props.initialBlueprint.volume + " m³"}
               <p id="bpheader" />
               Estimate Crafting price:{" "}
-              {craftPrice(props.initialBlueprint, "card_"+ props.initialBlueprint.name).toLocaleString("en-US", {
+              {craftPrice(
+                props.initialBlueprint,
+                "card_" + props.initialBlueprint.name
+              ).toLocaleString("en-US", {
                 style: "currency",
                 currency: "ISK",
                 minimumFractionDigits: 2,
@@ -257,18 +257,25 @@ function Calculator(props) {
               })}
               <p id="bpheader" />
               Estimate Profit :{" "}
-              {(props.initialBlueprint.sellPrice - craftPrice(props.initialBlueprint, "card_"+props.initialBlueprint.name)).toLocaleString(
-                "en-US",
-                {
-                  style: "currency",
-                  currency: "ISK",
-                  minimumFractionDigits: 2,
-                }
-              )}
+              {(
+                props.initialBlueprint.sellPrice -
+                craftPrice(
+                  props.initialBlueprint,
+                  "card_" + props.initialBlueprint.name
+                )
+              ).toLocaleString("en-US", {
+                style: "currency",
+                currency: "ISK",
+                minimumFractionDigits: 2,
+              })}
               <p id="bpheader" />
               Margin :{" "}
               {(
-                ((props.initialBlueprint.sellPrice - craftPrice(props.initialBlueprint, "card_"+props.initialBlueprint.name)) /
+                ((props.initialBlueprint.sellPrice -
+                  craftPrice(
+                    props.initialBlueprint,
+                    "card_" + props.initialBlueprint.name
+                  )) /
                   props.initialBlueprint.sellPrice) *
                 100
               ).toFixed(2) + " %"}
@@ -386,9 +393,7 @@ function Calculator(props) {
               toggleCollapsible("card_" + id, material.isCreatable)
             }
           >
-            {material.craftPrice
-              ? craftPrice(material, openId)
-              : "-"}
+            {material.craftPrice ? craftPrice(material, openId) : "-"}
           </td>
 
           <td>
