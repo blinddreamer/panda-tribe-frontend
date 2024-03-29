@@ -202,6 +202,7 @@ td {
 
 th {
   vertical-align: middle !important;
+  transition: 1s !important;
 }
 
 /*TD sizing*/
@@ -244,7 +245,7 @@ tr {
 
 /*transition swup */
 html.is-changing .transition-main {
-  transition: opacity 250ms ease-in-out;
+  transition: opacity 500ms ease-in-out;
 }
 
 html.is-animating .transition-main {
