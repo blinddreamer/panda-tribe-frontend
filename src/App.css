@@ -243,3 +243,7 @@ textarea {
 .form-label {
   margin-top: 5px;
 }
+
+tr {
+  transform: 1s !important;
+}

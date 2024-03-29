@@ -1,23 +1,12 @@
 import { useState } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import ResponsiveAlert from "./Alert";
+import AnimatedPage from "./Animated";
 
-function Appraisal() {
+function Homepage() {
   return (
     <>
-      <div id="HukuBartopolos">
-        <Header />
-        <div>
-          <ResponsiveAlert
-            breakpointWidth={1280}
-            message="Optimizing for desktop first, screen resolution too low!"
-          />
-        </div>
-
+      <AnimatedPage>
         <div>
           <h2>UNDER CONSTRUCTION!</h2>
-
           <main>
             <p>
               eve-helper is an advanced industrial calculator aiming to help
@@ -39,9 +28,8 @@ function Appraisal() {
             </p>
           </main>
         </div>
-        <Footer />
-      </div>
+      </AnimatedPage>
     </>
   );
 }
-export default Appraisal;
+export default Homepage;
