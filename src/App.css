@@ -183,16 +183,9 @@ svg {
 
 #HukuBartopolos {
   background-color: var(--bs-body-bg);
-  padding: 15px;
-  border-radius: 15px;
   font-size: var(--bs-body-font-size);
-}
-
-#HukuBartopolos {
-  background-color: var(--bs-body-bg);
   padding: 15px;
   border-radius: 15px;
-  transition: 1s;
 }
 
 #AletaOceans {

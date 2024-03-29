@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import Calchome from "./components/Calchome";
 import Home from "./components/Home";
-import { Route } from "wouter";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DarkModeToggle from "./components/darkmode";
 import Footer from "./components/Footer";
 import Container from "react-bootstrap/Container";
@@ -37,14 +37,15 @@ const App = () => {
           />
         </div>
         <main id="swup" class="transition-main">
-          <Route path="/">
-            <Home />
-          </Route>
-          <Route path="/calculator">
-            <Calchome />
-          </Route>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/calculator" element={<Calchome />} />
+            </Routes>
+          </BrowserRouter>
+
+          <Footer />
         </main>
-        <Footer />
       </div>
     </>
   );
