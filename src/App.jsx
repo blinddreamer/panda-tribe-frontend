@@ -13,30 +13,31 @@ import ResponsiveAlert from "./components/Alert";
 const App = () => {
   return (
     <>
-      <div id="HukuBartopolos">
-        <Navbar expand="lg" className="bg-body-tertiary navbarh">
-          <Container>
-            <Navbar.Brand>eve-helper</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
-                <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/calculator">Calculator</Nav.Link>
-              </Nav>
-              <Nav>
-                <DarkModeToggle />
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-        <p />
-        <div>
-          <ResponsiveAlert
-            breakpointWidth={1280}
-            message="Optimizing for desktop first, screen resolution too low!"
-          />
-        </div>
-        <main id="swup" class="transition-main">
+      <main id="swup" class="transition-main">
+        <div id="HukuBartopolos">
+          <Navbar expand="lg" className="bg-body-tertiary navbarh">
+            <Container>
+              <Navbar.Brand>eve-helper</Navbar.Brand>
+              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="me-auto">
+                  <Nav.Link href="/">Home</Nav.Link>
+                  <Nav.Link href="/calculator">Calculator</Nav.Link>
+                </Nav>
+                <Nav>
+                  <DarkModeToggle />
+                </Nav>
+              </Navbar.Collapse>
+            </Container>
+          </Navbar>
+          <p />
+
+          <div>
+            <ResponsiveAlert
+              breakpointWidth={1280}
+              message="Optimizing for desktop first, screen resolution too low!"
+            />
+          </div>
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -45,8 +46,8 @@ const App = () => {
           </BrowserRouter>
 
           <Footer />
-        </main>
-      </div>
+        </div>
+      </main>
     </>
   );
 };
