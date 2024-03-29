@@ -2,8 +2,7 @@ import React from "react";
 import "./App.css";
 import Calchome from "./components/Calchome";
 import Home from "./components/Home";
-import { Route, useLocation, useRouter, Link } from "wouter";
-import { AnimatePresence } from "framer-motion";
+import { Route } from "wouter";
 import DarkModeToggle from "./components/darkmode";
 import Footer from "./components/Footer";
 import Container from "react-bootstrap/Container";
@@ -12,8 +11,6 @@ import Navbar from "react-bootstrap/Navbar";
 import ResponsiveAlert from "./components/Alert";
 
 const App = () => {
-  const location = useLocation();
-  const router = useRouter();
   return (
     <>
       <div id="HukuBartopolos">
@@ -39,16 +36,14 @@ const App = () => {
             message="Optimizing for desktop first, screen resolution too low!"
           />
         </div>
-
-        <AnimatePresence mode={"wait"}>
-          <Route key="1" path="/">
+        <main id="swup" class="transition-main">
+          <Route path="/">
             <Home />
           </Route>
-          <Route key="2" path="/calculator">
+          <Route path="/calculator">
             <Calchome />
           </Route>
-        </AnimatePresence>
-
+        </main>
         <Footer />
       </div>
     </>
