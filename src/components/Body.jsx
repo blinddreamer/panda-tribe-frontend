@@ -22,8 +22,8 @@ function Body(props) {
   const [multiBuy, setMultiBuy] = useState({});
   const [crafitng, setCrafting] = useState({});
 
-  const backend = "https://api.eve-helper.com/api/v1/";
-  // const backend = "http://thunder:6549/api/v1/";
+   const backend = "https://api.eve-helper.com/api/v1/";
+  //  const backend = "http://thunder:8080/api/v1/";
 
   useEffect(() => {
     isClicked && submitForm();
