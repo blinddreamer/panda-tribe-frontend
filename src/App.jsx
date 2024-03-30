@@ -10,6 +10,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import ResponsiveAlert from "./components/Alert";
 import PageNotFound from "./components/404";
+import Appraisal from "./components/Appraisal";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
                 <Nav className="me-auto">
                   <Nav.Link href="/">Home</Nav.Link>
                   <Nav.Link href="/calculator">Calculator</Nav.Link>
+                  <Nav.Link href="/Appraisal">Appraisal</Nav.Link>
                 </Nav>
                 <Nav>
                   <DarkModeToggle />
@@ -43,6 +45,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/calculator" element={<Calchome />} />
+              <Route path="/Appraisal" element={<Appraisal />} />
               <Route path="*" element={<PageNotFound />} />
             </Routes>
           </BrowserRouter>
