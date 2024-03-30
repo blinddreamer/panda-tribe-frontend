@@ -115,24 +115,53 @@ function Calculator(props) {
     }
   }
 
+  function generateCopyText(material, step) {
+    // Initialize an empty string to store the copy text
+    let copyText = '';
+
+    // Iterate through the material's materialsList
+    if(Array.isArray(material.materialsList) && material.isCreatable && (material.copy || step==0)){
+    for (const subMaterial of material.materialsList) {
+        // Recursively generate copy text for each sub-material
+        copyText += generateCopyText(subMaterial, step+1);
+    }
+  }
+    // Construct the copy text for the current material (if it's not marked as copy)
+    if (!material.copy && step!=0) {
+        copyText += `${material.name} x${material.quantity} \n`;
+    }
+
+    return copyText;
+}
+
   // COPY FUNCTION
   async function handleMultiBuyCopy(id) {
-    const matsToCopy = Object.values(props.multiBuy);
-    try {
-      const textToCopy = matsToCopy
-        .map((mat) =>
-          mat.materialsList
-            .map((subMat) => `${subMat.name} x${subMat.quantity}`)
-            .join("\n")
-        )
-        .join("\n");
-      await navigator.clipboard.writeText(textToCopy);
-      setIsCopied({ [id]: true });
-    } catch (error) {
+    // const matsToCopy = Object.values(props.multiBuy);
+    // try {
+    //   const textToCopy = matsToCopy
+    //     .map((mat) =>
+    //       mat.materialsList
+    //         .map((subMat) => `${subMat.name} x${subMat.quantity}`)
+    //         .join("\n")
+    //     )
+    //     .join("\n");
+    //   await navigator.clipboard.writeText(textToCopy);
+    //   setIsCopied({ [id]: true });
+    // } catch (error) {
+    //   console.error("Error copying text: ", error);
+    //   alert("Failed to copy text.");
+    // }
+    try{
+      //const textToCopy = ;
+     // console.log(textToCopy);
+      await navigator.clipboard.writeText(generateCopyText(props.initialBlueprint,0));
+      console.log("Text copied")
+      setIsCopied({[id]: true });
+    } catch{
       console.error("Error copying text: ", error);
       alert("Failed to copy text.");
     }
-  }
+   }
 
   // COPY FUNCTION
   async function handleSingleCopy(material, id) {
@@ -141,7 +170,7 @@ function Calculator(props) {
         .map((mat) => `${mat.name} x${mat.quantity}`)
         .join("\n");
       await navigator.clipboard.writeText(textToCopy);
-      setIsCopied({ [id]: true });
+      setIsCopied({[id]: true });
     } catch (error) {
       console.error("Error copying text: ", error);
       alert("Failed to copy text.");
@@ -180,16 +209,16 @@ function Calculator(props) {
       ...prevState,
       [checkId]: !prevState[checkId]
     }));
-    props.setMultiBuy((prevState) => {
-      const newState = { ...prevState }; // Copy the state object
-      if (newState[checkId]) {
-        delete newState[checkId]; // Remove the item if it exists
-      } else {
-        newState[checkId] = material; // Add the item if it doesn't exist
-      }
-      return newState; // Return the new state object
-    });
-    
+    // props.setMultiBuy((prevState) => {
+    //   const newState = { ...prevState }; // Copy the state object
+    //   if (newState[checkId]) {
+    //     delete newState[checkId]; // Remove the item if it exists
+    //   } else {
+    //     newState[checkId] = material; // Add the item if it doesn't exist
+    //   }
+    //   return newState; // Return the new state object
+    // });
+    material.copy = !material.copy;
     getSubmatsData(material, colId);
   }
   // BACKEND CALL FOR THE SUBMATERIALS DATA
@@ -371,11 +400,12 @@ function Calculator(props) {
     const isOpen = props.openState[openId]; // Get the open state for the card
     const isLoaded = isDataLoaded[colId];
     const trColor = index % 2 == 0 ? "huku" : "gnomo";
+    const isCheckable = (parent == props.initialBlueprint.name ? false : !isChecked["card_"+parent]) || !material.isCreatable || isOpen;
     return (
       <>
         <tr className={trColor}>
           <td
-          role={material.isCreatable && "button"}
+          role={material.isCreatable ? "button" :""}
           aria-expanded={props.openState["card_" + id]}
           aria-controls="example-collapse-text"
             onClick={() =>
@@ -385,7 +415,7 @@ function Calculator(props) {
             <img src={material.icon} loading="lazy" />
           </td>
           <td
-          role={material.isCreatable && "button"}
+          role={material.isCreatable ? "button" :""}
           aria-controls="example-collapse-text"
           aria-expanded={props.openState["card_" + id]}
             onClick={() =>
@@ -395,7 +425,7 @@ function Calculator(props) {
             {material.name}
           </td>
           <td
-          role={material.isCreatable && "button"}
+          role={material.isCreatable ? "button" :""}
           aria-expanded={props.openState["card_" + id]}
             aria-controls="example-collapse-text"
             onClick={() =>
@@ -405,7 +435,7 @@ function Calculator(props) {
             {material.quantity}
           </td>
           <td
-          role={material.isCreatable && "button"}
+          role={material.isCreatable ? "button" :""}
           aria-expanded={props.openState["card_" + id]}
           aria-controls="example-collapse-text"
             onClick={() =>
@@ -415,7 +445,7 @@ function Calculator(props) {
             {material.volume.toFixed(0)}
           </td>
           <td
-          role={material.isCreatable && "button"}
+          role={material.isCreatable ? "button" :""}
           aria-expanded={props.openState["card_" + id]}
           aria-controls="example-collapse-text"
             onClick={() =>
@@ -425,7 +455,7 @@ function Calculator(props) {
             {material.sellPrice}
           </td>
           <td
-          role={material.isCreatable && "button"}
+          role={material.isCreatable ? "button" :""}
           aria-expanded={props.openState["card_" + id]}
           aria-controls="example-collapse-text"
             onClick={() =>
@@ -437,8 +467,8 @@ function Calculator(props) {
 
           <td>
             <Form.Check
-              role={material.isCreatable && "button"}
-              disabled={!material.isCreatable || isOpen}
+              role={material.isCreatable ? "button" :""}
+              disabled={isCheckable} 
               id={"check_" + id}
               key={"check_" + id}
               type="switch"
@@ -481,6 +511,8 @@ function Calculator(props) {
                     <option value="1">Azbel</option>
                     <option value="2">Raitaru</option>
                     <option value="3">Sotiyo</option>
+                    <option value="4">Athanor</option>
+                    <option value="5">Tatara</option>
                   </Form.Select>
                 </Form.Group>
               </td>
