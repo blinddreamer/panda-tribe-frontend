@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Collapse, Alert, Spinner } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
 import axios from "axios";
 import AdvancedModeToggle from "../components/AdvancedMode";
 import Table from "react-bootstrap/Table";
@@ -252,7 +253,10 @@ function Calculator(props) {
               Volume : {props.initialBlueprint.volume + " m³"}
               <p id="bpheader" />
               Estimate Crafting price:{" "}
-              {craftPrice(props.initialBlueprint, "card_"+ props.initialBlueprint.name).toLocaleString("en-US", {
+              {craftPrice(
+                props.initialBlueprint,
+                "card_" + props.initialBlueprint.name
+              ).toLocaleString("en-US", {
                 style: "currency",
                 currency: "ISK",
                 minimumFractionDigits: 2,
@@ -266,18 +270,25 @@ function Calculator(props) {
               })}
               <p id="bpheader" />
               Estimate Profit :{" "}
-              {(props.initialBlueprint.sellPrice - craftPrice(props.initialBlueprint, "card_"+props.initialBlueprint.name)).toLocaleString(
-                "en-US",
-                {
-                  style: "currency",
-                  currency: "ISK",
-                  minimumFractionDigits: 2,
-                }
-              )}
+              {(
+                props.initialBlueprint.sellPrice -
+                craftPrice(
+                  props.initialBlueprint,
+                  "card_" + props.initialBlueprint.name
+                )
+              ).toLocaleString("en-US", {
+                style: "currency",
+                currency: "ISK",
+                minimumFractionDigits: 2,
+              })}
               <p id="bpheader" />
               Margin :{" "}
               {(
-                ((props.initialBlueprint.sellPrice - craftPrice(props.initialBlueprint, "card_"+props.initialBlueprint.name)) /
+                ((props.initialBlueprint.sellPrice -
+                  craftPrice(
+                    props.initialBlueprint,
+                    "card_" + props.initialBlueprint.name
+                  )) /
                   props.initialBlueprint.sellPrice) *
                 100
               ).toFixed(2) + " %"}
@@ -413,9 +424,7 @@ function Calculator(props) {
               toggleCollapsible("card_" + id, material.isCreatable)
             }
           >
-            {material.craftPrice
-              ? craftPrice(material, openId)
-              : "-"}
+            {material.craftPrice ? craftPrice(material, openId) : "-"}
           </td>
 
           <td>

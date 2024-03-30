@@ -183,13 +183,7 @@ svg {
 
 #HukuBartopolos {
   background-color: var(--bs-body-bg);
-  padding: 15px;
-  border-radius: 15px;
   font-size: var(--bs-body-font-size);
-}
-
-#HukuBartopolos {
-  background-color: var(--bs-body-bg);
   padding: 15px;
   border-radius: 15px;
 }
@@ -208,6 +202,7 @@ td {
 
 th {
   vertical-align: middle !important;
+  transition: 1s !important;
 }
 
 /*TD sizing*/
@@ -242,4 +237,35 @@ textarea {
 
 .form-label {
   margin-top: 5px;
+}
+
+tr {
+  transform: 1s !important;
+}
+
+/*transition swup */
+.transition-main {
+  transition-property: opacity, transform;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+  transform: translateX(0);
+  opacity: 1;
+}
+
+html.is-animating .transition-main {
+  opacity: 0;
+  transform: translateX(-1em);
+}
+
+html.is-leaving .transition-main {
+  transform: translateX(1em);
+}
+
+html.is-animating.to-left .transition-main {
+  opacity: 0;
+  transform: translateX(1em);
+}
+
+html.is-leaving.to-left .transition-main {
+  transform: translateX(-1em);
 }
