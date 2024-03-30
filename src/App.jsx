@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Calchome from "./components/Calchome";
+import Calchome from "./components/Calculator_Home";
 import Home from "./components/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DarkModeToggle from "./components/darkmode";
@@ -9,6 +9,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import ResponsiveAlert from "./components/Alert";
+import PageNotFound from "./components/404";
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/calculator" element={<Calchome />} />
+              <Route path="*" element={<PageNotFound />} />
             </Routes>
           </BrowserRouter>
 

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Calculator from "../components/Calculator";
-import GetForm from "./Form";
+import Calculator from "./Calculator";
+import GetForm from "./Calculator_Form";
 import axios from "axios";
 
 function Body(props) {
@@ -21,7 +21,7 @@ function Body(props) {
   const [stations, setStations] = useState([{}]);
   const [multiBuy, setMultiBuy] = useState({});
 
-   const backend = "https://api.eve-helper.com/api/v1/";
+  const backend = "https://api.eve-helper.com/api/v1/";
   //const backend = "http://thunder:6549/api/v1/";
 
   useEffect(() => {

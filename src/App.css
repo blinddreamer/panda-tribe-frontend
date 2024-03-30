@@ -243,6 +243,10 @@ tr {
   transform: 1s !important;
 }
 
+#fof {
+  font-size: 170px;
+}
+
 /*transition swup */
 .transition-main {
   transition-property: opacity, transform;
