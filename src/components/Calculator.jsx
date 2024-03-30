@@ -13,6 +13,7 @@ function Calculator(props) {
   const [system, setSystem] = useState(null);
   const [systemValues, setSystemValues] = useState({});
   const [inputValues, setInputValues] = useState({});
+  const [isChecked, setIsChecked] = useState({});
  
 
   useEffect(() => {
@@ -175,6 +176,10 @@ function Calculator(props) {
       ...prevState,
       [checkId]: !prevState[checkId]
     }));
+    setIsChecked((prevState) => ({
+      ...prevState,
+      [checkId]: !prevState[checkId]
+    }));
     props.setMultiBuy((prevState) => {
       const newState = { ...prevState }; // Copy the state object
       if (newState[checkId]) {
@@ -223,10 +228,13 @@ function Calculator(props) {
         ...prevState,
         [id]: !prevState[id], // Toggle the state for the given ID
       }));
-      props.setCrafting((prevState) => ({
-        ...prevState,
-        [id]: !prevState[id], // Toggle the state for the given ID
-      }));
+      const checkBox = isChecked[id];
+      if(!checkBox) {
+        props.setCrafting((prevState) => ({
+          ...prevState,
+          [id]: !prevState[id]
+        }));
+      }
     }
   };
   // UPDATE LOADED DATA
