@@ -12,6 +12,7 @@ function Calculator(props) {
   const [system, setSystem] = useState(null);
   const [systemValues, setSystemValues] = useState({});
   const [inputValues, setInputValues] = useState({});
+ 
 
   useEffect(() => {
     system != null &&
@@ -101,11 +102,11 @@ function Calculator(props) {
         throw new Error(`Server Error: ${response.statusText}`);
       }
       const data = response.data;
-      material.craftPrice = data.craftPrice;
       material.industryCosts = data.industryCosts;
       material.materialsList = data.materialsList;
       props.setMaterialsList(...[props.materialsList]);
       updateLoadedData(colId);
+      material.craftPrice = craftPrice(material, "card_"+parent_id)
     } catch (error) {
       console.error("Error:", error.message);
       props.setErrorMessage(error.message);
@@ -147,29 +148,32 @@ function Calculator(props) {
   // INITIAL BACKEND CALL TO OBTAIN INITIAL DATA
 
   const craftPrice = (material,id) => {
+    
+     
     const price = material.materialsList.reduce(
-      (accumulator, mat, index) => {
-     //   const elementId = (
-        //   "card_" +
-        //   props.initialBlueprint.name +
-        //   "_" +
-        //   mat.name +
-        //   index
-        // ).replace(" ", "_");
-        const state = props.openState[id];
-        return (
+      (accumulator, mat,index) => {
+        const openId = (id+"_"+ mat.name+index).replaceAll(" ","_");
+        const state = props.crafitng[openId];
+       
+          return (
           accumulator +
-          (mat.craftPrice && state
+          ((mat.craftPrice != "-" && mat.craftPrice !=null && state)
             ? mat.craftPrice + mat.industryCosts
             : mat.sellPrice)
         );
       },
       0
     );
-    return price + props.initialBlueprint.industryCosts;
-  };
+    material.craftPrice = price + material.industryCosts;
+    return material.craftPrice;
+};
 
   function handleCheck(material, colId, checkId) {
+  
+    props.setCrafting((prevState) => ({
+      ...prevState,
+      [checkId]: !prevState[checkId]
+    }));
     props.setMultiBuy((prevState) => {
       const newState = { ...prevState }; // Copy the state object
       if (newState[checkId]) {
@@ -179,6 +183,7 @@ function Calculator(props) {
       }
       return newState; // Return the new state object
     });
+    
     getSubmatsData(material, colId);
   }
   // BACKEND CALL FOR THE SUBMATERIALS DATA
@@ -198,8 +203,9 @@ function Calculator(props) {
           throw new Error(`Server Error: ${response.statusText}`);
         }
         const data = response.data;
-        material.craftPrice = data.craftPrice;
+        const id = colId.split(/_(.*)/s)[1];
         material.materialsList = data.materialsList;
+        material.craftPrice = craftPrice(material,"cards_"+id);
         props.setMaterialsList(...[props.materialsList]);
         updateLoadedData(colId);
       } catch (error) {
@@ -213,6 +219,10 @@ function Calculator(props) {
   const toggleCollapsible = (id, isCreatable) => {
     if (isCreatable) {
       props.setOpenState((prevState) => ({
+        ...prevState,
+        [id]: !prevState[id], // Toggle the state for the given ID
+      }));
+      props.setCrafting((prevState) => ({
         ...prevState,
         [id]: !prevState[id], // Toggle the state for the given ID
       }));
@@ -336,7 +346,7 @@ function Calculator(props) {
 
   // RENDER MATERIALS
   function render(parent, material, index) {
-    const id = (parent + "_" + material.name + index).replace(" ", "_"); // Unique ID for the card
+    const id = (parent + "_" + material.name + index).replaceAll(" ", "_"); // Unique ID for the card
     const openId = "card_" + id;
     const colId = "col_" + id;
     const isOpen = props.openState[openId]; // Get the open state for the card
@@ -346,6 +356,9 @@ function Calculator(props) {
       <>
         <tr className={trColor}>
           <td
+          role={material.isCreatable && "button"}
+          aria-expanded={props.openState["card_" + id]}
+          aria-controls="example-collapse-text"
             onClick={() =>
               toggleCollapsible("card_" + id, material.isCreatable)
             }
@@ -353,6 +366,9 @@ function Calculator(props) {
             <img src={material.icon} loading="lazy" />
           </td>
           <td
+          role={material.isCreatable && "button"}
+          aria-controls="example-collapse-text"
+          aria-expanded={props.openState["card_" + id]}
             onClick={() =>
               toggleCollapsible("card_" + id, material.isCreatable)
             }
@@ -360,6 +376,9 @@ function Calculator(props) {
             {material.name}
           </td>
           <td
+          role={material.isCreatable && "button"}
+          aria-expanded={props.openState["card_" + id]}
+            aria-controls="example-collapse-text"
             onClick={() =>
               toggleCollapsible("card_" + id, material.isCreatable)
             }
@@ -367,6 +386,9 @@ function Calculator(props) {
             {material.quantity}
           </td>
           <td
+          role={material.isCreatable && "button"}
+          aria-expanded={props.openState["card_" + id]}
+          aria-controls="example-collapse-text"
             onClick={() =>
               toggleCollapsible("card_" + id, material.isCreatable)
             }
@@ -374,6 +396,9 @@ function Calculator(props) {
             {material.volume.toFixed(0)}
           </td>
           <td
+          role={material.isCreatable && "button"}
+          aria-expanded={props.openState["card_" + id]}
+          aria-controls="example-collapse-text"
             onClick={() =>
               toggleCollapsible("card_" + id, material.isCreatable)
             }
@@ -381,6 +406,9 @@ function Calculator(props) {
             {material.sellPrice}
           </td>
           <td
+          role={material.isCreatable && "button"}
+          aria-expanded={props.openState["card_" + id]}
+          aria-controls="example-collapse-text"
             onClick={() =>
               toggleCollapsible("card_" + id, material.isCreatable)
             }
@@ -392,11 +420,12 @@ function Calculator(props) {
 
           <td>
             <Form.Check
-              disabled={!material.isCreatable}
+              role={material.isCreatable && "button"}
+              disabled={!material.isCreatable || isOpen}
               id={"check_" + id}
               key={"check_" + id}
               type="switch"
-              onClick={() => handleCheck(material, "col_" + id, "check_" + id)}
+              onClick={() => handleCheck(material, "col_" + id, "card_" + id)}
             />
           </td>
 
@@ -523,7 +552,7 @@ function Calculator(props) {
           in={isOpen}
           onEnter={() => getSubmatsData(material, colId)}
           timeout={10}
-        >
+         >
           <tr>
             <td colSpan={props.advancedMode ? 13 : 8}>
               <Table
@@ -554,7 +583,7 @@ function Calculator(props) {
                 <tbody>
                   {isLoaded && Array.isArray(material.materialsList) ? (
                     material.materialsList.map((mat, index) =>
-                      render(material.name, mat, index)
+                      render(id, mat, index)
                     )
                   ) : (
                     <Spinner></Spinner>

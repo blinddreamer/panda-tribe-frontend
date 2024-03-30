@@ -20,6 +20,7 @@ function Body(props) {
   const [regions, setRegions] = useState([{}]);
   const [stations, setStations] = useState([{}]);
   const [multiBuy, setMultiBuy] = useState({});
+  const [crafitng, setCrafting] = useState({});
 
    const backend = "https://api.eve-helper.com/api/v1/";
   //const backend = "http://thunder:6549/api/v1/";
@@ -80,6 +81,7 @@ function Body(props) {
       const data = response.data;
       setMaterialsList(data.materialsList);
       setInitialBlueprint(data);
+      setCrafting({["card_" + data.name]: true})
       setMultiBuy({
         ["check_" + data.name]: initialBlueprint,
       });
@@ -127,6 +129,8 @@ function Body(props) {
               formData={formData}
               multiBuy={multiBuy}
               setMultiBuy={setMultiBuy}
+              crafitng={crafitng}
+              setCrafting={setCrafting}
             />
           </Col>
         </Row>
