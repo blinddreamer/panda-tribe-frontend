@@ -6,7 +6,7 @@ import Calculator from "./Calculator";
 import GetForm from "./Calculator_Form";
 import axios from "axios";
 
-function Body(props) {
+function CalcBody(props) {
   const [openState, setOpenState] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [initialBlueprint, setInitialBlueprint] = useState({});
@@ -21,8 +21,8 @@ function Body(props) {
   const [stations, setStations] = useState([{}]);
   const [crafitng, setCrafting] = useState({});
 
-    const backend = "https://api.eve-helper.com/api/v1/";
-    // const backend = "http://thunder:8080/api/v1/";
+  const backend = "https://api.eve-helper.com/api/v1/";
+  // const backend = "http://thunder:8080/api/v1/";
 
   useEffect(() => {
     isClicked && submitForm();
@@ -80,7 +80,7 @@ function Body(props) {
       const data = response.data;
       setMaterialsList(data.materialsList);
       setInitialBlueprint(data);
-      setCrafting({["card_" + data.name]: true})
+      setCrafting({ ["card_" + data.name]: true });
     } catch (error) {
       console.error("Error:", error.message);
       setErrorMessage(
@@ -133,4 +133,4 @@ function Body(props) {
   );
 }
 
-export default Body;
+export default CalcBody;
