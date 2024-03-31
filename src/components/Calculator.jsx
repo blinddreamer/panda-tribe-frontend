@@ -136,25 +136,8 @@ function Calculator(props) {
 
   // COPY FUNCTION
   async function handleMultiBuyCopy(id) {
-    // const matsToCopy = Object.values(props.multiBuy);
-    // try {
-    //   const textToCopy = matsToCopy
-    //     .map((mat) =>
-    //       mat.materialsList
-    //         .map((subMat) => `${subMat.name} x${subMat.quantity}`)
-    //         .join("\n")
-    //     )
-    //     .join("\n");
-    //   await navigator.clipboard.writeText(textToCopy);
-    //   setIsCopied({ [id]: true });
-    // } catch (error) {
-    //   console.error("Error copying text: ", error);
-    //   alert("Failed to copy text.");
-    // }
-    try{
-      //const textToCopy = ;
-     // console.log(textToCopy);
-      await navigator.clipboard.writeText(generateCopyText(props.initialBlueprint,0));
+    try {
+     await navigator.clipboard.writeText(generateCopyText(props.initialBlueprint,0));
       console.log("Text copied")
       setIsCopied({[id]: true });
     } catch{
@@ -209,15 +192,7 @@ function Calculator(props) {
       ...prevState,
       [checkId]: !prevState[checkId]
     }));
-    // props.setMultiBuy((prevState) => {
-    //   const newState = { ...prevState }; // Copy the state object
-    //   if (newState[checkId]) {
-    //     delete newState[checkId]; // Remove the item if it exists
-    //   } else {
-    //     newState[checkId] = material; // Add the item if it doesn't exist
-    //   }
-    //   return newState; // Return the new state object
-    // });
+
     material.copy = !material.copy;
     getSubmatsData(material, colId);
   }
@@ -228,7 +203,7 @@ function Calculator(props) {
         const response = await axios.post(props.backend + "type", {
           blueprintName: material.name,
           quantity: material.jobsCount,
-          blueprintMe: 10,
+          blueprintMe: material.activityId == 11 ? 0 : 10,
           building: props.formData.building,
           buildingRig: props.formData.buildingRig,
           system: props.formData.system,
@@ -372,6 +347,7 @@ function Calculator(props) {
                 <th>Volume</th>
                 <th>Market Cost</th>
                 <th>Craft Cost</th>
+                <th>Excess</th>
                 <th>Multibuy</th>
                 {props.advancedMode && <th id="fackbpme">BP ME</th>}
                 {props.advancedMode && <th id="fackbuilding">Building</th>}
@@ -464,7 +440,9 @@ function Calculator(props) {
           >
             {material.craftPrice ? craftPrice(material, openId) : "-"}
           </td>
-
+          <td>
+            {material.excessMaterials}
+            </td>    
           <td>
             <Form.Check
               role={material.isCreatable ? "button" :""}
@@ -482,11 +460,11 @@ function Calculator(props) {
                 <Form.Group controlId={`me_${id}`}>
                   <Form.Control
                     type="number"
-                    disabled={!material.isCreatable}
+                    disabled={!material.isCreatable || material.activityId==11}
                     min={0}
                     name={`me_${id}`}
                     placeholder="0"
-                    defaultValue={
+                    defaultValue={ material.activityId==11 ? 0 :
                       inputValues[`me_${id}`] ? inputValues[`me_${id}`] : 10
                     }
                     onChange={(e) => handleInputChange(material, e)}
@@ -502,7 +480,7 @@ function Calculator(props) {
                     defaultValue={
                       inputValues[`build_${id}`]
                         ? inputValues[`build_${id}`]
-                        : props.formData.building
+                        : material.activityId == 11 ? 5 : props.formData.building
                     }
                     onChange={(e) => handleInputChange(material, e)}
                   >
@@ -620,6 +598,7 @@ function Calculator(props) {
                     <th>Volume</th>
                     <th>Market Cost</th>
                     <th>Craft Cost</th>
+                    <th>Excess</th>
                     <th>Multibuy</th>
                     {props.advancedMode && <th id="fackbpme">BP ME</th>}
                     {props.advancedMode && <th id="fackbuilding">Building</th>}

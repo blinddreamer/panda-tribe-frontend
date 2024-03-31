@@ -19,11 +19,10 @@ function Body(props) {
   const [onStart, setOnstart] = useState(true);
   const [regions, setRegions] = useState([{}]);
   const [stations, setStations] = useState([{}]);
-  const [multiBuy, setMultiBuy] = useState({});
   const [crafitng, setCrafting] = useState({});
 
-   const backend = "https://api.eve-helper.com/api/v1/";
-  //  const backend = "http://thunder:8080/api/v1/";
+  const backend = "https://api.eve-helper.com/api/v1/";
+  // const backend = "http://thunder:8080/api/v1/";
 
   useEffect(() => {
     isClicked && submitForm();
@@ -127,8 +126,6 @@ function Body(props) {
               advancedMode={props.advancedMode}
               setAdvancedMode={props.setAdvancedMode}
               formData={formData}
-              multiBuy={multiBuy}
-              setMultiBuy={setMultiBuy}
               crafitng={crafitng}
               setCrafting={setCrafting}
             />
