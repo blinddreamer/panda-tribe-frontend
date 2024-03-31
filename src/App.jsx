@@ -11,36 +11,39 @@ import Navbar from "react-bootstrap/Navbar";
 import ResponsiveAlert from "./components/Alert";
 import PageNotFound from "./components/404";
 import Appraisal from "./components/Appraisal";
+import Video from "./components/video";
 
 const App = () => {
   return (
     <>
-      <main id="swup" className="transition-main">
-        <div id="HukuBartopolos">
-          <Navbar expand="lg" className="bg-body-tertiary navbarh">
-            <Container>
-              <Navbar.Brand>eve-helper</Navbar.Brand>
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="me-auto">
-                  <Nav.Link href="/">Home</Nav.Link>
-                  <Nav.Link href="/calculator">Calculator</Nav.Link>
-                  <Nav.Link href="/Appraisal">Appraisal</Nav.Link>
-                </Nav>
-                <Nav>
-                  <DarkModeToggle />
-                </Nav>
-              </Navbar.Collapse>
-            </Container>
-          </Navbar>
-          <p />
+      <Video />
 
+      <div id="HukuBartopolos">
+        <Navbar expand="lg" className="bg-body-tertiary navbarh">
+          <Container>
+            <Navbar.Brand>eve-helper</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto">
+                <Nav.Link href="/">Home</Nav.Link>
+                <Nav.Link href="/calculator">Calculator</Nav.Link>
+                <Nav.Link href="/Appraisal">Appraisal</Nav.Link>
+              </Nav>
+              <Nav>
+                <DarkModeToggle />
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+        <p />
+        <main id="swup" className="transition-main">
           <div>
             <ResponsiveAlert
               breakpointWidth={1450}
               message="Optimizing for desktop first, screen resolution too low!"
             />
           </div>
+
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -49,10 +52,9 @@ const App = () => {
               <Route path="*" element={<PageNotFound />} />
             </Routes>
           </BrowserRouter>
-
-          <Footer />
-        </div>
-      </main>
+        </main>
+        <Footer />
+      </div>
     </>
   );
 };
