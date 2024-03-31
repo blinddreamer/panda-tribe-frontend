@@ -21,8 +21,8 @@ function Body(props) {
   const [stations, setStations] = useState([{}]);
   const [crafitng, setCrafting] = useState({});
 
-  const backend = "https://api.eve-helper.com/api/v1/";
-  // const backend = "http://thunder:8080/api/v1/";
+   const backend = "https://api.eve-helper.com/api/v1/";
+  //  const backend = "http://thunder:8080/api/v1/";
 
   useEffect(() => {
     isClicked && submitForm();
@@ -81,9 +81,6 @@ function Body(props) {
       setMaterialsList(data.materialsList);
       setInitialBlueprint(data);
       setCrafting({["card_" + data.name]: true})
-      setMultiBuy({
-        ["check_" + data.name]: initialBlueprint,
-      });
     } catch (error) {
       console.error("Error:", error.message);
       setErrorMessage(
