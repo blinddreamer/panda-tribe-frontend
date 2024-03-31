@@ -124,9 +124,10 @@ function GetForm(props) {
       <Form.Group controlId="marketRegion">
         <Form.Label>Market Region:</Form.Label>
         <Form.Select aria-label="Default select example">
-          {props.regions.map((region) => {
+          {props.regions.map((region, index) => {
             return (
               <option
+                key={index}
                 selected={region.regionId == 10000002}
                 value={region.regionId}
               >
