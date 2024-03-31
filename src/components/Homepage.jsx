@@ -19,10 +19,10 @@ function Homepage() {
             With eve-helper, you can calculate material requirements, production
             costs, profit margins, and more for a wide range of industrial
             activities.{" "}
-            <p>
-              Our user-friendly interface and customizable settings make it easy
-              to optimize your industry and maximize your profits.
-            </p>
+          </p>
+          <p>
+            Our user-friendly interface and customizable settings make it easy
+            to optimize your industry and maximize your profits.
           </p>
         </main>
       </div>

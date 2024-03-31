@@ -41,20 +41,21 @@ const App = () => {
               </Navbar.Collapse>
             </Container>
           </Navbar>
-          <main id="swup" className="transition-main">
-            <div>
-              <ResponsiveAlert
-                breakpointWidth={1450}
-                message="Optimizing for desktop first, screen resolution too low!"
-              />
-            </div>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/Calculator" element={<Calchome />} />
-              <Route path="/Appraisal" element={<Appraisal />} />
-              <Route path="*" element={<PageNotFound />} />
-            </Routes>
-          </main>
+          <p></p>
+          {/*<main id="swup" className="transition-main">*/}
+          <div>
+            <ResponsiveAlert
+              breakpointWidth={1450}
+              message="Optimizing for desktop first, screen resolution too low!"
+            />
+          </div>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/Calculator" element={<Calchome />} />
+            <Route path="/Appraisal" element={<Appraisal />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+          {/*</main>*/}
           <Footer />
         </div>
       </BrowserRouter>
