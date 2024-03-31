@@ -14,7 +14,6 @@ function Calculator(props) {
   const [systemValues, setSystemValues] = useState({});
   const [inputValues, setInputValues] = useState({});
   const [isChecked, setIsChecked] = useState({});
- 
 
   useEffect(() => {
     system != null &&
@@ -108,7 +107,7 @@ function Calculator(props) {
       material.materialsList = data.materialsList;
       props.setMaterialsList(...[props.materialsList]);
       updateLoadedData(colId);
-      material.craftPrice = craftPrice(material, "card_"+parent_id)
+      material.craftPrice = craftPrice(material, "card_" + parent_id);
     } catch (error) {
       console.error("Error:", error.message);
       props.setErrorMessage(error.message);
@@ -117,34 +116,40 @@ function Calculator(props) {
 
   function generateCopyText(material, step) {
     // Initialize an empty string to store the copy text
-    let copyText = '';
+    let copyText = "";
 
     // Iterate through the material's materialsList
-    if(Array.isArray(material.materialsList) && material.isCreatable && (material.copy || step==0)){
-    for (const subMaterial of material.materialsList) {
+    if (
+      Array.isArray(material.materialsList) &&
+      material.isCreatable &&
+      (material.copy || step == 0)
+    ) {
+      for (const subMaterial of material.materialsList) {
         // Recursively generate copy text for each sub-material
-        copyText += generateCopyText(subMaterial, step+1);
+        copyText += generateCopyText(subMaterial, step + 1);
+      }
     }
-  }
     // Construct the copy text for the current material (if it's not marked as copy)
-    if (!material.copy && step!=0) {
-        copyText += `${material.name} x${material.quantity} \n`;
+    if (!material.copy && step != 0) {
+      copyText += `${material.name} x${material.quantity} \n`;
     }
 
     return copyText;
-}
+  }
 
   // COPY FUNCTION
   async function handleMultiBuyCopy(id) {
     try {
-     await navigator.clipboard.writeText(generateCopyText(props.initialBlueprint,0));
-      console.log("Text copied")
-      setIsCopied({[id]: true });
-    } catch{
+      await navigator.clipboard.writeText(
+        generateCopyText(props.initialBlueprint, 0)
+      );
+      console.log("Text copied");
+      setIsCopied({ [id]: true });
+    } catch {
       console.error("Error copying text: ", error);
       alert("Failed to copy text.");
     }
-   }
+  }
 
   // COPY FUNCTION
   async function handleSingleCopy(material, id) {
@@ -153,7 +158,7 @@ function Calculator(props) {
         .map((mat) => `${mat.name} x${mat.quantity}`)
         .join("\n");
       await navigator.clipboard.writeText(textToCopy);
-      setIsCopied({[id]: true });
+      setIsCopied({ [id]: true });
     } catch (error) {
       console.error("Error copying text: ", error);
       alert("Failed to copy text.");
@@ -161,36 +166,30 @@ function Calculator(props) {
   }
   // INITIAL BACKEND CALL TO OBTAIN INITIAL DATA
 
-  const craftPrice = (material,id) => {
-    
-     
-    const price = material.materialsList.reduce(
-      (accumulator, mat,index) => {
-        const openId = (id+"_"+ mat.name+index).replaceAll(" ","_");
-        const state = props.crafitng[openId];
-       
-          return (
-          accumulator +
-          ((mat.craftPrice != "-" && mat.craftPrice !=null && state)
-            ? mat.craftPrice + mat.industryCosts
-            : mat.sellPrice)
-        );
-      },
-      0
-    );
+  const craftPrice = (material, id) => {
+    const price = material.materialsList.reduce((accumulator, mat, index) => {
+      const openId = (id + "_" + mat.name + index).replaceAll(" ", "_");
+      const state = props.crafitng[openId];
+
+      return (
+        accumulator +
+        (mat.craftPrice != "-" && mat.craftPrice != null && state
+          ? mat.craftPrice + mat.industryCosts
+          : mat.sellPrice)
+      );
+    }, 0);
     material.craftPrice = price + material.industryCosts;
     return material.craftPrice;
-};
+  };
 
   function handleCheck(material, colId, checkId) {
-  
     props.setCrafting((prevState) => ({
       ...prevState,
-      [checkId]: !prevState[checkId]
+      [checkId]: !prevState[checkId],
     }));
     setIsChecked((prevState) => ({
       ...prevState,
-      [checkId]: !prevState[checkId]
+      [checkId]: !prevState[checkId],
     }));
 
     material.copy = !material.copy;
@@ -215,7 +214,7 @@ function Calculator(props) {
         const data = response.data;
         const id = colId.split(/_(.*)/s)[1];
         material.materialsList = data.materialsList;
-        material.craftPrice = craftPrice(material,"cards_"+id);
+        material.craftPrice = craftPrice(material, "cards_" + id);
         props.setMaterialsList(...[props.materialsList]);
         updateLoadedData(colId);
       } catch (error) {
@@ -233,10 +232,10 @@ function Calculator(props) {
         [id]: !prevState[id], // Toggle the state for the given ID
       }));
       const checkBox = isChecked[id];
-      if(!checkBox) {
+      if (!checkBox) {
         props.setCrafting((prevState) => ({
           ...prevState,
-          [id]: !prevState[id]
+          [id]: !prevState[id],
         }));
       }
     }
@@ -376,14 +375,19 @@ function Calculator(props) {
     const isOpen = props.openState[openId]; // Get the open state for the card
     const isLoaded = isDataLoaded[colId];
     const trColor = index % 2 == 0 ? "huku" : "gnomo";
-    const isCheckable = (parent == props.initialBlueprint.name ? false : !isChecked["card_"+parent]) || !material.isCreatable || isOpen;
+    const isCheckable =
+      (parent == props.initialBlueprint.name
+        ? false
+        : !isChecked["card_" + parent]) ||
+      !material.isCreatable ||
+      isOpen;
     return (
       <>
         <tr className={trColor}>
           <td
-          role={material.isCreatable ? "button" :""}
-          aria-expanded={props.openState["card_" + id]}
-          aria-controls="example-collapse-text"
+            role={material.isCreatable ? "button" : ""}
+            aria-expanded={props.openState["card_" + id]}
+            aria-controls="example-collapse-text"
             onClick={() =>
               toggleCollapsible("card_" + id, material.isCreatable)
             }
@@ -391,9 +395,9 @@ function Calculator(props) {
             <img src={material.icon} loading="lazy" />
           </td>
           <td
-          role={material.isCreatable ? "button" :""}
-          aria-controls="example-collapse-text"
-          aria-expanded={props.openState["card_" + id]}
+            role={material.isCreatable ? "button" : ""}
+            aria-controls="example-collapse-text"
+            aria-expanded={props.openState["card_" + id]}
             onClick={() =>
               toggleCollapsible("card_" + id, material.isCreatable)
             }
@@ -401,8 +405,8 @@ function Calculator(props) {
             {material.name}
           </td>
           <td
-          role={material.isCreatable ? "button" :""}
-          aria-expanded={props.openState["card_" + id]}
+            role={material.isCreatable ? "button" : ""}
+            aria-expanded={props.openState["card_" + id]}
             aria-controls="example-collapse-text"
             onClick={() =>
               toggleCollapsible("card_" + id, material.isCreatable)
@@ -411,9 +415,9 @@ function Calculator(props) {
             {material.quantity}
           </td>
           <td
-          role={material.isCreatable ? "button" :""}
-          aria-expanded={props.openState["card_" + id]}
-          aria-controls="example-collapse-text"
+            role={material.isCreatable ? "button" : ""}
+            aria-expanded={props.openState["card_" + id]}
+            aria-controls="example-collapse-text"
             onClick={() =>
               toggleCollapsible("card_" + id, material.isCreatable)
             }
@@ -421,9 +425,9 @@ function Calculator(props) {
             {material.volume.toFixed(0)}
           </td>
           <td
-          role={material.isCreatable ? "button" :""}
-          aria-expanded={props.openState["card_" + id]}
-          aria-controls="example-collapse-text"
+            role={material.isCreatable ? "button" : ""}
+            aria-expanded={props.openState["card_" + id]}
+            aria-controls="example-collapse-text"
             onClick={() =>
               toggleCollapsible("card_" + id, material.isCreatable)
             }
@@ -431,22 +435,20 @@ function Calculator(props) {
             {material.sellPrice}
           </td>
           <td
-          role={material.isCreatable ? "button" :""}
-          aria-expanded={props.openState["card_" + id]}
-          aria-controls="example-collapse-text"
+            role={material.isCreatable ? "button" : ""}
+            aria-expanded={props.openState["card_" + id]}
+            aria-controls="example-collapse-text"
             onClick={() =>
               toggleCollapsible("card_" + id, material.isCreatable)
             }
           >
             {material.craftPrice ? craftPrice(material, openId) : "-"}
           </td>
-          <td>
-            {material.excessMaterials}
-            </td>    
+          <td>{material.excessMaterials}</td>
           <td>
             <Form.Check
-              role={material.isCreatable ? "button" :""}
-              disabled={isCheckable} 
+              role={material.isCreatable ? "button" : ""}
+              disabled={isCheckable}
               id={"check_" + id}
               key={"check_" + id}
               type="switch"
@@ -460,12 +462,18 @@ function Calculator(props) {
                 <Form.Group controlId={`me_${id}`}>
                   <Form.Control
                     type="number"
-                    disabled={!material.isCreatable || material.activityId==11}
+                    disabled={
+                      !material.isCreatable || material.activityId == 11
+                    }
                     min={0}
                     name={`me_${id}`}
                     placeholder="0"
-                    defaultValue={ material.activityId==11 ? 0 :
-                      inputValues[`me_${id}`] ? inputValues[`me_${id}`] : 10
+                    defaultValue={
+                      material.activityId == 11
+                        ? 0
+                        : inputValues[`me_${id}`]
+                        ? inputValues[`me_${id}`]
+                        : 10
                     }
                     onChange={(e) => handleInputChange(material, e)}
                   />
@@ -480,7 +488,9 @@ function Calculator(props) {
                     defaultValue={
                       inputValues[`build_${id}`]
                         ? inputValues[`build_${id}`]
-                        : material.activityId == 11 ? 5 : props.formData.building
+                        : material.activityId == 11
+                        ? 5
+                        : props.formData.building
                     }
                     onChange={(e) => handleInputChange(material, e)}
                   >
@@ -508,7 +518,7 @@ function Calculator(props) {
                     onChange={(e) => handleInputChange(material, e)}
                   >
                     <option hidden>Select Building Rig</option>
-                    <option value="0">None</option>
+                    <option value="0">No</option>
                     <option value="1">T1</option>
                     <option value="2">T2</option>
                   </Form.Select>
@@ -579,7 +589,7 @@ function Calculator(props) {
           in={isOpen}
           onEnter={() => getSubmatsData(material, colId)}
           timeout={10}
-         >
+        >
           <tr>
             <td colSpan={props.advancedMode ? 13 : 8}>
               <Table
