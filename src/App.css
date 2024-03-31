@@ -63,6 +63,12 @@ body {
   font-weight: 400;
   transition: 0.5s;
   color: var(--bs-border-color);
+  transition: 1s;
+}
+
+#icons:hover {
+  transition: 1s;
+  color: var(--bs-btn-bg);
 }
 
 #legal {
