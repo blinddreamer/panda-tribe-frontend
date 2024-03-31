@@ -1,9 +1,16 @@
 import { useState } from "react";
+import { Form } from "react-bootstrap";
 
 function Appraisal() {
   return (
     <>
-      <div> not yet</div>
+      <div>
+      <Form>
+      
+
+      </Form>
+
+      </div>
     </>
   );
 }

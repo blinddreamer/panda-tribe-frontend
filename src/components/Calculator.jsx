@@ -251,6 +251,11 @@ function Calculator(props) {
   const displayResult = () => {
     return (
       <>
+      {!props.initialBlueprint.materialsList && (
+         <div id="start-message">
+          <p>Choose blueprint or reaction formula to start.</p>
+         </div>
+      )}
         {props.initialBlueprint.materialsList && (
           <div id="blueprintHeader">
             <div>
