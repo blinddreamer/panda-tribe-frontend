@@ -15,7 +15,7 @@ import Appraisal from "./components/Appraisal";
 const App = () => {
   return (
     <>
-      <main id="swup" class="transition-main">
+      <main id="swup" className="transition-main">
         <div id="HukuBartopolos">
           <Navbar expand="lg" className="bg-body-tertiary navbarh">
             <Container>
