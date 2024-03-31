@@ -3,10 +3,10 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Calculator from "./Calculator";
-import GetForm from "./Calculator_Form";
+import GetForm from "./CalculatorForm";
 import axios from "axios";
 
-function CalcBody(props) {
+function CalculatorBody(props) {
   const [openState, setOpenState] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [initialBlueprint, setInitialBlueprint] = useState({});
@@ -133,4 +133,4 @@ function CalcBody(props) {
   );
 }
 
-export default CalcBody;
+export default CalculatorBody;

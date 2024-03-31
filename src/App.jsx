@@ -1,17 +1,17 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
-import Calchome from "./components/Calculator_Home";
-import Home from "./components/Home";
-import DarkModeToggle from "./components/darkmode";
+import Calchome from "./components/CalculatorHome";
+import Home from "./components/Homepage";
+import DarkModeToggle from "./components/DarkModeToggle";
 import Footer from "./components/Footer";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
-import ResponsiveAlert from "./components/Alert";
-import PageNotFound from "./components/404";
+import ResponsiveAlert from "./components/ResponsiveAlert";
+import PageNotFound from "./components/PageNotFound";
 import Appraisal from "./components/Appraisal";
-import Video from "./components/video";
+import Video from "./components/Video";
 
 const App = () => {
   return (

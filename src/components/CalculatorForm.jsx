@@ -6,7 +6,7 @@ import { Typeahead } from "react-bootstrap-typeahead";
 
 import React, { useState } from "react";
 
-function GetForm(props) {
+function CalculatorForm(props) {
   const [system, setSystem] = useState("");
   const [blueprint, setBlueprint] = useState("");
 
@@ -85,7 +85,7 @@ function GetForm(props) {
           <option value={0}>None</option>
           <option value="1">T1</option>
           <option value="2">T2</option>
-       </Form.Select>
+        </Form.Select>
       </Form.Group>
       <Form.Group controlId="systemName">
         <Form.Label>System:</Form.Label>
@@ -156,4 +156,4 @@ function GetForm(props) {
     </Form>
   );
 }
-export default GetForm;
+export default CalculatorForm;
