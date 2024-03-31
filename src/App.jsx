@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
-import Calchome from "./components/CalculatorHome";
+import CalculatorHome from "./components/CalculatorHome";
 import Home from "./components/Homepage";
 import DarkModeToggle from "./components/DarkModeToggle";
 import Footer from "./components/Footer";
@@ -51,7 +51,7 @@ const App = () => {
           </div>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/Calculator" element={<Calchome />} />
+            <Route path="/Calculator" element={<CalculatorHome />} />
             <Route path="/Appraisal" element={<Appraisal />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
