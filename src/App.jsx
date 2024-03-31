@@ -37,7 +37,7 @@ const App = () => {
 
           <div>
             <ResponsiveAlert
-              breakpointWidth={1280}
+              breakpointWidth={1450}
               message="Optimizing for desktop first, screen resolution too low!"
             />
           </div>

@@ -251,11 +251,11 @@ function Calculator(props) {
   const displayResult = () => {
     return (
       <>
-      {!props.initialBlueprint.materialsList && (
-         <div id="start-message">
-          <p>Choose blueprint or reaction formula to start.</p>
-         </div>
-      )}
+        {!props.initialBlueprint.materialsList && (
+          <div id="start-message">
+            <p>Choose blueprint or reaction formula to start.</p>
+          </div>
+        )}
         {props.initialBlueprint.materialsList && (
           <div id="blueprintHeader">
             <div>
@@ -358,7 +358,7 @@ function Calculator(props) {
                 {props.advancedMode && <th id="fackrig">Rig</th>}
                 {props.advancedMode && <th id="facksystem">System</th>}
                 {props.advancedMode && <th id="facktax">Facility tax</th>}
-                <th>Copy</th>
+                <th id="fackcopy">Copy</th>
               </tr>
             </thead>
             <tbody>
@@ -620,7 +620,7 @@ function Calculator(props) {
                     {props.advancedMode && <th id="fackrig">Rig</th>}
                     {props.advancedMode && <th id="facksystem">System</th>}
                     {props.advancedMode && <th id="facktax">Facility tax</th>}
-                    <th>Copy</th>
+                    <th id="fackcopy">Copy</th>
                   </tr>
                 </thead>
                 <tbody>
