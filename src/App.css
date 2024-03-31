@@ -1,5 +1,5 @@
 #root {
-  max-width: 1400px;
+  max-width: 1450px;
   min-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -207,6 +207,10 @@ th {
 }
 #facktax {
   width: 65px;
+}
+
+#fackexcess {
+  width: 50px;
 }
 
 input,

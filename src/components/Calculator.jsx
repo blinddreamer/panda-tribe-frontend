@@ -346,7 +346,7 @@ function Calculator(props) {
                 <th>Volume</th>
                 <th>Market Cost</th>
                 <th>Craft Cost</th>
-                <th>Excess</th>
+                <th id="fackexcess">Excess</th>
                 <th>Multibuy</th>
                 {props.advancedMode && <th id="fackbpme">BP ME</th>}
                 {props.advancedMode && <th id="fackbuilding">Building</th>}
@@ -608,7 +608,7 @@ function Calculator(props) {
                     <th>Volume</th>
                     <th>Market Cost</th>
                     <th>Craft Cost</th>
-                    <th>Excess</th>
+                    <th id="fackexcess">Excess</th>
                     <th>Multibuy</th>
                     {props.advancedMode && <th id="fackbpme">BP ME</th>}
                     {props.advancedMode && <th id="fackbuilding">Building</th>}
