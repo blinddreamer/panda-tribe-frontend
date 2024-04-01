@@ -7,7 +7,7 @@ import Spinner from "react-bootstrap/Spinner";
 import { Typeahead } from "react-bootstrap-typeahead/types";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import axios from "axios";
-import AdvancedModeToggle from "./AdvancedModeToggle";
+import AdvancedModeToggle from "src/components/AdvancedModeToggle.jsx";
 import Table from "react-bootstrap/Table";
 
 function Calculator(props) {
