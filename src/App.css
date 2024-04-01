@@ -278,3 +278,20 @@ html.is-animating.to-left .transition-main {
 html.is-leaving.to-left .transition-main {
   transform: translateX(-1em);
 }
+
+textarea {
+  height: 200px !important;
+}
+
+#saltemike {
+  font-size: 1.5rem;
+  margin-top: 20px;
+}
+
+#avengerone {
+  color: #eb9c35;
+}
+
+#berks {
+  color: #c4501b;
+}
