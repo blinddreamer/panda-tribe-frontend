@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Body from "src/components/Calculator/CalculatorBody.jsx";
+import Body from "./CalculatorBody.jsx";
 
 function CalculatorHome() {
   const [advancedMode, setAdvancedMode] = useState(false);

@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
-import CalculatorHome from "src/components/Calculator/CalculatorHome.jsx";
+import CalculatorHome from "./components/Calculator/CalculatorHome.jsx";
 import Home from "./components/Homepage";
 import DarkModeToggle from "./components/DarkModeToggle";
 import Footer from "./components/Footer";
@@ -10,7 +10,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import ResponsiveAlert from "./components/ResponsiveAlert";
 import PageNotFound from "./components/PageNotFound";
-import Appraisal from "src/components/Appraisal/Appraisal.jsx";
+import Appraisal from "./components/Appraisal/Appraisal.jsx";
 import Video from "./components/Video";
 
 const App = () => {

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import AppraisalForm from "src/components/Appraisal/AppraisalForm.jsx";
-import AppraisalResult from "src/components/Appraisal/AppraisalResult.jsx";
+import AppraisalForm from "./AppraisalForm";
+import AppraisalResult from "./AppraisalResult";
+
 
 function Appraisal() {
   const [onStart, setOnstart] = useState(true);

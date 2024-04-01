@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Calculator from "src/components/Calculator/Calculator.jsx";
-import GetForm from "src/components/Calculator/CalculatorForm.jsx";
+import Calculator from "./Calculator.jsx";
+import GetForm from "./CalculatorForm.jsx";
 import axios from "axios";
 
 function CalculatorBody(props) {

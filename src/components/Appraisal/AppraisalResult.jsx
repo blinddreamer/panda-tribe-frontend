@@ -1,4 +1,5 @@
 import Table from "react-bootstrap/Table";
+
 function AppraisalResult(props){
     let volumeFormat = new Intl.NumberFormat();  
     let priceFormat = new Intl.NumberFormat('en-US')
