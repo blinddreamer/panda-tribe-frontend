@@ -1,10 +1,13 @@
 import { React } from "react";
+import Alert from "react-bootstrap/Alert";
 
 function Homepage() {
   return (
     <>
       <div>
-        <h2>UNDER CONSTRUCTION!</h2>
+        <div>
+          <Alert variant="danger">UNDER CONSTRUCTION!</Alert>
+        </div>
         <main>
           <p>
             eve-helper is an advanced industrial calculator aiming to help with

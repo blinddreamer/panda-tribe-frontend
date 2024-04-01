@@ -257,7 +257,9 @@ function Calculator(props) {
       <>
         {!props.initialBlueprint.materialsList && (
           <div id="start-message">
-            Choose blueprint or reaction formula to start.
+            <Alert variant="success">
+              Choose blueprint or reaction formula to start.
+            </Alert>
           </div>
         )}
         {props.initialBlueprint.materialsList && (
