@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import AppraisalForm from "./AppraisalForm";
 import AppraisalResult from "./AppraisalResult";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 
 function Appraisal() {
@@ -24,41 +27,58 @@ function Appraisal() {
     }
   }
 
-  async function calculateAppraisal(){
+  async function calculateAppraisal() {
     setErrorMessage();
-    try { 
-    setIsLoading(true);
-    const text = document.getElementById("appraisalText").value;
-    const lines = text.split(`\n`);
-    const items = [];
-    lines.forEach(line => {
-    if (line.trim() !== ""){
-      const [quantity, itemName] = line.split(/\s+(.+)/);
-      const item = {quantity: quantity.trim(), name: itemName.trim() }
-      items.push(item);
+    try {
+      setIsLoading(true);
+      const text = document.getElementById("appraisalText").value;
+      const lines = text.split(`\n`);
+      const items = [];
+      lines.forEach((line) => {
+        if (line.trim() !== "") {
+          const [quantity, itemName] = line.split(/\s+(.+)/);
+          const item = { quantity: quantity.trim(), name: itemName.trim() };
+          items.push(item);
+        }
+      });
+      const region = document.getElementById("marketRegion").value;
+      const data = await axios.post(backend + "appraisal", {
+        appraisalRequestEntityList: items,
+        regionId: region,
+      });
+      if (data.status != 200) {
+        throw new Error(`Server Error: ${response.statusText}`);
+      }
+      setAppraisal(data.data);
+    } catch (error) {
+      setErrorMessage(error.message);
+    } finally {
+      setIsLoading(false);
     }
-    });
-    const region = document.getElementById("marketRegion").value;
-    const data = await axios.post(backend + "appraisal", {appraisalRequestEntityList: items, regionId: region});
-    if (data.status != 200){
-      throw new Error(`Server Error: ${response.statusText}`);
-    }
-    setAppraisal(data.data);
-  }catch(error){
-    setErrorMessage(error.message);
-
-  }finally{
-    setIsLoading(false);
   }
+  return (
+    <div id="AletaOceans">
+      <Container>
+        <Row>
+          <Col>
+            <div id="menuleft">
+              <AppraisalForm
+                isLoading={isLoading}
+                regions={regions}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+                calculateAppraisal={calculateAppraisal}
+              />
+            </div>
+          </Col>
+          <Col xs={7}>
+            {appraisal.appraisals && <AppraisalResult appraisal={appraisal} />}
+          </Col>
+        </Row>
+        <Row></Row>
+      </Container>
+    </div>
+  );
 }
-return (
-  <div id="appraisal">
-     <AppraisalForm isLoading={isLoading} regions={regions} errorMessage={errorMessage} setErrorMessage={setErrorMessage} calculateAppraisal={calculateAppraisal} />
-     {appraisal.appraisals &&  
-     <AppraisalResult appraisal={appraisal}/>  }
-
-  </div>
-
-)}
 
 export default Appraisal;
