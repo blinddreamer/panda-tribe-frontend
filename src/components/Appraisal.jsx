@@ -12,8 +12,8 @@ function Appraisal() {
   const [regions, setRegions] = useState([{}]);
   const [appraisal, setAppraisal] = useState({});
   const [errorMessage, setErrorMessage] = useState();
-   // const backend = "https://api.eve-helper.com/api/v1/";
-   const backend = "http://thunder:8080/api/v1/";
+   const backend = "https://api.eve-helper.com/api/v1/";
+   //const backend = "http://thunder:8080/api/v1/";
   useEffect(() => {
     onStart && getRegions();
     setOnstart(false);
