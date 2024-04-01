@@ -8,7 +8,7 @@ function AppraisalForm(props){
         <div id="appraisalForm">
           {props.errorMessage && <Alert>{props.errorMessage}</Alert>}
           <Form>
-          <Form.Group controlId="appraisal">
+          <Form.Group controlId="appraisalText">
             <Form.Label>Appraisal:</Form.Label>
             <Form.Control
              key="appraisal" 

@@ -10,7 +10,7 @@ function Appraisal() {
   const [appraisal, setAppraisal] = useState({});
   const [errorMessage, setErrorMessage] = useState();
   const backend = "https://api.eve-helper.com/api/v1/";
-  // const backend = "http://thunder:8080/api/v1/";
+  //  const backend = "http://thunder:8080/api/v1/";
   useEffect(() => {
     onStart && getRegions();
     setOnstart(false);
@@ -27,7 +27,7 @@ function Appraisal() {
     setErrorMessage();
     try { 
     setIsLoading(true);
-    const text = document.getElementById("appraisal").value;
+    const text = document.getElementById("appraisalText").value;
     const lines = text.split(`\n`);
     const items = [];
     lines.forEach(line => {
@@ -54,7 +54,7 @@ return (
   <div id="appraisal">
      <AppraisalForm isLoading={isLoading} regions={regions} errorMessage={errorMessage} setErrorMessage={setErrorMessage} calculateAppraisal={calculateAppraisal} />
      {appraisal.appraisals &&  
-     <AppraisalResult appraisal={appraisal} formatPrice={formatPrice}/>  }
+     <AppraisalResult appraisal={appraisal}/>  }
 
   </div>
 
