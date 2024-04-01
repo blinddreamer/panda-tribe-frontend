@@ -13,7 +13,7 @@ function AppraisalForm(props) {
             key="appraisal"
             as="textarea"
             name="appraisal"
-            placeholder="Paste a list of items from ingame"
+            placeholder="List of items..."
           />
         </Form.Group>
         <Form.Group controlId="marketRegion">

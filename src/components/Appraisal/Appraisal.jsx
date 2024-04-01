@@ -5,7 +5,7 @@ import AppraisalResult from "./AppraisalResult";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
+import Alert from "react-bootstrap/Alert";
 
 function Appraisal() {
   const [onStart, setOnstart] = useState(true);
@@ -72,7 +72,15 @@ function Appraisal() {
             </div>
           </Col>
           <Col xs={7}>
-            {appraisal.appraisals ? <AppraisalResult appraisal={appraisal} /> : "KO STAA BRAT"}
+            {appraisal.appraisals ? (
+              <AppraisalResult appraisal={appraisal} />
+            ) : (
+              <div id="start-message">
+                <Alert variant="success">
+                  Paste a list from in-game items.
+                </Alert>
+              </div>
+            )}
           </Col>
         </Row>
         <Row></Row>
