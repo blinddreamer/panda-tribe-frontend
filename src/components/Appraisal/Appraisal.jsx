@@ -72,7 +72,7 @@ function Appraisal() {
             </div>
           </Col>
           <Col xs={7}>
-            {appraisal.appraisals && <AppraisalResult appraisal={appraisal} />}
+            {appraisal.appraisals ? <AppraisalResult appraisal={appraisal} /> : "KO STAA BRAT"}
           </Col>
         </Row>
         <Row></Row>
