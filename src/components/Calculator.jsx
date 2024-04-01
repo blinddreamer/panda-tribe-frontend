@@ -4,10 +4,10 @@ import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import Alert from "react-bootstrap/Alert";
 import Spinner from "react-bootstrap/Spinner";
-import {Typeahead}  from "react-bootstrap-typeahead/types";
+import { Typeahead } from "react-bootstrap-typeahead/types";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import axios from "axios";
-import AdvancedModeToggle from "../components/AdvancedMode";
+import AdvancedModeToggle from "./AdvancedModeToggle";
 import Table from "react-bootstrap/Table";
 
 function Calculator(props) {

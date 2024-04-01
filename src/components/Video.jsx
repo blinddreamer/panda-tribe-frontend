@@ -1,4 +1,4 @@
-//video + dots div
+//video + dots div -> so cool 
 
 import React, { useState, useEffect, Fragment } from "react";
 import video from "../assets/bg.mp4";

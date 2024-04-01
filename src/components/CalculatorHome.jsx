@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Body from "./Calculator_Body";
+import Body from "./CalculatorBody";
 
-function Home() {
+function CalculatorHome() {
   const [advancedMode, setAdvancedMode] = useState(false);
   return (
     <>
@@ -11,4 +11,4 @@ function Home() {
     </>
   );
 }
-export default Home;
+export default CalculatorHome;
