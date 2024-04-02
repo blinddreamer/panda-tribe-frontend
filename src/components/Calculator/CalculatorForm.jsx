@@ -48,7 +48,7 @@ function CalculatorForm(props) {
         />
       </Form.Group>
       <Form.Group controlId="quantity">
-        <Form.Label>Quantity:</Form.Label>
+        <Form.Label>Runs:</Form.Label>
         <Form.Control
           type="number"
           min={1}
@@ -112,7 +112,7 @@ function CalculatorForm(props) {
       </Form.Group>
 
       <Form.Group controlId="blueprintCount">
-        <Form.Label>Job Runs:</Form.Label>
+        <Form.Label>Job Count:</Form.Label>
         <Form.Control
           type="number"
           min={1}
