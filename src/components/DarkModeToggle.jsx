@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 
-const DarkModeToggle = () => {
+function DarkModeToggle() {
   // Retrieve dark mode preference from localStorage on initial render
   const [darkMode, setDarkMode] = useState(() => {
     const storedDarkMode = localStorage.getItem("darkMode");
@@ -30,6 +30,6 @@ const DarkModeToggle = () => {
       </Button>
     </div>
   );
-};
+}
 
 export default DarkModeToggle;

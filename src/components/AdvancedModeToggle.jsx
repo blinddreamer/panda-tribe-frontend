@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
-const AdvancedModeToggle = (props) => {
+function AdvancedModeToggle(props) {
   return (
     <Button
       variant="secondary"
@@ -11,6 +11,6 @@ const AdvancedModeToggle = (props) => {
       {props.advancedMode ? "Basic Mode" : "Advanced Mode"}
     </Button>
   );
-};
+}
 
 export default AdvancedModeToggle;

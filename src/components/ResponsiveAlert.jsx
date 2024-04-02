@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Alert from "react-bootstrap/Alert";
 
-const ResponsiveAlert = ({ breakpointWidth, message }) => {
+function ResponsiveAlert({ breakpointWidth, message }) {
   const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
@@ -18,6 +18,6 @@ const ResponsiveAlert = ({ breakpointWidth, message }) => {
   }, [breakpointWidth]);
 
   return showAlert ? <Alert variant="danger">{message}</Alert> : null;
-};
+}
 
 export default ResponsiveAlert;

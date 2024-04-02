@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 
-const PageNotFound = () => {
+function PageNotFound() {
   return (
     <Fragment>
       <span id="fof">404</span>
     </Fragment>
   );
-};
+}
 
 export default PageNotFound;

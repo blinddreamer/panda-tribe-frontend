@@ -1,9 +1,9 @@
-//video + dots div -> so cool 
+//video + dots div -> so cool
 
 import React, { useState, useEffect, Fragment } from "react";
 import video from "../assets/bg.mp4";
 
-const Video = () => {
+function Video() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   useEffect(() => {
@@ -36,6 +36,6 @@ const Video = () => {
       </video>
     </Fragment>
   );
-};
+}
 
 export default Video;
