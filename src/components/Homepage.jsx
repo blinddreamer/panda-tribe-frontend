@@ -6,7 +6,7 @@ function Homepage() {
     <>
       <div>
         <div>
-          <Alert variant="danger">UNDER CONSTRUCTION!</Alert>
+          <Alert variant="danger">UNDER CONSTRUCTION</Alert>
         </div>
         <main>
           <p>
