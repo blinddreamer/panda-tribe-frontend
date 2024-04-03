@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, Fragment } from "react";
 import video from "../assets/bg.mp4";
-document.getElementById("hero-img").src = imgUrl;
 
 function Video() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
