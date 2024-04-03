@@ -9,7 +9,7 @@ import Appraisal from "./components/Appraisal/Appraisal.jsx";
 import Video from "./components/Video";
 import NavbarMenu from "./components/NavbarMenu";
 
-const App = () => {
+function App() {
   return (
     <>
       <Video />
@@ -29,6 +29,6 @@ const App = () => {
       </BrowserRouter>
     </>
   );
-};
+}
 
 export default App;
