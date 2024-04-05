@@ -1,6 +1,11 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import CalculatorHome from "./components/Calculator/CalculatorHome.jsx";
 import Home from "./components/Homepage";
 import Footer from "./components/Footer";
@@ -8,25 +13,27 @@ import PageNotFound from "./components/PageNotFound";
 import Appraisal from "./components/Appraisal/Appraisal.jsx";
 import Video from "./components/Video";
 import NavbarMenu from "./components/NavbarMenu";
+import { AnimatePresence } from "framer-motion";
 
 function App() {
+  const location = useLocation();
+
   return (
     <>
       <Video />
-      <BrowserRouter>
-        <div id="HukuBartopolos">
-          <NavbarMenu />
-          {/*<main id="swup" className="transition-main">*/}
-          <Routes>
+
+      <div id="HukuBartopolos">
+        <NavbarMenu />
+        <AnimatePresence initial={false} mode={"wait"}>
+          <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
             <Route path="/Calculator" element={<CalculatorHome />} />
             <Route path="/Appraisal" element={<Appraisal />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
-          {/*</main>*/}
-          <Footer />
-        </div>
-      </BrowserRouter>
+        </AnimatePresence>
+        <Footer />
+      </div>
     </>
   );
 }

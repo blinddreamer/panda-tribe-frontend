@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import Calculator from "./Calculator.jsx";
 import GetForm from "./CalculatorForm.jsx";
 import axios from "axios";
+import Animated from "../Animated";
 
 function CalculatorBody(props) {
   const [openState, setOpenState] = useState({});
@@ -92,43 +93,45 @@ function CalculatorBody(props) {
   };
   return (
     <>
-      <Container>
-        <Row>
-          <Col>
+      <Animated>
+        <Container>
+          <Row>
             <Col>
-              <div id="menuleft">
-                <GetForm
-                  setFormData={setFormData}
-                  setIsClicked={setIsClicked}
-                  isLoading={isLoading}
-                  optionsBp={optionsBp}
-                  optionsSys={optionsSys}
-                  advancedMode={props.advancedMode}
-                  regions={regions}
-                ></GetForm>
-              </div>
+              <Col>
+                <div id="menuleft">
+                  <GetForm
+                    setFormData={setFormData}
+                    setIsClicked={setIsClicked}
+                    isLoading={isLoading}
+                    optionsBp={optionsBp}
+                    optionsSys={optionsSys}
+                    advancedMode={props.advancedMode}
+                    regions={regions}
+                  ></GetForm>
+                </div>
+              </Col>
             </Col>
-          </Col>
-          <Col xs={9}>
-            <Calculator
-              materialsList={materialsList}
-              setMaterialsList={setMaterialsList}
-              errorMessage={errorMessage}
-              setErrorMessage={setErrorMessage}
-              initialBlueprint={initialBlueprint}
-              openState={openState}
-              setOpenState={setOpenState}
-              optionsSys={optionsSys}
-              backend={backend}
-              advancedMode={props.advancedMode}
-              setAdvancedMode={props.setAdvancedMode}
-              formData={formData}
-              crafitng={crafitng}
-              setCrafting={setCrafting}
-            />
-          </Col>
-        </Row>
-      </Container>
+            <Col xs={9}>
+              <Calculator
+                materialsList={materialsList}
+                setMaterialsList={setMaterialsList}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+                initialBlueprint={initialBlueprint}
+                openState={openState}
+                setOpenState={setOpenState}
+                optionsSys={optionsSys}
+                backend={backend}
+                advancedMode={props.advancedMode}
+                setAdvancedMode={props.setAdvancedMode}
+                formData={formData}
+                crafitng={crafitng}
+                setCrafting={setCrafting}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </Animated>
     </>
   );
 }
