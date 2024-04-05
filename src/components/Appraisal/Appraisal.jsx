@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Alert from "react-bootstrap/Alert";
+import Animated from "../Animated";
 
 function Appraisal() {
   const [onStart, setOnstart] = useState(true);
@@ -57,35 +58,37 @@ function Appraisal() {
     }
   }
   return (
-    <div id="AletaOceans">
-      <Container>
-        <Row>
-          <Col>
-            <div id="menuleft">
-              <AppraisalForm
-                isLoading={isLoading}
-                regions={regions}
-                errorMessage={errorMessage}
-                setErrorMessage={setErrorMessage}
-                calculateAppraisal={calculateAppraisal}
-              />
-            </div>
-          </Col>
-          <Col xs={7}>
-            {appraisal.appraisals ? (
-              <AppraisalResult appraisal={appraisal} />
-            ) : (
-              <div id="start-message">
-                <Alert variant="success">
-                  Paste a list from in-game items.
-                </Alert>
+    <Animated>
+      <div id="AletaOceans">
+        <Container>
+          <Row>
+            <Col>
+              <div id="menuleft">
+                <AppraisalForm
+                  isLoading={isLoading}
+                  regions={regions}
+                  errorMessage={errorMessage}
+                  setErrorMessage={setErrorMessage}
+                  calculateAppraisal={calculateAppraisal}
+                />
               </div>
-            )}
-          </Col>
-        </Row>
-        <Row></Row>
-      </Container>
-    </div>
+            </Col>
+            <Col xs={7}>
+              {appraisal.appraisals ? (
+                <AppraisalResult appraisal={appraisal} />
+              ) : (
+                <div id="start-message">
+                  <Alert variant="success">
+                    Paste a list from in-game items.
+                  </Alert>
+                </div>
+              )}
+            </Col>
+          </Row>
+          <Row></Row>
+        </Container>
+      </div>
+    </Animated>
   );
 }
 
