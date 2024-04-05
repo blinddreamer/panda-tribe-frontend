@@ -21,6 +21,10 @@ function Appraisal() {
     setOnstart(false);
   });
 
+  useEffect(() => {
+    document.title = "EVE Helper - Appraisal";
+  });
+
   async function getRegions() {
     const response = await axios.get(backend + "regions");
     if (response.status === 200) {

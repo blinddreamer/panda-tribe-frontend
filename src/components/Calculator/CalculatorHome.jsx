@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Body from "./CalculatorBody.jsx";
 
 function CalculatorHome() {
   const [advancedMode, setAdvancedMode] = useState(false);
+  useEffect(() => {
+    document.title = "EVE Helper - Industry Calculator";
+  });
   return (
     <>
       <div id="AletaOceans">

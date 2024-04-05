@@ -1,8 +1,12 @@
-import { React } from "react";
+import { React, useEffect } from "react";
 import Alert from "react-bootstrap/Alert";
 import Animated from "./Animated";
 
 function Homepage() {
+  useEffect(() => {
+    document.title =
+      "EVE Helper - Industry Calculator/Appraisal for EVE Online";
+  });
   return (
     <>
       <Animated>

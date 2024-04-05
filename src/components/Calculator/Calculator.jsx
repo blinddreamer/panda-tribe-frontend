@@ -5,10 +5,11 @@ import Collapse from "react-bootstrap/Collapse";
 import Alert from "react-bootstrap/Alert";
 import Spinner from "react-bootstrap/Spinner";
 import { Typeahead } from "react-bootstrap-typeahead/types";
-import AdvancedModeToggle from "../AdvancedModeToggle"
+import AdvancedModeToggle from "../AdvancedModeToggle";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
+import { GiBasket } from "react-icons/gi";
 
 function Calculator(props) {
   // INITIALISE STATE PARAMETERS
@@ -324,15 +325,19 @@ function Calculator(props) {
                   handleMultiBuyCopy("copy_" + props.initialBlueprint.name)
                 }
               >
-                {!isCopied["copy_" + props.initialBlueprint.name]
-                  ? "Multibuy"
-                  : "Copied"}
+                {!isCopied["copy_" + props.initialBlueprint.name] ? (
+                  <>
+                    <GiBasket /> Multibuy
+                  </>
+                ) : (
+                  "Copied"
+                )}
               </Button>
               <p />
-            <AdvancedModeToggle 
-             setAdvancedMode={props.setAdvancedMode}
-             advancedMode={props.advancedMode}
-            />
+              <AdvancedModeToggle
+                setAdvancedMode={props.setAdvancedMode}
+                advancedMode={props.advancedMode}
+              />
             </div>
           </div>
         )}
