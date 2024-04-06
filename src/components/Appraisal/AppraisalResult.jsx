@@ -20,11 +20,31 @@ function AppraisalResult(props) {
   return (
     <Animated>
       <div id="appraisalResponse">
-        <h3>
-          Estimate volume: {volumeFormat.format(props.appraisal.totalVolume)} m³
-          Estimate sell: {formatPrice(props.appraisal.estimateTotalSell)} ISK
-          Estimate buy: {formatPrice(props.appraisal.estimateTotalBuy)} ISK
-        </h3>
+        <div id="kfc">
+          <table id="tobleron">
+            <tr>
+              <td>
+                BUY:
+                <span id="ivanivanov">
+                  {formatPrice(props.appraisal.estimateTotalBuy)}
+                </span>
+              </td>
+              <td>
+                SELL:
+                <span id="maxpayne">
+                  {formatPrice(props.appraisal.estimateTotalSell)}
+                </span>
+              </td>
+              <td>
+                VOLUME:
+                <span id="vamos">
+                  {volumeFormat.format(props.appraisal.totalVolume)}
+                  m³
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
         <Table striped bordered hover size="sm">
           <thead>
             <tr>
@@ -56,6 +76,7 @@ function AppraisalResult(props) {
             ))}
           </tbody>
         </Table>
+        <span> *all prices are estimate</span>
       </div>
     </Animated>
   );

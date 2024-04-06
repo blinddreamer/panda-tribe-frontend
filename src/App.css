@@ -248,23 +248,38 @@ tr {
   left: 0;
   content: "";
   z-index: -1;
-  background: radial-gradient(rgba(255, 255, 255, 0.1) 10%, transparent 10%);
+  background: radial-gradient(rgba(255, 255, 255, 0.1) 5%, transparent 10%);
   background-size: 2vmin 2vmin;
 }
 
 textarea {
   height: 200px !important;
 }
+#ivanivanov {
+  color: #22babb;
+  font-size: 2.2rem;
+  vertical-align: middle !important;
+}
 
-#saltemike {
-  font-size: 1.5rem;
+#maxpayne {
+  color: #fa7f08;
+  font-size: 2.2rem;
+  vertical-align: middle !important;
+}
+
+#vamos {
+  font-size: 2.2rem;
+  vertical-align: middle !important;
+}
+
+#kfc {
+  background-color: rgba(var(--bs-body-color-rgb), 0.03);
   margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 10px;
 }
 
-#avengerone {
-  color: #eb9c35;
-}
-
-#berks {
-  color: #c4501b;
+#tobleron {
+  margin-left: auto;
+  margin-right: auto;
 }

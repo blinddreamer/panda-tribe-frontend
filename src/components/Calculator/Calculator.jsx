@@ -275,7 +275,7 @@ function Calculator(props) {
             <div id="hukurocks">
               Volume : {props.initialBlueprint.volume + " m³"}
               <p id="bpheader" />
-              Estimate Crafting price:{" "}
+              Crafting price:{" "}
               {craftPrice(
                 props.initialBlueprint,
                 "card_" + props.initialBlueprint.name
@@ -285,14 +285,14 @@ function Calculator(props) {
                 minimumFractionDigits: 2,
               })}{" "}
               <p id="bpheader" />
-              Estimate Sell order :{" "}
+              Sell order :{" "}
               {props.initialBlueprint.sellPrice.toLocaleString("en-US", {
                 style: "currency",
                 currency: "ISK",
                 minimumFractionDigits: 2,
               })}
               <p id="bpheader" />
-              Estimate Profit :{" "}
+              Profit :{" "}
               {(
                 props.initialBlueprint.sellPrice -
                 craftPrice(
@@ -640,7 +640,7 @@ function Calculator(props) {
                       render(id, mat, index)
                     )
                   ) : (
-                    <Spinner></Spinner>
+                    <Spinner animation="border"></Spinner>
                   )}
                 </tbody>
               </Table>
