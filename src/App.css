@@ -110,9 +110,6 @@ a:visited {
   padding: 5px;
 }
 
-.gnomatrie {
-}
-
 img,
 svg {
   border-radius: 3px !important;
@@ -122,22 +119,15 @@ svg {
   width: 140px !important;
 }
 
-#gnomorocks {
+#propimage {
   width: 150px;
 }
 
-#hukurocks {
+#propvolume {
   text-align: left;
 }
 
-#stats {
-}
-
-#statsp {
-  margin-bottom: -2px;
-}
-
-#pinkrainbow {
+#matsdiv {
   margin-bottom: 20px;
   font-size: 20px;
 }
@@ -147,10 +137,6 @@ svg {
   padding: 15px;
   border-radius: 5px;
   margin-top: 20px;
-}
-
-#bruh {
-  margin-top: 10px;
 }
 
 #HukuBartopolos {
@@ -208,9 +194,6 @@ th {
   width: 50px;
 }
 
-#fackcopy {
-}
-
 input,
 optgroup,
 select,
@@ -255,31 +238,31 @@ tr {
 textarea {
   height: 200px !important;
 }
-#ivanivanov {
+#apbuy {
   color: #22babb;
   font-size: 2.2rem;
   vertical-align: middle !important;
 }
 
-#maxpayne {
+#apsel {
   color: #fa7f08;
   font-size: 2.2rem;
   vertical-align: middle !important;
 }
 
-#vamos {
+#apvolume {
   font-size: 2.2rem;
   vertical-align: middle !important;
 }
 
-#kfc {
+#apholddiv {
   background-color: rgba(var(--bs-body-color-rgb), 0.03);
   margin-top: 20px;
   margin-bottom: 10px;
   padding: 10px;
 }
 
-#tobleron {
+#apmaindiv {
   margin-left: auto;
   margin-right: auto;
 }

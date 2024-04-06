@@ -267,12 +267,12 @@ function Calculator(props) {
           <div id="blueprintHeader">
             <div>
               <img
-                id="gnomorocks"
+                id="propimage"
                 src={props.initialBlueprint.icon}
                 loading="lazy"
               />{" "}
             </div>
-            <div id="hukurocks">
+            <div id="propvolume">
               Volume : {props.initialBlueprint.volume + " m³"}
               <p id="bpheader" />
               Crafting price:{" "}
@@ -342,7 +342,7 @@ function Calculator(props) {
           </div>
         )}
         {props.initialBlueprint.materialsList && (
-          <div id="pinkrainbow">
+          <div id="matsdiv">
             Materials for creating {props.initialBlueprint.quantity}{" "}
             {props.initialBlueprint.name}.
           </div>
@@ -369,7 +369,7 @@ function Calculator(props) {
                 {props.advancedMode && <th id="fackrig">Rig</th>}
                 {props.advancedMode && <th id="facksystem">System</th>}
                 {props.advancedMode && <th id="facktax">Facility tax</th>}
-                <th id="fackcopy">Copy</th>
+                <th>Copy</th>
               </tr>
             </thead>
             <tbody>
@@ -631,7 +631,7 @@ function Calculator(props) {
                     {props.advancedMode && <th id="fackrig">Rig</th>}
                     {props.advancedMode && <th id="facksystem">System</th>}
                     {props.advancedMode && <th id="facktax">Facility tax</th>}
-                    <th id="fackcopy">Copy</th>
+                    <th>Copy</th>
                   </tr>
                 </thead>
                 <tbody>
