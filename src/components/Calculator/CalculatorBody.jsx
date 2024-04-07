@@ -22,8 +22,8 @@ function CalculatorBody(props) {
   const [stations, setStations] = useState([{}]);
   const [crafitng, setCrafting] = useState({});
 
-  const backend = "https://api.eve-helper.com/api/v1/";
-  // const backend = "http://thunder:8080/api/v1/";
+  // const backend = "https://api.eve-helper.com/api/v1/";
+  const backend = "http://thunder:8080/api/v1/";
 
   useEffect(() => {
     isClicked && submitForm();
@@ -64,13 +64,13 @@ function CalculatorBody(props) {
     try {
       const response = await axios.post(backend + "type", {
         blueprintName: formData.blueprintName,
-        quantity: formData.quantity,
+        runs: formData.runs,
         blueprintMe: formData.blueprintMe,
         buildingRig: formData.buildingRig,
         building: formData.building,
         system: formData.system,
         facilityTax: formData.facilityTax,
-        jobRuns: formData.blueprintCount,
+        count: formData.count,
         regionId: formData.regionId,
         init: true,
       });

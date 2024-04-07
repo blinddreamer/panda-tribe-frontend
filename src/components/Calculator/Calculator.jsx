@@ -52,6 +52,7 @@ function Calculator(props) {
     }));
   };
 
+  // RECALCULATIONS 
   async function recalculatePrices(id, material, colId, parent_id, value) {
     let blueprintMe = "";
     let buildingRig = "";
@@ -118,7 +119,7 @@ function Calculator(props) {
       props.setErrorMessage(error.message);
     }
   }
-
+  // GENERATE COPY TEXT 
   function generateCopyText(material, step) {
     // Initialize an empty string to store the copy text
     let copyText = "";
@@ -156,26 +157,13 @@ function Calculator(props) {
     }
   }
 
-  // COPY FUNCTION
-  async function handleSingleCopy(material, id) {
-    try {
-      const textToCopy = material.materialsList
-        .map((mat) => `${mat.name} x${mat.quantity}`)
-        .join("\n");
-      await navigator.clipboard.writeText(textToCopy);
-      setIsCopied({ [id]: true });
-    } catch (error) {
-      console.error("Error copying text: ", error);
-      alert("Failed to copy text.");
-    }
-  }
-  // INITIAL BACKEND CALL TO OBTAIN INITIAL DATA
+  // CRAFT PRICE CALCULATIONS
 
   const craftPrice = (material, id) => {
     const price = material.materialsList.reduce((accumulator, mat, index) => {
       const openId = (id + "_" + mat.name + index).replaceAll(" ", "_");
       const state = props.crafitng[openId];
-
+      
       return (
         accumulator +
         (mat.craftPrice != "-" && mat.craftPrice != null && state
@@ -186,7 +174,7 @@ function Calculator(props) {
     material.craftPrice = price + material.industryCosts;
     return material.craftPrice;
   };
-
+  // HANDLE CHECK BOX
   function handleCheck(material, colId, checkId) {
     props.setCrafting((prevState) => ({
       ...prevState,
@@ -206,7 +194,7 @@ function Calculator(props) {
       try {
         const response = await axios.post(props.backend + "type", {
           blueprintName: material.name,
-          quantity: material.jobsCount,
+          runs: material.jobsCount,
           blueprintMe: material.activityId == 11 ? 0 : 10,
           building: props.formData.building,
           buildingRig: props.formData.buildingRig,
@@ -254,6 +242,7 @@ function Calculator(props) {
 
   // DISPLAY RESULT
   const displayResult = () => {
+    let volumeFormat = new Intl.NumberFormat();
     return (
       <>
         {!props.initialBlueprint.materialsList && (
@@ -273,7 +262,7 @@ function Calculator(props) {
               />{" "}
             </div>
             <div id="hukurocks">
-              Volume : {props.initialBlueprint.volume + " m³"}
+              Volume : {volumeFormat.format(props.initialBlueprint.volume) + " m³"}
               <p id="bpheader" />
               Crafting price:{" "}
               {craftPrice(
@@ -293,8 +282,9 @@ function Calculator(props) {
               })}
               <p id="bpheader" />
               Profit :{" "}
-              {(
-                props.initialBlueprint.sellPrice -
+              <span className={(props.initialBlueprint.sellPrice -
+                craftPrice(props.initialBlueprint,"card_" + props.initialBlueprint.name)) < 0 ? "redmilcho" : "greenmilcho"}>
+              {(props.initialBlueprint.sellPrice -
                 craftPrice(
                   props.initialBlueprint,
                   "card_" + props.initialBlueprint.name
@@ -303,10 +293,11 @@ function Calculator(props) {
                 style: "currency",
                 currency: "ISK",
                 minimumFractionDigits: 2,
-              })}
+              })}</span>
               <p id="bpheader" />
               Margin :{" "}
-              {(
+              <span className={(props.initialBlueprint.sellPrice -
+                craftPrice(props.initialBlueprint,"card_" + props.initialBlueprint.name)) < 0 ? "redmilcho" : "greenmilcho"}>{(
                 ((props.initialBlueprint.sellPrice -
                   craftPrice(
                     props.initialBlueprint,
@@ -314,7 +305,7 @@ function Calculator(props) {
                   )) /
                   props.initialBlueprint.sellPrice) *
                 100
-              ).toFixed(2) + " %"}
+              ).toFixed(2) + " %"}</span> 
               <p id="bpheader" />
             </div>
             <div>
@@ -359,9 +350,9 @@ function Calculator(props) {
                 <th>#</th>
                 <th>Item</th>
                 <th>Quantity</th>
-                <th>Volume</th>
-                <th>Market Cost</th>
-                <th>Craft Cost</th>
+                <th>Volume m³</th>
+                <th>Market Cost ISK</th>
+                <th>Craft Cost ISK</th>
                 <th id="fackexcess">Excess</th>
                 <th>Multibuy</th>
                 {props.advancedMode && <th id="fackbpme">BP ME</th>}
@@ -369,15 +360,16 @@ function Calculator(props) {
                 {props.advancedMode && <th id="fackrig">Rig</th>}
                 {props.advancedMode && <th id="facksystem">System</th>}
                 {props.advancedMode && <th id="facktax">Facility tax</th>}
-                <th id="fackcopy">Copy</th>
-              </tr>
+                </tr>
             </thead>
             <tbody>
               {props.materialsList.map((mat, index) =>
                 render(props.initialBlueprint.name, mat, index)
               )}
             </tbody>
+            <span> *all prices are estimate</span>
           </Table>
+          
         )}
       </>
     );
@@ -391,12 +383,15 @@ function Calculator(props) {
     const isOpen = props.openState[openId]; // Get the open state for the card
     const isLoaded = isDataLoaded[colId];
     const trColor = index % 2 == 0 ? "huku" : "gnomo";
+    let volumeFormat = new Intl.NumberFormat();
+    let priceFormat = new Intl.NumberFormat("en-US");
     const isCheckable =
-      (parent == props.initialBlueprint.name
-        ? false
-        : !isChecked["card_" + parent]) ||
-      !material.isCreatable ||
-      isOpen;
+    (parent == props.initialBlueprint.name
+      ? false
+      : !isChecked["card_" + parent]) ||
+    !material.isCreatable ||
+    isOpen;
+      
     return (
       <>
         <tr className={trColor}>
@@ -438,7 +433,7 @@ function Calculator(props) {
               toggleCollapsible("card_" + id, material.isCreatable)
             }
           >
-            {material.volume.toFixed(0)}
+            {volumeFormat.format(material.volume)}
           </td>
           <td
             role={material.isCreatable ? "button" : ""}
@@ -448,7 +443,7 @@ function Calculator(props) {
               toggleCollapsible("card_" + id, material.isCreatable)
             }
           >
-            {material.sellPrice}
+            {priceFormat.format(material.sellPrice)}
           </td>
           <td
             role={material.isCreatable ? "button" : ""}
@@ -458,16 +453,17 @@ function Calculator(props) {
               toggleCollapsible("card_" + id, material.isCreatable)
             }
           >
-            {material.craftPrice ? craftPrice(material, openId) : "-"}
+            {material.craftPrice ? priceFormat.format(craftPrice(material, openId)) : "-"}
           </td>
           <td>{material.excessMaterials}</td>
           <td>
             <Form.Check
               role={material.isCreatable ? "button" : ""}
+              // defaultChecked={parent==props.initialBlueprint.name}
               disabled={isCheckable}
               id={"check_" + id}
               key={"check_" + id}
-              type="switch"
+              type="checkbox"
               onClick={() => handleCheck(material, "col_" + id, "card_" + id)}
             />
           </td>
@@ -588,16 +584,6 @@ function Calculator(props) {
               </td>
             </>
           )}
-          <td>
-            <Button
-              id={`copy_${id}`}
-              disabled={!isLoaded}
-              onClick={() => handleSingleCopy(material, "copy_" + id)}
-              variant="secondary"
-            >
-              {!isCopied["copy_" + id] ? "Copy" : "Copied"}
-            </Button>
-          </td>
         </tr>
 
         <Collapse
@@ -621,9 +607,9 @@ function Calculator(props) {
                     <th>#</th>
                     <th>Item</th>
                     <th>Quantity</th>
-                    <th>Volume</th>
-                    <th>Market Cost</th>
-                    <th>Craft Cost</th>
+                    <th>Volume m³</th>
+                    <th>Market Cost ISK</th>
+                    <th>Craft Cost ISK</th>
                     <th id="fackexcess">Excess</th>
                     <th>Multibuy</th>
                     {props.advancedMode && <th id="fackbpme">BP ME</th>}
@@ -631,8 +617,7 @@ function Calculator(props) {
                     {props.advancedMode && <th id="fackrig">Rig</th>}
                     {props.advancedMode && <th id="facksystem">System</th>}
                     {props.advancedMode && <th id="facktax">Facility tax</th>}
-                    <th id="fackcopy">Copy</th>
-                  </tr>
+                    </tr>
                 </thead>
                 <tbody>
                   {isLoaded && Array.isArray(material.materialsList) ? (

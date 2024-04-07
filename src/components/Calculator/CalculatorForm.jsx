@@ -12,21 +12,21 @@ function CalculatorForm(props) {
 
   function sendData() {
     let building = document.getElementById("building").value;
-    let quantity = document.getElementById("quantity").value;
+    let runs = document.getElementById("quantity").value;
     let buildingRig = document.getElementById("buildingRig").value;
     let blueprintMe = document.getElementById("blueprintMe").value;
     let facilityTax = document.getElementById("facility").value;
-    let blueprintCount = document.getElementById("blueprintCount").value;
+    let count = document.getElementById("blueprintCount").value;
     let regionId = document.getElementById("marketRegion").value;
     props.setFormData({
       blueprintName: blueprint,
-      quantity: quantity,
+      runs: runs,
       blueprintMe: blueprintMe,
       buildingRig: buildingRig,
       building: building,
       system: system,
       facilityTax: facilityTax,
-      blueprintCount: blueprintCount,
+      count: count,
       regionId: regionId,
     });
     props.setIsClicked(true);

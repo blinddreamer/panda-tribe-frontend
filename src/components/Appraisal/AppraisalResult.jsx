@@ -48,6 +48,7 @@ function AppraisalResult(props) {
         <Table striped bordered hover size="sm">
           <thead>
             <tr>
+              <th>#</th>
               <th>Item</th>
               <th>Quantity</th>
               <th>Unit Volume</th>
@@ -61,10 +62,8 @@ function AppraisalResult(props) {
           <tbody>
             {props.appraisal.appraisals.map((ap, index) => (
               <tr key={index}>
-                <td>
-                  <img src={ap.icon} loading="lazy" />
-                  {ap.item}
-                </td>
+                <td><img src={ap.icon} loading="lazy" /></td>
+                <td>{ap.item}</td>
                 <td>{ap.quantity}</td>
                 <td>{volumeFormat.format(ap.volume)} m³</td>
                 <td>{volumeFormat.format(ap.quantity * ap.volume)} m³ </td>
