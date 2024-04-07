@@ -20,24 +20,24 @@ function AppraisalResult(props) {
   return (
     <Animated>
       <div id="appraisalResponse">
-        <div id="kfc">
-          <table id="tobleron">
+        <div id="apholddiv">
+          <table id="apmaindiv">
             <tr>
               <td>
                 BUY:
-                <span id="ivanivanov">
+                <span id="apbuy">
                   {formatPrice(props.appraisal.estimateTotalBuy)}
                 </span>
               </td>
               <td>
                 SELL:
-                <span id="maxpayne">
+                <span id="apsel">
                   {formatPrice(props.appraisal.estimateTotalSell)}
                 </span>
               </td>
               <td>
                 VOLUME:
-                <span id="vamos">
+                <span id="apvolume">
                   {volumeFormat.format(props.appraisal.totalVolume)}
                   m³
                 </span>

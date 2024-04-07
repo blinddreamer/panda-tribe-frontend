@@ -256,12 +256,12 @@ function Calculator(props) {
           <div id="blueprintHeader">
             <div>
               <img
-                id="gnomorocks"
+                id="propimage"
                 src={props.initialBlueprint.icon}
                 loading="lazy"
               />{" "}
             </div>
-            <div id="hukurocks">
+            <div id="propvolume">
               Volume : {volumeFormat.format(props.initialBlueprint.volume) + " m³"}
               <p id="bpheader" />
               Crafting price:{" "}
@@ -333,7 +333,7 @@ function Calculator(props) {
           </div>
         )}
         {props.initialBlueprint.materialsList && (
-          <div id="pinkrainbow">
+          <div id="matsdiv">
             Materials for creating {props.initialBlueprint.quantity}{" "}
             {props.initialBlueprint.name}.
           </div>
