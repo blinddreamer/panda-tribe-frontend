@@ -52,7 +52,7 @@ function Calculator(props) {
     }));
   };
 
-  // RECALCULATIONS 
+  // RECALCULATIONS
   async function recalculatePrices(id, material, colId, parent_id, value) {
     let blueprintMe = "";
     let buildingRig = "";
@@ -119,7 +119,7 @@ function Calculator(props) {
       props.setErrorMessage(error.message);
     }
   }
-  // GENERATE COPY TEXT 
+  // GENERATE COPY TEXT
   function generateCopyText(material, step) {
     // Initialize an empty string to store the copy text
     let copyText = "";
@@ -163,7 +163,7 @@ function Calculator(props) {
     const price = material.materialsList.reduce((accumulator, mat, index) => {
       const openId = (id + "_" + mat.name + index).replaceAll(" ", "_");
       const state = props.crafitng[openId];
-      
+
       return (
         accumulator +
         (mat.craftPrice != "-" && mat.craftPrice != null && state
@@ -262,7 +262,8 @@ function Calculator(props) {
               />{" "}
             </div>
             <div id="propvolume">
-              Volume : {volumeFormat.format(props.initialBlueprint.volume) + " m³"}
+              Volume :{" "}
+              {volumeFormat.format(props.initialBlueprint.volume) + " m³"}
               <p id="bpheader" />
               Crafting price:{" "}
               {craftPrice(
@@ -282,30 +283,54 @@ function Calculator(props) {
               })}
               <p id="bpheader" />
               Profit :{" "}
-              <span className={(props.initialBlueprint.sellPrice -
-                craftPrice(props.initialBlueprint,"card_" + props.initialBlueprint.name)) < 0 ? "redmilcho" : "greenmilcho"}>
-              {(props.initialBlueprint.sellPrice -
-                craftPrice(
-                  props.initialBlueprint,
-                  "card_" + props.initialBlueprint.name
-                )
-              ).toLocaleString("en-US", {
-                style: "currency",
-                currency: "ISK",
-                minimumFractionDigits: 2,
-              })}</span>
-              <p id="bpheader" />
-              Margin :{" "}
-              <span className={(props.initialBlueprint.sellPrice -
-                craftPrice(props.initialBlueprint,"card_" + props.initialBlueprint.name)) < 0 ? "redmilcho" : "greenmilcho"}>{(
-                ((props.initialBlueprint.sellPrice -
+              <span
+                className={
+                  props.initialBlueprint.sellPrice -
+                    craftPrice(
+                      props.initialBlueprint,
+                      "card_" + props.initialBlueprint.name
+                    ) <
+                  0
+                    ? "redmilcho"
+                    : "greenmilcho"
+                }
+              >
+                {(
+                  props.initialBlueprint.sellPrice -
                   craftPrice(
                     props.initialBlueprint,
                     "card_" + props.initialBlueprint.name
-                  )) /
-                  props.initialBlueprint.sellPrice) *
-                100
-              ).toFixed(2) + " %"}</span> 
+                  )
+                ).toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "ISK",
+                  minimumFractionDigits: 2,
+                })}
+              </span>
+              <p id="bpheader" />
+              Margin :{" "}
+              <span
+                className={
+                  props.initialBlueprint.sellPrice -
+                    craftPrice(
+                      props.initialBlueprint,
+                      "card_" + props.initialBlueprint.name
+                    ) <
+                  0
+                    ? "redmilcho"
+                    : "greenmilcho"
+                }
+              >
+                {(
+                  ((props.initialBlueprint.sellPrice -
+                    craftPrice(
+                      props.initialBlueprint,
+                      "card_" + props.initialBlueprint.name
+                    )) /
+                    props.initialBlueprint.sellPrice) *
+                  100
+                ).toFixed(2) + " %"}
+              </span>
               <p id="bpheader" />
             </div>
             <div>
@@ -360,17 +385,16 @@ function Calculator(props) {
                 {props.advancedMode && <th id="fackrig">Rig</th>}
                 {props.advancedMode && <th id="facksystem">System</th>}
                 {props.advancedMode && <th id="facktax">Facility tax</th>}
-                </tr>
+              </tr>
             </thead>
             <tbody>
               {props.materialsList.map((mat, index) =>
                 render(props.initialBlueprint.name, mat, index)
               )}
             </tbody>
-            <span> *all prices are estimate</span>
           </Table>
-          
         )}
+        <span> *all prices are estimate</span>
       </>
     );
   };
@@ -386,12 +410,12 @@ function Calculator(props) {
     let volumeFormat = new Intl.NumberFormat();
     let priceFormat = new Intl.NumberFormat("en-US");
     const isCheckable =
-    (parent == props.initialBlueprint.name
-      ? false
-      : !isChecked["card_" + parent]) ||
-    !material.isCreatable ||
-    isOpen;
-      
+      (parent == props.initialBlueprint.name
+        ? false
+        : !isChecked["card_" + parent]) ||
+      !material.isCreatable ||
+      isOpen;
+
     return (
       <>
         <tr className={trColor}>
@@ -453,7 +477,9 @@ function Calculator(props) {
               toggleCollapsible("card_" + id, material.isCreatable)
             }
           >
-            {material.craftPrice ? priceFormat.format(craftPrice(material, openId)) : "-"}
+            {material.craftPrice
+              ? priceFormat.format(craftPrice(material, openId))
+              : "-"}
           </td>
           <td>{material.excessMaterials}</td>
           <td>
@@ -617,7 +643,7 @@ function Calculator(props) {
                     {props.advancedMode && <th id="fackrig">Rig</th>}
                     {props.advancedMode && <th id="facksystem">System</th>}
                     {props.advancedMode && <th id="facktax">Facility tax</th>}
-                    </tr>
+                  </tr>
                 </thead>
                 <tbody>
                   {isLoaded && Array.isArray(material.materialsList) ? (
