@@ -394,7 +394,7 @@ function Calculator(props) {
             </tbody>
           </Table>
         )}
-        <span> *all prices are estimate</span>
+        {props.initialBlueprint.materialsList && <span> *all prices are estimate</span>}
       </>
     );
   };
