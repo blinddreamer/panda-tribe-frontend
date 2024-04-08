@@ -98,7 +98,7 @@ function Calculator(props) {
     try {
       const response = await axios.post(props.backend + "type", {
         blueprintName: material.name,
-        quantity: material.jobsCount,
+        runs: material.jobsCount,
         blueprintMe: blueprintMe,
         buildingRig: buildingRig,
         building: building,
@@ -224,13 +224,13 @@ function Calculator(props) {
         ...prevState,
         [id]: !prevState[id], // Toggle the state for the given ID
       }));
-      const checkBox = isChecked[id];
-      if (!checkBox) {
-        props.setCrafting((prevState) => ({
-          ...prevState,
-          [id]: !prevState[id],
-        }));
-      }
+      // const checkBox = isChecked[id];
+      // if (!checkBox) {
+      //   props.setCrafting((prevState) => ({
+      //     ...prevState,
+      //     [id]: !prevState[id],
+      //   }));
+      // }
     }
   };
   // UPDATE LOADED DATA
@@ -343,7 +343,7 @@ function Calculator(props) {
               >
                 {!isCopied["copy_" + props.initialBlueprint.name] ? (
                   <>
-                    <GiBasket /> Multibuy
+                    <GiBasket /> Copy Mats
                   </>
                 ) : (
                   "Copied"
@@ -379,7 +379,7 @@ function Calculator(props) {
                 <th>Market Cost ISK</th>
                 <th>Craft Cost ISK</th>
                 <th id="fackexcess">Excess</th>
-                <th>Multibuy</th>
+                <th>Buy / Craft</th>
                 {props.advancedMode && <th id="fackbpme">BP ME</th>}
                 {props.advancedMode && <th id="fackbuilding">Building</th>}
                 {props.advancedMode && <th id="fackrig">Rig</th>}
@@ -413,8 +413,7 @@ function Calculator(props) {
       (parent == props.initialBlueprint.name
         ? false
         : !isChecked["card_" + parent]) ||
-      !material.isCreatable ||
-      isOpen;
+      !material.isCreatable
 
     return (
       <>
@@ -447,7 +446,7 @@ function Calculator(props) {
               toggleCollapsible("card_" + id, material.isCreatable)
             }
           >
-            {material.quantity}
+            {volumeFormat.format(material.quantity)}
           </td>
           <td
             role={material.isCreatable ? "button" : ""}
@@ -489,7 +488,7 @@ function Calculator(props) {
               disabled={isCheckable}
               id={"check_" + id}
               key={"check_" + id}
-              type="checkbox"
+              type="switch"
               onClick={() => handleCheck(material, "col_" + id, "card_" + id)}
             />
           </td>
@@ -637,7 +636,7 @@ function Calculator(props) {
                     <th>Market Cost ISK</th>
                     <th>Craft Cost ISK</th>
                     <th id="fackexcess">Excess</th>
-                    <th>Multibuy</th>
+                    <th>Buy / Craft</th>
                     {props.advancedMode && <th id="fackbpme">BP ME</th>}
                     {props.advancedMode && <th id="fackbuilding">Building</th>}
                     {props.advancedMode && <th id="fackrig">Rig</th>}
