@@ -359,7 +359,7 @@ function Calculator(props) {
         )}
         {props.initialBlueprint.materialsList && (
           <div id="matsdiv">
-            Materials for creating {props.initialBlueprint.quantity}{" "}
+            Input materials for creating {props.initialBlueprint.quantity}{" "}
             {props.initialBlueprint.name}.
           </div>
         )}
