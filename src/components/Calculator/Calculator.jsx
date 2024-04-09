@@ -166,7 +166,7 @@ function Calculator(props) {
 
       return (
         accumulator +
-        (mat.craftPrice != "-" && mat.craftPrice != null && state
+        (state
           ? mat.craftPrice + mat.industryCosts
           : mat.sellPrice)
       );
@@ -485,7 +485,7 @@ function Calculator(props) {
           <td>
             <Form.Check
               role={material.isCreatable ? "button" : ""}
-              // defaultChecked={parent==props.initialBlueprint.name}
+              checked={props.crafitng[openId]}
               disabled={isCheckable}
               id={"check_" + id}
               key={"check_" + id}

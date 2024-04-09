@@ -62,6 +62,7 @@ function CalculatorBody(props) {
     setIsClicked(false);
     setOpenState({});
     setCrafting({});
+    setIsChecked({});
     setIsLoading(true);
     try {
       const response = await axios.post(backend + "type", {
