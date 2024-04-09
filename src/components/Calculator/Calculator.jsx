@@ -166,7 +166,7 @@ function Calculator(props) {
 
       return (
         accumulator +
-        (state
+        (mat.craftPrice != "-" && mat.craftPrice != null && state
           ? mat.craftPrice + mat.industryCosts
           : mat.sellPrice)
       );
