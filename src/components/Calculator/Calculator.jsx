@@ -18,7 +18,7 @@ function Calculator(props) {
   const [system, setSystem] = useState(null);
   const [systemValues, setSystemValues] = useState({});
   const [inputValues, setInputValues] = useState({});
-  const [isChecked, setIsChecked] = useState({});
+  
 
   useEffect(() => {
     system != null &&
@@ -166,7 +166,7 @@ function Calculator(props) {
 
       return (
         accumulator +
-        (state
+        (mat.craftPrice != "-" && mat.craftPrice != null && state
           ? mat.craftPrice + mat.industryCosts
           : mat.sellPrice)
       );
@@ -180,7 +180,7 @@ function Calculator(props) {
       ...prevState,
       [checkId]: !prevState[checkId],
     }));
-    setIsChecked((prevState) => ({
+    props.setIsChecked((prevState) => ({
       ...prevState,
       [checkId]: !prevState[checkId],
     }));
@@ -224,7 +224,7 @@ function Calculator(props) {
         ...prevState,
         [id]: !prevState[id], // Toggle the state for the given ID
       }));
-      // const checkBox = isChecked[id];
+      // const checkBox = props.isChecked[id];
       // if (!checkBox) {
       //   props.setCrafting((prevState) => ({
       //     ...prevState,
@@ -414,7 +414,7 @@ function Calculator(props) {
     const isCheckable =
       (parent == props.initialBlueprint.name
         ? false
-        : !isChecked["card_" + parent]) || !material.isCreatable;
+        : !props.isChecked["card_" + parent]) || !material.isCreatable;
 
     return (
       <>

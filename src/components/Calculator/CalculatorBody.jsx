@@ -21,6 +21,7 @@ function CalculatorBody(props) {
   const [regions, setRegions] = useState([{}]);
   const [stations, setStations] = useState([{}]);
   const [crafitng, setCrafting] = useState({});
+  const [isChecked, setIsChecked] = useState({});
 
   const backend = "https://api.eve-helper.com/api/v1/";
   // const backend = "http://thunder:8080/api/v1/";
@@ -60,6 +61,7 @@ function CalculatorBody(props) {
   const submitForm = async () => {
     setIsClicked(false);
     setOpenState({});
+    setCrafting({});
     setIsLoading(true);
     try {
       const response = await axios.post(backend + "type", {
@@ -127,6 +129,8 @@ function CalculatorBody(props) {
                 formData={formData}
                 crafitng={crafitng}
                 setCrafting={setCrafting}
+                isChecked={isChecked}
+                setIsChecked={setIsChecked}
               />
             </Col>
           </Row>
