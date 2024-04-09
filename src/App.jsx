@@ -21,7 +21,6 @@ function App() {
   return (
     <>
       <Video />
-
       <div id="HukuBartopolos">
         <NavbarMenu />
         <AnimatePresence initial={false} mode={"wait"}>

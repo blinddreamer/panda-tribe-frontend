@@ -378,13 +378,13 @@ function Calculator(props) {
                 <th>Volume m³</th>
                 <th>Market Cost ISK</th>
                 <th>Craft Cost ISK</th>
-                <th id="fackexcess">Excess</th>
+                <th>Excess</th>
                 <th>Buy / Craft</th>
-                {props.advancedMode && <th id="fackbpme">BP ME</th>}
-                {props.advancedMode && <th id="fackbuilding">Building</th>}
-                {props.advancedMode && <th id="fackrig">Rig</th>}
-                {props.advancedMode && <th id="facksystem">System</th>}
-                {props.advancedMode && <th id="facktax">Facility tax</th>}
+                {props.advancedMode && <th>BP ME</th>}
+                {props.advancedMode && <th>Building</th>}
+                {props.advancedMode && <th>Rig</th>}
+                {props.advancedMode && <th>System</th>}
+                {props.advancedMode && <th>Facility tax</th>}
               </tr>
             </thead>
             <tbody>
@@ -394,7 +394,9 @@ function Calculator(props) {
             </tbody>
           </Table>
         )}
-        {props.initialBlueprint.materialsList && <span> *all prices are estimate</span>}
+        {props.initialBlueprint.materialsList && (
+          <span> *all prices are estimate</span>
+        )}
       </>
     );
   };
@@ -412,8 +414,7 @@ function Calculator(props) {
     const isCheckable =
       (parent == props.initialBlueprint.name
         ? false
-        : !isChecked["card_" + parent]) ||
-      !material.isCreatable
+        : !isChecked["card_" + parent]) || !material.isCreatable;
 
     return (
       <>
@@ -635,13 +636,13 @@ function Calculator(props) {
                     <th>Volume m³</th>
                     <th>Market Cost ISK</th>
                     <th>Craft Cost ISK</th>
-                    <th id="fackexcess">Excess</th>
+                    <th>Excess</th>
                     <th>Buy / Craft</th>
-                    {props.advancedMode && <th id="fackbpme">BP ME</th>}
-                    {props.advancedMode && <th id="fackbuilding">Building</th>}
-                    {props.advancedMode && <th id="fackrig">Rig</th>}
-                    {props.advancedMode && <th id="facksystem">System</th>}
-                    {props.advancedMode && <th id="facktax">Facility tax</th>}
+                    {props.advancedMode && <th>BP ME</th>}
+                    {props.advancedMode && <th>Building</th>}
+                    {props.advancedMode && <th>Rig</th>}
+                    {props.advancedMode && <th>System</th>}
+                    {props.advancedMode && <th>Facility tax</th>}
                   </tr>
                 </thead>
                 <tbody>

@@ -36,7 +36,7 @@ function NavbarMenu() {
       <p></p>
       <div>
         <ResponsiveAlert
-          breakpointWidth={1450}
+          breakpointWidth={1280}
           message="Optimizing for desktop first, screen resolution too low!"
         />
       </div>
