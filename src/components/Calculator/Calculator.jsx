@@ -595,6 +595,7 @@ function Calculator(props) {
                 <Form.Group controlId={`facility_${id}`}>
                   <Form.Control
                     disabled={!material.isCreatable}
+                    step={0.1}
                     defaultValue={
                       inputValues[`facility_${id}`]
                         ? inputValues[`facility_${id}`]
@@ -602,6 +603,7 @@ function Calculator(props) {
                     }
                     type="number"
                     min={0}
+
                     name={`facility_${id}`}
                     placeholder="0"
                     onChange={(e) => handleInputChange(material, e)}
