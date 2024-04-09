@@ -18,7 +18,7 @@ function Calculator(props) {
   const [system, setSystem] = useState(null);
   const [systemValues, setSystemValues] = useState({});
   const [inputValues, setInputValues] = useState({});
-  const [isChecked, setIsChecked] = useState({});
+  
 
   useEffect(() => {
     system != null &&
@@ -166,7 +166,7 @@ function Calculator(props) {
 
       return (
         accumulator +
-        (mat.craftPrice != "-" && mat.craftPrice != null && state
+        (state
           ? mat.craftPrice + mat.industryCosts
           : mat.sellPrice)
       );
@@ -180,7 +180,7 @@ function Calculator(props) {
       ...prevState,
       [checkId]: !prevState[checkId],
     }));
-    setIsChecked((prevState) => ({
+    props.setIsChecked((prevState) => ({
       ...prevState,
       [checkId]: !prevState[checkId],
     }));
@@ -224,7 +224,7 @@ function Calculator(props) {
         ...prevState,
         [id]: !prevState[id], // Toggle the state for the given ID
       }));
-      // const checkBox = isChecked[id];
+      // const checkBox = props.isChecked[id];
       // if (!checkBox) {
       //   props.setCrafting((prevState) => ({
       //     ...prevState,
@@ -414,7 +414,7 @@ function Calculator(props) {
     const isCheckable =
       (parent == props.initialBlueprint.name
         ? false
-        : !isChecked["card_" + parent]) || !material.isCreatable;
+        : !props.isChecked["card_" + parent]) || !material.isCreatable;
 
     return (
       <>
@@ -485,7 +485,7 @@ function Calculator(props) {
           <td>
             <Form.Check
               role={material.isCreatable ? "button" : ""}
-              // defaultChecked={parent==props.initialBlueprint.name}
+              checked={props.crafitng[openId]}
               disabled={isCheckable}
               id={"check_" + id}
               key={"check_" + id}
@@ -595,6 +595,7 @@ function Calculator(props) {
                 <Form.Group controlId={`facility_${id}`}>
                   <Form.Control
                     disabled={!material.isCreatable}
+                    step={0.1}
                     defaultValue={
                       inputValues[`facility_${id}`]
                         ? inputValues[`facility_${id}`]
@@ -602,6 +603,7 @@ function Calculator(props) {
                     }
                     type="number"
                     min={0}
+
                     name={`facility_${id}`}
                     placeholder="0"
                     onChange={(e) => handleInputChange(material, e)}
