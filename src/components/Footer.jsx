@@ -9,7 +9,7 @@ function Footer() {
       <Card className="text-center cardh">
         <Card.Body>
           <Card.Text>
-            &copy; {new Date().getFullYear()}. Made with ❤️ by{" "}
+            Made with ❤️ by{" "}
             <a href="https://evewho.com/character/92997815">
               <span id="linkz">Gnomcho Kraitan</span>
             </a>

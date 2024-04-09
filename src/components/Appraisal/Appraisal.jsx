@@ -63,7 +63,7 @@ function Appraisal() {
   }
   return (
     <Animated>
-      <div id="AletaOceans">
+      <div id="animateddiv">
         <Container>
           <Row>
             <Col>

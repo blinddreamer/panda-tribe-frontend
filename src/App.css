@@ -150,7 +150,7 @@ svg {
   width: 83% !important;
 }
 
-#AletaOceans {
+#animateddiv {
   font-size: 0.75rem;
 }
 
@@ -167,33 +167,6 @@ th {
   margin-top: 20px;
 }
 
-/*TD sizing
-#facktax {
-  width: 75px;
-}
-#facksystem {
-  width: 80px;
-}
-#fackbpme {
-  width: 65px;
-}
-#fackbuilding {
-  width: 100px;
-}
-#fackrig {
-  width: 80px;
-}
-#facksystem {
-  width: 100px;
-}
-#facktax {
-  width: 65px;
-}
-
-#fackexcess {
-  width: 50px;
-}
-*/
 input,
 optgroup,
 select,

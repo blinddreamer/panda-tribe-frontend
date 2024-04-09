@@ -8,7 +8,7 @@ function CalculatorHome() {
   });
   return (
     <>
-      <div id="AletaOceans">
+      <div id="animateddiv">
         <Body advancedMode={advancedMode} setAdvancedMode={setAdvancedMode} />
       </div>
     </>
