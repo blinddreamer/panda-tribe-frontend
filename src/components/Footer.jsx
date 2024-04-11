@@ -35,7 +35,9 @@ function Footer() {
         </Card.Footer>
         <p />
         <div id="legal">
-          All EVE related materials are property of CCP Games.
+          © 2014 CCP hf. All rights reserved. "EVE", "EVE Online", "CCP", and
+          all related logos and images are trademarks or registered trademarks
+          of CCP hf.
         </div>
       </Card>
     </>
