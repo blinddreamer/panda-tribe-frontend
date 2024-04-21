@@ -23,8 +23,8 @@ function CalculatorBody(props) {
   const [crafitng, setCrafting] = useState({});
   const [isChecked, setIsChecked] = useState({});
 
-  const backend = "https://api.eve-helper.com/api/v1/";
-  // const backend = "http://thunder:8080/api/v1/";
+  //const backend = "https://api.eve-helper.com/api/v1/";
+   const backend = "http://thunder:8080/api/v1/";
 
   useEffect(() => {
     isClicked && submitForm();
