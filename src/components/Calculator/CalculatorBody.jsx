@@ -85,11 +85,13 @@ function CalculatorBody(props) {
         throw new Error(`Server Error: ${response.statusText}`);
       }
       setErrorMessage("");
+      
       const data = response.data;
       const materials = data.materialsList.map( mat => {
-        mat.tier = 0;
-        mat.checked = false;
-        return mat;
+       // mat.tier = 0;
+        let materialId = mat.id;
+        let materialToAdd = {materialId: materialId, materials: [mat], tier: 0, volume: mat.volume, icon: mat.icon, price: mat.sellPrice, name:mat.name}
+        return materialToAdd;
       })
       setMaterialsList(materials);
       setInitialBlueprint(data);
