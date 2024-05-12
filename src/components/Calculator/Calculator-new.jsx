@@ -2,15 +2,20 @@ import { useState, useEffect } from "react";
 import Table from 'react-bootstrap/Table';
 import Alert  from "react-bootstrap/Alert";
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Spinner from "react-bootstrap/Spinner";
+import Modal from "react-bootstrap/Modal";
+
 import { GiBasket } from "react-icons/gi";
 import AdvancedModeToggle from "../AdvancedModeToggle";
 import axios from "axios";
 function Calculator(props){
 const [isCopied, setIsCopied] = useState({});
-const [parts, setIsParts] = useState(false);
-const [partsLoaded, setPartsLoaded] = useState({});
-const [outputParts, setOutputParts] = useState([]);
-const [reactions, setReaactions] = useState(false);
+const [isLoading, setIsLoading] = useState(false);
+
+
+
+
   function craftPrice(material){
     const price = material.materialsList.reduce((accumulator, mat, index) => {
       return (
@@ -96,8 +101,8 @@ const [reactions, setReaactions] = useState(false);
                      
                     ) <
                   0
-                    ? "redmilcho"
-                    : "greenmilcho"
+                    ? "negativeprice"
+                    : "positiveprice"
                 }
               >
                 {(
@@ -135,39 +140,89 @@ const [reactions, setReaactions] = useState(false);
               />
             </div>
           </div>
-          {generateTable(props.materialsList)}
+          {generateTable(props.materialsList.filter(mat=>mat.tier==0), 1)}
+          {props.materialsList.filter(mat=> mat.tier==1).length>0 && generateTable(props.materialsList.filter(mat=> mat.tier==1), 2)}
+          {props.materialsList.filter(mat=> mat.tier==2).length>0 && generateTable(props.materialsList.filter(mat=> mat.tier==2), 3)}
+          {props.materialsList.filter(mat=> mat.tier==3).length>0 && generateTable(props.materialsList.filter(mat=> mat.tier==3), 4)}
+          {props.materialsList.filter(mat=> mat.tier==4).length>0 && generateTable(props.materialsList.filter(mat=> mat.tier==4), 5)}
+          {props.fuelList.length>0 && generateTable(props.fuelList, "fuelPart")}
+          {props.materialsList.filter(mat=> mat.tier ==="fuelPart").length>0 && generateTable(props.materialsList.filter(mat=> mat.tier ==="fuelPart"), 6)}
+          <Modal size="sm" className="loadingModal" centered={true} show={isLoading}><span className="d-flex justify-content-center"><Spinner
+              as="span"
+              animation="border"
+              size="lg"
+              role="status"
+              aria-hidden="true"
+            />
+            <span className="loading">Loading</span></span></Modal>
        </>)}
-        {props.initialBlueprint.materialsList && <Button disabled={props.initialBlueprint.materialsList[0].activityId==11} onClick={()=>updateParts(props.initialBlueprint)}>Calculate Parts</Button>}
-        {props.initialBlueprint.materialsList && <Button onClick={()=> updateReactions()}>Calculate Reactions</Button>}
-        </>
+      </>
       
     )}
     
-    function generateOutputParts(materialsList,type){
-    let outputResult = [];
-    materialsList.forEach((mat, index) => {
-        if(mat.isCreatable && partsLoaded[index+type]) {
-            mat.materialsList.forEach((newMat) => {
-                const existingMaterial = outputResult.find((item) => item.name === newMat.name);
-                if (existingMaterial) {
-                    existingMaterial.quantity += newMat.quantity;
-                } else {
-                    outputResult.push(newMat);
-                }
-            });
-        }
-    });
-    return outputResult;
-  }  
-  function displayParts(material){
-      let outputResult = generateOutputParts(material.materialsList,"parts");
-      return generateTable(outputResult);
-  }
+    function handleCheck(material){
+      material.checked = !material.checked;
+      let updatedMaterialsList = [...props.materialsList];
+      if(material.checked==false){
+        material.materialsList.map(mat=> {
+          const existingMaterial = updatedMaterialsList.find((item) => item.name === mat.name);
+          if(existingMaterial.checked){
+           updatedMaterialsList = recursiveRemove(existingMaterial, updatedMaterialsList);
+          }
+          existingMaterial.quantity -= mat.quantity;
+          if (existingMaterial.quantity == 0){
+            updatedMaterialsList = updatedMaterialsList.filter(mat => mat.id !== existingMaterial.id);
+          }
+          
+          });
+          props.setMaterialsList(updatedMaterialsList);
+      } else {
+        if(material.materialsList) {
+          material.materialsList.map(mat=> {
+            const existingMaterial = updatedMaterialsList.find((item) => item.name === mat.name);
+            if(existingMaterial) {
+              existingMaterial.quantity += mat.quantity;
+            } else{
+              const matToAdd = JSON.parse(JSON.stringify(mat));
+              updatedMaterialsList.push(matToAdd);
+            } 
+          });
+          props.setMaterialsList(updatedMaterialsList);
+        } else {
 
-  function generateTable(materialsList){
+          getSubData(material);
+        }
+      }
+    }
+    function recursiveRemove(material, updatedMaterialsList){
+      
+      
+        material.materialsList.map(mat=> {
+          const existingMaterial = updatedMaterialsList.find((item) => item.name === mat.name);
+          if (existingMaterial.materialsList){
+           updatedMaterialsList = recursiveRemove(existingMaterial, updatedMaterialsList);
+          }
+          existingMaterial.quantity -= mat.quantity;
+          if (existingMaterial.quantity == 0){
+            updatedMaterialsList = updatedMaterialsList.filter(mat => mat.id !== existingMaterial.id);
+          }
+      });
+      return updatedMaterialsList;
+    }
+  
+    const getParts = (e)=>{
+      let tier = e.target.id;
+      tier !== "fuelPart" ? getSubmatsData(props.materialsList, tier) :
+      getSubmatsData(props.fuelList, tier);
+    }
+
+   function generateTable(materialsList, tier){
       let volumeFormat = new Intl.NumberFormat();
       let priceFormat = new Intl.NumberFormat("en-US");
-    return( <Table 
+      
+    return( 
+    <>
+    <Table 
       bordered
       hover
       size="sm">
@@ -179,6 +234,8 @@ const [reactions, setReaactions] = useState(false);
               <th>Volume m³</th>
               <th>Market Cost ISK per unit/total</th>
               <th>Activity</th>
+              <th>Excess</th>
+              <th>Buy / Craft</th>
           </tr>
       </thead>
       <tbody>
@@ -189,60 +246,162 @@ const [reactions, setReaactions] = useState(false);
                   <td>{volumeFormat.format(mat.quantity)}</td>
                   <td>{volumeFormat.format(mat.volume * mat.quantity)}</td>
                   <td>{priceFormat.format(mat.sellPrice)} / {priceFormat.format(mat.quantity * mat.sellPrice)}</td>
-                  <td>{mat.activityId == 1 ? "part" : mat.activityId == 11 ? "reaction":"none"}</td>
+                  <td>{mat.activityId == 1 ? "component" : mat.activityId == 11 ? "reaction":"none"}</td>
+                  <td>{mat.excessMaterials}</td>
+                  <td>
+                  <Form.Check
+              role={mat.isCreatable ? "button" : ""}
+              defaultChecked={mat.checked}
+              disabled={!mat.isCreatable}
+              id={mat.id}
+              key={"key_"+ mat.id}
+              type="switch"
+              onClick={()=>handleCheck(mat)}
+            />
+                  </td>
               </tr>
           ))}
       </tbody>
-  </Table>);
+  </Table>
+  {/* {props.initialBlueprint.materialsList && 
+  <Button id={tier} onClick={(e)=>getParts(e)}> {isLoading[tier] ? (
+          <>
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+            Loading...
+          </>
+        ) : (
+          "Calculate"
+        )}</Button>} */}
+  </>);
   }
    
-  function updateReactions(){
-    getSubmatsData(outputParts, "react");
-    setReaactions(true);
-  }
-   function updateParts(material){
-      getSubmatsData(material.materialsList, "parts");
-      setOutputParts(generateOutputParts(material.materialsList,"parts"))
-      setIsParts(true);
-    }
-    function displayReactions(outputParts){
-      let outputReactResult = generateOutputParts(outputParts, "react");
-      return generateTable(outputReactResult);
-    }
+
+
     function updateLoadedData(index){
       setPartsLoaded((prevState) => ({
         ...prevState,
         [index]: true,
       }));
     }
-    async function getSubmatsData(materialsList, type) {
+    async function getSubData(material){
+      try{
+        setIsLoading(true);
+        const response = await axios.post(props.backend + "type", {
+          blueprintName: material.name,
+          runs: material.quantity,
+          blueprintMe: material.activityId === 11 ? props.formDataReaction.blueprintMe : props.formDataPart.blueprintMe,
+          building: material.activityId === 11 ? props.formDataReaction.building : props.formDataPart.building,
+          buildingRig: material.activityId === 11 ? props.formDataReaction.buildingRig : props.formDataPart.buildingRig,
+          system: material.activityId === 11 ? props.formDataReaction.system : props.formDataPart.system,
+          facilityTax: material.activityId === 11 ? props.formDataReaction.facilityTax : props.formDataPart.facilityTax,
+      });
+        let materials = response.data.materialsList.map(mat=> {
+        mat.tier = material.tier + 1 ;
+        return mat;
+      });
+      const materialsSave = JSON.parse(JSON.stringify(materials));
+      const materialsDisplay = JSON.parse(JSON.stringify(materials));
+      material.materialsList = materialsSave;
+      let updateMaterilsList = [...props.materialsList];
+      materialsDisplay.map(mat=> {
+        let existingMaterial = updateMaterilsList.find((item) => item.name === mat.name);
+        if(existingMaterial) {
+          existingMaterial.quantity += mat.quantity;
+        } else{
+          updateMaterilsList.push(mat);
+        } 
+      });
+      props.setMaterialsList(updateMaterilsList);
+      }catch(error){
+        console.error("Error:", error.message);
+        props.setErrorMessage(error.message);
+      }finally{
+        setIsLoading(false);
+      }
+    }
+    async function getSubmatsData(materialsList, tier) {
       try {
-          materialsList.map(async (mat,index) => {
-          if(mat.isCreatable){
-          const response =  await axios.post(props.backend + "type", {
-            blueprintName: mat.name,
-            runs: mat.quantity,
-            blueprintMe: mat.activityId == 11 ? 0 : 10,
-            building: props.formData.building,
-            buildingRig: props.formData.buildingRig,
-            system: props.formData.system,
-            facilityTax: props.formData.facilityTax,
-          }).then()
-          if (response.status !== 200) {
-            throw new Error(`Server Error: ${response.statusText}`);
+        // setIsLoading((prevState) => ({
+        //   ...prevState,
+        //   [tier]: !prevState[tier],
+        // }));
+        setIsLoading(true)
+          // Create a copy of the state object
+          const newMatList = tier === "fuelPart" ?  props.materialsList : [];
+          const newFuelList = [];
+          // Map through the keys of the object (assuming each key is a material)
+          for (const key of Object.keys(materialsList)) {
+              const mat = materialsList[key]; // Get the material object
+            if (mat.tier < tier-1){
+              mat.isFuel ?
+              newFuelList.push(mat) :
+              newMatList.push(mat);
+              continue;  
+            }
+            if (mat.tier == tier-1 || mat.tier === "fuel"){
+              mat.isFuel ?
+              newFuelList.push(mat) :
+              newMatList.push(mat);
+              
+            if (mat.isCreatable && mat.checked) {
+                  mat.craft = true;
+                  const response = await axios.post(props.backend + "type", {
+                      blueprintName: mat.name,
+                      runs: mat.quantity,
+                      blueprintMe: mat.activityId === 11 ? props.formDataReaction.blueprintMe : props.formDataPart.blueprintMe,
+                      building: mat.activityId === 11 ? props.formDataReaction.building : props.formDataPart.building,
+                      buildingRig: mat.activityId === 11 ? props.formDataReaction.buildingRig : props.formDataPart.buildingRig,
+                      system: mat.activityId === 11 ? props.formDataReaction.system : props.formDataPart.system,
+                      facilityTax: mat.activityId === 11 ? props.formDataReaction.facilityTax : props.formDataPart.facilityTax,
+                  });
+  
+                  const materials = response.data.materialsList.map(subMat => {
+                      subMat.tier = subMat.isFuel ? "fuel" : tier;
+                      subMat.checked = false;
+                      let existingMaterial = null;
+                      subMat.isFuel ?
+                      existingMaterial = newFuelList.find((item) => item.name === subMat.name) : 
+                      existingMaterial = newMatList.find((item) => item.name === subMat.name)
+                      if (existingMaterial) {
+                          existingMaterial.quantity += subMat.quantity;
+                      } else {
+                        subMat.isFuel ?
+                        newFuelList.push(subMat) :
+                        newMatList.push(subMat);
+                      }
+                      return subMat;
+                  });
+                   // Update the materials list with the new materials
+                 mat.materialsList = materials;
+                }
+                 
+              }
           }
-          const data = response.data;
-          mat.materialsList = data.materialsList;
+  
+          // Update the state with the updated object
           
-          props.setMaterialsList(...[props.materialsList]);
-          updateLoadedData(index+type);
-         }
-        });
-        } catch (error) {
+          props.setMaterialsList(newMatList);
+          props.setFuelList(newFuelList);
+          // All requests completed successfully
+          console.log("All requests completed successfully");
+      } catch (error) {
           console.error("Error:", error.message);
           props.setErrorMessage(error.message);
-        }
+      } finally {
+        // setIsLoading((prevState) => ({
+        //   ...prevState,
+        //   [tier]: !prevState[tier],
+        // }));
+        setIsLoading(false);
       }
+  }
+      
     return (
 <>
       {props.errorMessage ? (
@@ -251,9 +410,8 @@ const [reactions, setReaactions] = useState(false);
         displayCommon()
         
       )}
-      {parts && displayParts(props.initialBlueprint)}
-      {reactions && displayReactions(outputParts)}
-    </>
+      
+      </>
     )
 }
 export default Calculator;

@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Calculator from "./Calculator-new.jsx";
 import GetForm from "./CalculatorForm.jsx";
+import ShortForm from "./ShortForm.jsx";
 import axios from "axios";
 import Animated from "../Animated";
 
@@ -14,6 +15,8 @@ function CalculatorBody(props) {
   const [materialsList, setMaterialsList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({});
+  const [formDataPart, setFormDataPart] = useState({});
+  const [formDataReaction, setFormDataReaction] = useState({});
   const [isClicked, setIsClicked] = useState(false);
   const [optionsBp, setOptionsBp] = useState([]);
   const [optionsSys, setOptionsSys] = useState([]);
@@ -22,8 +25,8 @@ function CalculatorBody(props) {
   const [stations, setStations] = useState([{}]);
   const [crafitng, setCrafting] = useState({});
   const [isChecked, setIsChecked] = useState({});
-
-  //const backend = "https://api.eve-helper.com/api/v1/";
+  const [fuelList, setFuelList] = useState({});
+ // const backend = "https://api.eve-helper.com/api/v1/";
    const backend = "http://thunder:8080/api/v1/";
 
   useEffect(() => {
@@ -63,6 +66,7 @@ function CalculatorBody(props) {
     setOpenState({});
     setCrafting({});
     setIsChecked({});
+    setFuelList({});
     setIsLoading(true);
     try {
       const response = await axios.post(backend + "type", {
@@ -82,7 +86,12 @@ function CalculatorBody(props) {
       }
       setErrorMessage("");
       const data = response.data;
-      setMaterialsList(data.materialsList);
+      const materials = data.materialsList.map( mat => {
+        mat.tier = 0;
+        mat.checked = false;
+        return mat;
+      })
+      setMaterialsList(materials);
       setInitialBlueprint(data);
       setCrafting({ ["card_" + data.name]: true });
     } catch (error) {
@@ -112,6 +121,30 @@ function CalculatorBody(props) {
                     regions={regions}
                   ></GetForm>
                 </div>
+                <div id="menuParts">
+                  <p>Parts bonuses:</p>
+                  <ShortForm
+                    reaction={false}
+                    formData={formData}
+                    setFormDataPart={setFormDataPart}
+                    setFormDataReaction={setFormDataReaction}
+                    optionsSys={optionsSys}
+                    advancedMode={props.advancedMode}
+                    regions={regions}
+                  ></ShortForm>
+                </div>
+                <div id="menuReactions">
+                  <p>Reaction Bonuses:</p>
+                  <ShortForm
+                    reaction={true}
+                    formData={formData}
+                    setFormDataPart={setFormDataPart}
+                    setFormDataReaction={setFormDataReaction}
+                    optionsSys={optionsSys}
+                    advancedMode={props.advancedMode}
+                    regions={regions}
+                  ></ShortForm>
+                </div>
               </Col>
             </Col>
             <Col xs={9}>
@@ -128,10 +161,16 @@ function CalculatorBody(props) {
                 advancedMode={props.advancedMode}
                 setAdvancedMode={props.setAdvancedMode}
                 formData={formData}
+                formDataPart={formDataPart}
+                formDataReaction={formDataReaction}
                 crafitng={crafitng}
                 setCrafting={setCrafting}
                 isChecked={isChecked}
                 setIsChecked={setIsChecked}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                fuelList={fuelList}
+                setFuelList={setFuelList}
               />
             </Col>
           </Row>
