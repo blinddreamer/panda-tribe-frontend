@@ -219,7 +219,6 @@ const [isLoading, setIsLoading] = useState(false);
    function generateTable(materialsList, tier){
       let volumeFormat = new Intl.NumberFormat();
       let priceFormat = new Intl.NumberFormat("en-US");
-      
     return( 
     <>
     <Table 
@@ -243,11 +242,11 @@ const [isLoading, setIsLoading] = useState(false);
               <tr key={index}>
                   <td><img src={mat.icon} loading="lazy" alt={mat.name} /></td>
                   <td>{mat.name}</td>
-                  <td>{volumeFormat.format(mat.quantity)}</td>
-                  <td>{volumeFormat.format(mat.volume * mat.quantity)}</td>
-                  <td>{priceFormat.format(mat.sellPrice)} / {priceFormat.format(mat.quantity * mat.sellPrice)}</td>
+                  <td>{volumeFormat.format(calculateQuantity(mat))}</td>
+                  <td>{volumeFormat.format(mat.volume  * calculateQuantity(mat))}</td>
+                  <td>{priceFormat.format(mat.price)} / {priceFormat.format(calculateQuantity(mat) * mat.price)}</td>
                   <td>{mat.activityId == 1 ? "component" : mat.activityId == 11 ? "reaction":"none"}</td>
-                  <td>{mat.excessMaterials}</td>
+                  <td>{mat.craftQuantity*(mat.jobsCount)-calculateQuantity(mat)}</td>
                   <td>
                   <Form.Check
               role={mat.isCreatable ? "button" : ""}
@@ -263,7 +262,7 @@ const [isLoading, setIsLoading] = useState(false);
           ))}
       </tbody>
   </Table>
-  {/* {props.initialBlueprint.materialsList && 
+  {props.initialBlueprint.materialsList && 
   <Button id={tier} onClick={(e)=>getParts(e)}> {isLoading[tier] ? (
           <>
             <Spinner
@@ -277,11 +276,18 @@ const [isLoading, setIsLoading] = useState(false);
           </>
         ) : (
           "Calculate"
-        )}</Button>} */}
+        )}</Button>}
   </>);
   }
    
-
+  function calculateQuantity(material){
+    const quantity = material.materials.reduce((accumulator, mat) => {
+      return (
+        accumulator + mat.neededQuantity
+      );
+    }, 0);
+    return quantity;
+  }
 
     function updateLoadedData(index){
       setPartsLoaded((prevState) => ({
@@ -294,12 +300,12 @@ const [isLoading, setIsLoading] = useState(false);
         setIsLoading(true);
         const response = await axios.post(props.backend + "type", {
           blueprintName: material.name,
-          runs: material.quantity,
-          blueprintMe: material.activityId === 11 ? props.formDataReaction.blueprintMe : props.formDataPart.blueprintMe,
-          building: material.activityId === 11 ? props.formDataReaction.building : props.formDataPart.building,
-          buildingRig: material.activityId === 11 ? props.formDataReaction.buildingRig : props.formDataPart.buildingRig,
-          system: material.activityId === 11 ? props.formDataReaction.system : props.formDataPart.system,
-          facilityTax: material.activityId === 11 ? props.formDataReaction.facilityTax : props.formDataPart.facilityTax,
+          runs: calculateQuantity(material.materials)/material.craftQuantity,
+          blueprintMe: material.activity === 11 ? props.formDataReaction.blueprintMe : props.formDataPart.blueprintMe,
+          building: material.activity === 11 ? props.formDataReaction.building : props.formDataPart.building,
+          buildingRig: material.activity === 11 ? props.formDataReaction.buildingRig : props.formDataPart.buildingRig,
+          system: material.activity === 11 ? props.formDataReaction.system : props.formDataPart.system,
+          facilityTax: material.activity === 11 ? props.formDataReaction.facilityTax : props.formDataPart.facilityTax,
       });
         let materials = response.data.materialsList.map(mat=> {
         mat.tier = material.tier + 1 ;
@@ -353,7 +359,7 @@ const [isLoading, setIsLoading] = useState(false);
                   mat.craft = true;
                   const response = await axios.post(props.backend + "type", {
                       blueprintName: mat.name,
-                      runs: mat.quantity,
+                      runs: calculateQuantity(mat),
                       blueprintMe: mat.activityId === 11 ? props.formDataReaction.blueprintMe : props.formDataPart.blueprintMe,
                       building: mat.activityId === 11 ? props.formDataReaction.building : props.formDataPart.building,
                       buildingRig: mat.activityId === 11 ? props.formDataReaction.buildingRig : props.formDataPart.buildingRig,
@@ -367,18 +373,27 @@ const [isLoading, setIsLoading] = useState(false);
                       let existingMaterial = null;
                       subMat.isFuel ?
                       existingMaterial = newFuelList.find((item) => item.name === subMat.name) : 
-                      existingMaterial = newMatList.find((item) => item.name === subMat.name)
+                      existingMaterial = newMatList.find((item) => item.name === subMat.name);
+                      let special = {materialId: mat.name, neededQuantity: subMat.quantity}
                       if (existingMaterial) {
-                          existingMaterial.quantity += subMat.quantity;
+                          existingMaterial.materials.push(special)
+                          existingMaterial.quantity= calculateQuantity(existingMaterial);
+                          existingMaterial.jobsCount = Math.ceil(existingMaterial.quantity/existingMaterial.craftQuantity);
                       } else {
+                      
+                           let materialId = subMat.id;
+                           let materialToAdd = {materialId: materialId, materials: [special], tier: tier, volume: subMat.volume, icon: subMat.icon, price: subMat.sellPrice, 
+                            name:subMat.name, activityId: subMat.activityId, craftQuantity: subMat.craftQuantity, isCreatable: subMat.isCreatable, checked: true,
+                          jobsCount: subMat.jobsCount}
+                        
                         subMat.isFuel ?
-                        newFuelList.push(subMat) :
-                        newMatList.push(subMat);
+                        newFuelList.push(materialToAdd) :
+                        newMatList.push(materialToAdd);
                       }
                       return subMat;
                   });
                    // Update the materials list with the new materials
-                 mat.materialsList = materials;
+                 //mat.materialsList = materials;
                 }
                  
               }

@@ -27,7 +27,7 @@ function CalculatorBody(props) {
   const [isChecked, setIsChecked] = useState({});
   const [fuelList, setFuelList] = useState({});
  // const backend = "https://api.eve-helper.com/api/v1/";
-   const backend = "http://thunder:8080/api/v1/";
+   const backend = "http://localhost:8080/api/v1/";
 
   useEffect(() => {
     isClicked && submitForm();
@@ -87,10 +87,14 @@ function CalculatorBody(props) {
       setErrorMessage("");
       
       const data = response.data;
+      
       const materials = data.materialsList.map( mat => {
        // mat.tier = 0;
         let materialId = mat.id;
-        let materialToAdd = {materialId: materialId, materials: [mat], tier: 0, volume: mat.volume, icon: mat.icon, price: mat.sellPrice, name:mat.name}
+        let special = {materialId: data.id, neededQuantity: mat.quantity}
+        let materialToAdd = {materialId: materialId, materials: [special], tier: 0, volume: mat.volume, icon: mat.icon, price: mat.sellPrice, 
+          name:mat.name, activityId: mat.activityId, craftQuantity: mat.craftQuantity, isCreatable: mat.isCreatable, quantity: mat.quantity, checked: true,
+        jobsCount: mat.jobsCount}
         return materialToAdd;
       })
       setMaterialsList(materials);
